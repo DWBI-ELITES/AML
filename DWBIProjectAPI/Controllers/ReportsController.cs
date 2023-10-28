@@ -26,14 +26,14 @@ namespace DWBIProjectAPI.Controllers
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
         [Route("api/AccountSearch/GetPerson")]
-        public IHttpActionResult GetPerson(string personId)
+        public List<TPersonModel> GetPerson(string personId)
         {
             string serverName = "ADEGBOYEGAOLUWA\\GBEN";
             string databaseName = "AMLData";
 
             string connectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
 
-            List<SignatoryUpdateModel> signatoryDetailsPersonList = new List<SignatoryUpdateModel>();
+            List<TPersonModel> tPersonList = new List<TPersonModel>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -49,7 +49,7 @@ namespace DWBIProjectAPI.Controllers
 
                     while (reader.Read())
                     {
-                        SignatoryUpdateModel signatoryDetailsPerson = new SignatoryUpdateModel
+                        TPersonModel tPerson = new TPersonModel
                         {
                             PERSONID = reader["PERSONID"].ToString(),
                             birth_place = reader["birth_place"].ToString(),
@@ -132,23 +132,18 @@ namespace DWBIProjectAPI.Controllers
                             TPH_COMMUNICATION_TYPE = reader["TPH_COMMUNICATION_TYPE"].ToString()
                         };
 
-                        signatoryDetailsPersonList.Add(signatoryDetailsPerson);
+                        tPersonList.Add(tPerson);
                     }
                 }
             }
 
-            if (signatoryDetailsPersonList.Count > 0)
+            if (tPersonList.Count > 0)
             {
-                return Ok(signatoryDetailsPersonList);
+                return tPersonList; // Return the first person in the list
             }
 
-            return NotFound(); // No signatory details found for the specified personId
+            return null; // Return null if no person details found for the specified personId
         }
-
-
-
-
-
 
 
         // GET api/<controller>
@@ -162,7 +157,7 @@ namespace DWBIProjectAPI.Controllers
             if (transactionDetailsList.Count > 0)
             {
                 XmlDocument ctrXmlDoc = GenerateCTRAMLReport(transactionDetailsList);
-                ctrXmlDoc.Save("ctr_aml_report.xml");
+                ctrXmlDoc.Save("C:\\Users\\Adegboyega.Oluwagbem\\Downloads\\ctr_aml_report.xml");
 
                 return Ok(ctrXmlDoc.OuterXml);
             }
@@ -197,7 +192,15 @@ namespace DWBIProjectAPI.Controllers
 
                         string personId = reader["PERSON_ID"].ToString(); // Assuming there's a column named PERSON_ID
 
-                        SignatoryUpdateModel signatory = GetSignatoryDetailsPerson(personId);
+                        List<TPersonModel> personList = GetPerson(personId);
+
+                        TPersonModel person = null; // Declare 'person' here
+
+                        if (personList != null && personList.Count > 0)
+                        {
+                             person = personList[0];
+                            // Now 'person' contains the first TPersonModel in the list
+                        }
 
                         reportTransaction transactionDetails = new reportTransaction
                         {
@@ -212,26 +215,25 @@ namespace DWBIProjectAPI.Controllers
                                 from_funds_code = "D",
                                 from_person = new reportTransactionT_from_my_clientFrom_person
                                 {
-                                    first_name = signatory.first_name,
-                                    last_name = signatory.last_name,
-                                    //birthdate = (DateTime)reader["BIRTHDATE"],
-                                    birthdate = (DateTime)signatory.birthdate,
-                                    ssn = signatory.ssn,
-                                    nationality1 = signatory.nationality,
-                                    residence = signatory.residence,
+                                    first_name = person?.first_name,
+                                    last_name = person?.last_name,
+                                    birthdate = person?.birthdate ?? DateTime.MinValue,
+                                    ssn = person?.ssn,
+                                    nationality1 = person?.nationality,
+                                    residence = person?.residence,
                                     phones = new reportTransactionT_from_my_clientFrom_personPhones
                                     {
                                         phone = new reportTransactionT_from_my_clientFrom_personPhonesPhone
                                         {
-                                            tph_contact_type = signatory.tph_contact_type,
-                                            tph_communication_type = signatory.TPH_COMMUNICATION_TYPE,
-                                            tph_country_prefix = signatory.tph_country_prefix,
-                                            tph_number = signatory.tph_number,
+                                            tph_contact_type = person?.tph_contact_type,
+                                            tph_communication_type = person?.TPH_COMMUNICATION_TYPE,
+                                            tph_country_prefix = person?.tph_country_prefix,
+                                            tph_number = person?.tph_number,
                                         }
                                     },
-                                    occupation = signatory.occupation,
+                                    occupation = person?.occupation,
                                 },
-                                from_country = signatory.identifier_country,
+                                from_country = person?.identifier_country,
                             },
                             t_to_my_client = new reportTransactionT_to_my_client
                             {
@@ -252,34 +254,33 @@ namespace DWBIProjectAPI.Controllers
                                         {
                                             t_person = new reportTransactionT_to_my_clientTo_accountRelated_personsAccount_related_personT_person
                                             {
-                                                first_name = reader["FIRST_NAME"].ToString(),
-                                                last_name = reader["LAST_NAME"].ToString(),
-                                                //birthdate = DateTime.Parse(reader["BIRTHDATE"].ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
-                                                birthdate = DateTime.ParseExact(reader["BIRTHDATE"].ToString(), "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
-                                                //birthdate = (DateTime)reader["BIRTHDATE"],
-                                                ssn = reader["SSN"].ToString(),
-                                                nationality1 = reader["NATIONALITY1"].ToString(),
-                                                residence = reader["RESIDENCE"].ToString(),
+                                                first_name = person?.first_name,
+                                                last_name = person?.last_name,
+                                                birthdate = person?.birthdate ?? DateTime.MinValue,
+                                                ssn = person?.ssn,
+                                                nationality1 = person?.nationality,
+                                                residence = person?.residence,
                                                 phones = new reportTransactionT_to_my_clientTo_accountRelated_personsAccount_related_personT_personPhones
                                                 {
                                                     phone = new reportTransactionT_to_my_clientTo_accountRelated_personsAccount_related_personT_personPhonesPhone
                                                     {
-                                                        tph_contact_type = "-",
-                                                        tph_communication_type = "-",
-                                                        tph_country_prefix = "string",
-                                                        tph_number = "string"
+                                                        tph_contact_type = person?.tph_contact_type,
+                                                        tph_communication_type = person?.TPH_COMMUNICATION_TYPE,
+                                                        tph_country_prefix = person?.tph_country_prefix,
+                                                        tph_number = person?.tph_number
                                                     }
                                                 },
-                                                occupation = reader["OCCUPATION"].ToString()
+                                                occupation = person?.occupation
                                             },
                                             role = "OM"
                                         }
                                     },
-                                    opened = DateTime.ParseExact(reader["OPENED"].ToString(), "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
+                                    opened = (DateTime)reader["VALUE_DATE"],
 
                                     status_code = "I"
                                 },
-                                to_country = reader["TO_COUNTRY"].ToString()
+                                //to_country = reader["TO_COUNTRY"].ToString()
+                                to_country = reader["TXN_COUNTRY"].ToString()
                             }
                         };
 
