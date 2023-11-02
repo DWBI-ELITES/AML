@@ -26,7 +26,7 @@ namespace DWBIProjectAPI.Controllers
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
         [Route("api/AccountSearch/GetPerson")]
-        public List<TPersonModel> GetPerson(string personId)
+        public List<TPersonModel> GetPerson(string custId)
         {
             string serverName = "ADEGBOYEGAOLUWA\\GBEN";
             string databaseName = "AMLData";
@@ -39,11 +39,11 @@ namespace DWBIProjectAPI.Controllers
             {
                 connection.Open();
 
-                string query = "Select * FROM [AMLData].[dbo].[amlPerson] where personid = @personId";
+                string query = "Select * FROM [AMLData].[dbo].[amlPerson] where cust_id = @custId";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@personId", personId);
+                    command.Parameters.AddWithValue("@custId", custId);
 
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -157,14 +157,14 @@ namespace DWBIProjectAPI.Controllers
             if (transactionDetailsList.Count > 0)
             {
                 XmlDocument ctrXmlDoc = GenerateCTRAMLReport(transactionDetailsList);
-                ctrXmlDoc.Save("C:\\Users\\Adegboyega.Oluwagbem\\Downloads\\ctr_aml_report.xml");
+                ctrXmlDoc.Save("C:\\Users\\Adegboyega.Oluwagbem\\Downloads\\CTR_REPORT.xml");
 
                 return Ok(ctrXmlDoc.OuterXml);
             }
 
             return NotFound();
         }
-
+  
         private List<reportTransaction> RetrieveTransactionsFromDatabase(string startDate, string endDate)
         {
             string serverName = "ADEGBOYEGAOLUWA\\GBEN";
@@ -178,7 +178,14 @@ namespace DWBIProjectAPI.Controllers
             {
                 connection.Open();
 
-                string query = "SELECT * FROM [AMLData].[dbo].[txn_live] WHERE CAST(Tran_date AS DATE) BETWEEN @startDate AND @endDate";
+                //string query = "SELECT * FROM [AMLData].[dbo].[txn_live] WHERE CAST(Tran_date AS DATE) BETWEEN @startDate AND @endDate";
+
+                string query = "SELECT a.*, b.name as branch_name, c.swift, c.branch, c.account, c.currency_code, c.name as account_name, c.account_type " +
+               "FROM [AMLData].[dbo].[txn_live] a " +
+               "LEFT OUTER JOIN [AMLData].[dbo].[amlbranch] b ON a.BRANCH_ID = b.branch_id " +
+               "LEFT OUTER JOIN [AMLData].[dbo].[amlAccount] c ON a.CUSTOMER = c.cust_number " +
+               "WHERE CAST(Tran_date AS DATE) BETWEEN @startDate AND @endDate";
+
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -190,9 +197,9 @@ namespace DWBIProjectAPI.Controllers
                     while (reader.Read())
                     {
 
-                        string personId = reader["PERSON_ID"].ToString(); // Assuming there's a column named PERSON_ID
+                        string custId = reader["customer"].ToString(); // Assuming there's a column named PERSON_ID
 
-                        List<TPersonModel> personList = GetPerson(personId);
+                        List<TPersonModel> personList = GetPerson(custId);
 
                         TPersonModel person = null; // Declare 'person' here
 
@@ -205,14 +212,14 @@ namespace DWBIProjectAPI.Controllers
                         reportTransaction transactionDetails = new reportTransaction
                         {
                             transactionnumber = reader["TRAN_ID"].ToString(),
-                            transaction_location = reader["BRANCH_ID"].ToString(),
+                            transaction_location = reader["branch_name"].ToString(),
                             transaction_description = reader["TRAN_PARTICULAR"].ToString(),
                             date_transaction = reader["TRAN_DATE"].ToString(),
                             transmode_code = reader["TRAN_TYPE"].ToString(),
                             amount_local = reader["AMOUNT"].ToString(),
                             t_from_my_client = new reportTransactionT_from_my_client
                             {
-                                from_funds_code = "D",
+                                from_funds_code = reader["DRCR_IND"].ToString(),
                                 from_person = new reportTransactionT_from_my_clientFrom_person
                                 {
                                     first_name = person?.first_name,
@@ -237,17 +244,17 @@ namespace DWBIProjectAPI.Controllers
                             },
                             t_to_my_client = new reportTransactionT_to_my_client
                             {
-                                to_funds_code = "P",
+                                to_funds_code = reader["DRCR_IND"].ToString(),
                                 to_account = new reportTransactionT_to_my_clientTo_account
                                 {
                                     institution_name = reader["INSTITUTION_NAME"].ToString(),
-                                    swift = "string",
-                                    branch = "string",
-                                    account = "string",
-                                    currency_code = "OMR",
-                                    account_name = "string",
-                                    client_number = "string",
-                                    account_type = "AC",
+                                    swift = reader["swift"].ToString(),
+                                    branch = reader["branch"].ToString(),
+                                    account = reader["account"].ToString(),
+                                    currency_code = reader["currency_code"].ToString(),
+                                    account_name = reader["account_name"].ToString(),
+                                    client_number = reader["customer"].ToString(),
+                                    account_type = reader["account_type"].ToString(),
                                     related_persons = new reportTransactionT_to_my_clientTo_accountRelated_persons
                                     {
                                         account_related_person = new reportTransactionT_to_my_clientTo_accountRelated_personsAccount_related_person
@@ -272,7 +279,7 @@ namespace DWBIProjectAPI.Controllers
                                                 },
                                                 occupation = person?.occupation
                                             },
-                                            role = "OM"
+                                            role = "string"
                                         }
                                     },
                                     opened = (DateTime)reader["VALUE_DATE"],
@@ -303,22 +310,120 @@ namespace DWBIProjectAPI.Controllers
 
             reportElement.AppendChild(CreateElementWithText(xmlDoc, "schema_version", "string"));
             reportElement.AppendChild(CreateElementWithText(xmlDoc, "rentity_id", "1"));
+            reportElement.AppendChild(CreateElementWithText(xmlDoc, "report_code", "CTR"));
 
-            foreach (var record in transactionDetailsList)
+            var groupedTransactions = transactionDetailsList
+                .GroupBy(record => record.transactionnumber)
+                .ToList();
+
+            foreach (var transactionGroup in groupedTransactions)
             {
-                XmlElement transactionElement = xmlDoc.CreateElement("transaction");
+                if (transactionGroup.Any())
+                {
+                    var firstRecord = transactionGroup.First();
 
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transactionnumber", record.transactionnumber));
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transaction_location", record.transaction_location));
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transaction_description", record.transaction_description));
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "date_transaction", record.date_transaction));
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transmode_code", record.transmode_code));
-                transactionElement.AppendChild(CreateElementWithText(xmlDoc, "amount_local", record.amount_local));
+                    XmlElement transactionElement = xmlDoc.CreateElement("transaction");
 
-                // Add logic to handle t_from_my_client, t_to, t_from, t_to_my_client elements
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transactionnumber", firstRecord.transactionnumber));
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transaction_location", firstRecord.transaction_location));
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transaction_description", firstRecord.transaction_description));
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "date_transaction", firstRecord.date_transaction));
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transmode_code", firstRecord.transmode_code));
+                    transactionElement.AppendChild(CreateElementWithText(xmlDoc, "amount_local", firstRecord.amount_local));
+
+                    // Process the first record as t_from_my_client
+                    XmlElement t_from_my_clientElement = xmlDoc.CreateElement("t_from_my_client");
+                    t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", firstRecord.t_from_my_client.from_funds_code));
+
+                    XmlElement from_personElement = xmlDoc.CreateElement("from_person");
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", firstRecord.t_from_my_client.from_person.first_name));
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", firstRecord.t_from_my_client.from_person.last_name));
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", firstRecord.t_from_my_client.from_person.birthdate.ToString()));
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "ssn", firstRecord.t_from_my_client.from_person.ssn));
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", firstRecord.t_from_my_client.from_person.nationality1));
+                    from_personElement.AppendChild(CreateElementWithText(xmlDoc, "residence", firstRecord.t_from_my_client.from_person.residence));
+
+                    // Add code to handle phonesElement, etc.
+                    // ...
+
+                    XmlElement phonesElement = xmlDoc.CreateElement("phones");
+                    XmlElement phoneElement = xmlDoc.CreateElement("phone");
+                    phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord.t_from_my_client.from_person.phones.phone.tph_contact_type));
+                    phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord.t_from_my_client.from_person.phones.phone.tph_communication_type));
+                    phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord.t_from_my_client.from_person.phones.phone.tph_country_prefix));
+                    phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord.t_from_my_client.from_person.phones.phone.tph_number));
+                    phonesElement.AppendChild(phoneElement);
+
+                    t_from_my_clientElement.AppendChild(from_personElement);
+                    t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_country", firstRecord.t_from_my_client.from_country));
+
+                    transactionElement.AppendChild(t_from_my_clientElement);
 
 
-                reportElement.AppendChild(transactionElement);
+
+                    if (transactionGroup.Count() > 1)
+                    {
+                        var secondRecord = transactionGroup.Skip(1).First();
+
+                        // Process the second record as t_to_my_client
+                        XmlElement t_to_my_clientElement = xmlDoc.CreateElement("t_to_my_client");
+                        t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_funds_code", secondRecord.t_to_my_client.to_funds_code));
+
+                        XmlElement to_accountElement = xmlDoc.CreateElement("to_account");
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", secondRecord.t_to_my_client.to_account.institution_name));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "swift", secondRecord.t_to_my_client.to_account.swift));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "branch", secondRecord.t_to_my_client.to_account.branch));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", secondRecord.t_to_my_client.to_account.account));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "currency_code", secondRecord.t_to_my_client.to_account.currency_code));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", secondRecord.t_to_my_client.to_account.account_name));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "client_number", secondRecord.t_to_my_client.to_account.client_number));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_type", secondRecord.t_to_my_client.to_account.account_type));
+
+                        XmlElement related_personsElement = xmlDoc.CreateElement("related_persons");
+                        XmlElement account_related_personElement = xmlDoc.CreateElement("account_related_person");
+                        XmlElement to_personElement = xmlDoc.CreateElement("to_person");
+
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.first_name));
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.last_name));
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.birthdate.ToString()));
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "ssn", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.ssn));
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.nationality1));
+                        to_personElement.AppendChild(CreateElementWithText(xmlDoc, "residence", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.residence));
+
+                        // Add code to handle phonesElement, etc.
+                        // ...
+
+
+                        //XmlElement phonesElement = xmlDoc.CreateElement("phones");
+                        //XmlElement phoneElement = xmlDoc.CreateElement("phone");
+                        phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.phones.phone.tph_contact_type));
+                        phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.phones.phone.tph_communication_type));
+                        phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.phones.phone.tph_country_prefix));
+                        phoneElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.t_person.phones.phone.tph_number));
+                        phonesElement.AppendChild(phoneElement);
+
+
+                        account_related_personElement.AppendChild(to_personElement);
+                        account_related_personElement.AppendChild(CreateElementWithText(xmlDoc, "role", secondRecord.t_to_my_client.to_account.related_persons.account_related_person.role));
+
+                        related_personsElement.AppendChild(account_related_personElement);
+                        to_accountElement.AppendChild(related_personsElement);
+
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "opened", secondRecord.t_to_my_client.to_account.opened.ToString()));
+                        to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "status_code", secondRecord.t_to_my_client.to_account.status_code));
+
+                        t_to_my_clientElement.AppendChild(to_accountElement);
+                        t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_country", secondRecord.t_to_my_client.to_country));
+
+                        transactionElement.AppendChild(t_to_my_clientElement);
+                    }
+
+
+                    // Add logic to handle t_from, t_to elements if needed
+                    // ...
+
+                    reportElement.AppendChild(transactionElement);
+                }
             }
 
             XmlElement reportIndicatorsElement = xmlDoc.CreateElement("report_indicators");
@@ -336,7 +441,6 @@ namespace DWBIProjectAPI.Controllers
             XmlElement element = xmlDoc.CreateElement(elementName);
             element.InnerText = text;
             return element;
-
         }
 
 

@@ -247,10 +247,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\AddressModel.cs" />
+    <Compile Include="Models\BranchModel.cs" />
     <Compile Include="Models\CustomerUpdateModel.cs" />
     <Compile Include="Models\ExcelRecord.cs" />
     <Compile Include="Models\ExposureSummary.cs" />
     <Compile Include="Models\ExposureSummaryMoM.cs" />
+    <Compile Include="Models\PhoneModel.cs" />
     <Compile Include="Models\SignatoryUpdateModel.cs" />
     <Compile Include="Models\TPersonModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
