@@ -1,0 +1,95 @@
+<div class="main-content" >
+    <div class="container-fluid" >
+
+
+        <style>
+            .card-title {
+              margin-top: 5px;
+            }
+
+            
+          </style>
+          
+          <h6 style="font-weight: bold;">Dashboard</h6>
+          
+              <div class="row" >
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">account_balance</i>
+                      </div>
+                      <p class="card-category" style="text-align: center;font-weight:bold ;font-size: 16px; color:black">Total Exposure</p>
+                          <br />
+                      <h3 class="card-title" style="text-align: center;font-size: 13px;font-weight:bold ;white-space: nowrap">N{{totalexposureValue}}</h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                       <i class="material-icons" style="font-weight:bold">date_range</i> 
+                        <a style="font-weight:bold" >as at {{maxdateValue}} </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">credit_card</i>
+                      </div>
+                      <p class="card-category" style="text-align: center;font-weight:bold ;font-size: 16px; color:black">Direct Exposure</p>
+                        <br />
+          <h3 class="card-title" style="text-align: center;font-size: 13px;font-weight:bold ;white-space: nowrap">N{{directexposureValue}}</h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+            <i class="material-icons" style="font-weight:bold">date_range</i> 
+                        <a style="font-weight:bold" >as at {{maxdateValue}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">business</i>
+                      </div>
+                      <p class="card-category" style="text-align: center;font-weight:bold ;font-size: 14px; color:black">Contingent Exposure</p>
+                      <br />
+                      <h3 class="card-title" style="text-align: center;font-size: 13px;font-weight:bold ;white-space: nowrap">N{{contingentexposureValue}}</h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+            <i class="material-icons" style="font-weight:bold">date_range</i> 
+                        <a style="font-weight:bold" >as at {{maxdateValue}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">smartphone</i>
+                      </div>
+                      <p class="card-category" style="text-align: center;font-weight:bold ;font-size: 16px; color:black">Digital Loans</p>
+                        <br />
+                      <!-- <h3 class="card-title" style="text-align: center;font-size: 14px;font-weight:bold ;white-space: nowrap;color:black">{{ digitalLoansExposure }}</h3> -->
+                      <h3 class="card-title" style="text-align: center;font-size: 13px;font-weight:bold ;white-space: nowrap;" >N{{ digitalexposureValue  }}</h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+            <i class="material-icons" style="font-weight:bold">date_range</i> 
+                        <a style="font-weight:bold" >as at {{maxdateValue}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <iframe title="ExposureSummaryMoM" width="100%" height="335px" src="https://app.powerbi.com/view?r=eyJrIjoiMjU3NDg0NzAtYWVjZC00MDllLTllMTEtM2VkNGRkNzBhMTE2IiwidCI6IjBiMjFjNDRjLWI1ZDAtNDE1MS04OTI5LTNkZjc0Nzg2OTA0NiJ9" frameborder="0" allowFullScreen="true"></iframe>
+        
+
+
+    </div>
+</div>

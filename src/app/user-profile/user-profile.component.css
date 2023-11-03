@@ -1,0 +1,263 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th {
+  
+    font-weight:bold !important;
+    background-color: indianred !important;
+    color: white !important;
+      text-align: left !important;
+    padding: 8px !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+td {
+    
+    font-weight:bold !important;
+    color: black !important;
+    text-align: left !important;
+    padding: 8px !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .btn-default {
+    background-color: indianred !important; /* Initial background color */
+    color: white !important; /* Initial text color */
+}
+
+.btn-default:hover {
+    background-color: green !important; /* Background color on hover */
+    color: black !important; /* Text color on hover */
+}
+
+.btn-default:active {
+    background-color: greenyellow  !important; /* Background color on click */
+    color: Black !important; /* Text color on click */
+}
+
+.custom-input {
+    border: none; /* Remove border */
+    padding: 5px; /* Add padding for spacing */
+    border-radius: 2px; /* Optional: Add border radius for rounded corners */
+    width: 40%;
+    background-color:aliceblue;
+    border-color: aliceblue;
+  }
+
+  .clear-button {
+    background-color:white;
+    border: none;
+    border-radius: 50%;
+    /* padding: 5px; */
+    cursor: pointer;
+  }
+
+  .clear-icon {
+    color: indianred;
+    font-weight: bold;
+   
+  }
+
+  /* White color for sorting icons */
+.fas.fa-caret-up,
+.fas.fa-caret-down {
+  color: white;
+}
+
+/* Hover effect for sorting columns */
+th:hover {
+  cursor: pointer;
+  background-color: yellow
+}
+
+/* Add this CSS to style the buttons */
+
+.button-group {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  /* border: none; */
+  padding: 10px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.button i {
+  margin-right: 5px;
+}
+
+
+.popup-close {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.close-button {
+  background-color: indianred;
+  border-radius: 3px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: small;
+  border: none;
+}
+
+
+.popup-dialog {
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 95%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.edit-input {
+  border: none;
+  border-radius: 2px;
+  background-color: aliceblue;
+  color: black;
+  font-weight: bold;
+  font-size: small;
+/* width: 90px; */
+  
+}
+
+
+
+.edit-input-readonly {
+  /* border: none; 
+  padding: 5px;  */
+  /* border-radius: 2px;  */
+  border: none; 
+  width: fit-content;
+  background-color: white;
+  color: lightslategray;
+  font-weight: bold;
+  font-size: small;
+  
+}
+
+
+
+label{
+  color:black;
+  font-weight: bold;
+  font-size:small;
+
+}
+
+.popup-content {
+  
+  height: 85%;
+  width: 80%;
+  padding: 20px; /* Add padding to create space for the close button */
+  overflow-y: auto;
+}
+
+
+.info-container {
+  margin-bottom: 20px;
+}
+
+.collapse-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.info-section.collapsed {
+  display: none;
+}
+
+.side-by-side {
+  display: inline-block;
+  width: 53%; /* Adjust the width as needed */
+  vertical-align: top; /* Align paragraphs at the top */
+}
+
+.container {
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+p {
+   color:black;
+   font-weight: bold;
+   font-size: small;
+  }
+
+
+
+.selected-row {
+  background-color:#007bff;
+  color: black; /* Set appropriate text color */
+}
+
+.view-button-selected {
+  color: white;
+  background-color: indianred;
+}
+
+
+
+/* For success message */
+.snackbar-success {
+  background-color: #4caf50; /* Green color */
+  color: white;
+
+}
+
+/* For error message */
+.snackbar-error {
+  background-color: #f44336; /* Red color */
+  color: white;
+
+}
+
+
+/* Add this to your component's CSS file */
+.center-snackbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.select-container {
+  position: relative;
+  display: inline-block; 
+}
+
+select {
+  padding-right: 30px; /* Adjust this value based on your design */
+  appearance: none; /* Remove default arrow in some browsers */
+  background: transparent; /* Make the background transparent */
+  border: none; /* Remove default border */
+  width: 100%;
+}
+
+i.fa-caret-down {
+  position: absolute;
+  right: 10px; /* Adjust this value based on your design */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

@@ -1,0 +1,62 @@
+<style>
+    input[type="file"],
+    button[type="submit"] {
+      background-color: indianred;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    input[type="file"]:hover,
+    button[type="submit"]:hover {
+      background-color: green;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th {
+    
+      font-weight:bold !important;
+      background-color: indianred !important;
+      color: white !important;
+        text-align: left !important;
+      padding: 8px !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+  
+  td {
+      
+      font-weight:bold !important;
+      color: black !important;
+      text-align: left !important;
+      padding: 8px !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+  
+      .modal-dialog-centered {
+      transform: translateX(26%) !important;
+    }
+    
+   
+  </style>
+
+
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="text-center">
+        <h3 style="font-weight: bold;">Limit Definition Upload</h3>
+        <input type="file" (change)="onFileSelected($event)">
+        &nbsp;
+        <button id="uploadButton" type="submit"  (click)="onUpload()" [disabled]="!selectedFile">Upload</button>
+      </div>
+    </div>
+  </div>
+  
+
+   

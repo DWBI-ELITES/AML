@@ -1,0 +1,4211 @@
+
+
+
+<div class="main-content">
+  <div class="container-fluid">
+    <h5 style="font-weight: bold; color: black; background-color: aliceblue;">CUSTOMER/ACCOUNT MANAGEMENT</h5>
+    <br>
+
+    <div style="background-color: white;">
+      <div style="background-color: indianred; height: 50px; display: flex; align-items: center;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">Enter Search Criteria</p>
+      </div>
+
+      <br>
+      <form style="margin-left: 30px;">
+        <div>
+          <label style="font-weight: bold;color: black;">Customer ID:</label>
+          <input [(ngModel)]="custIDSearchValue" name="custIDSearchValue" class="custom-input" style="margin-left: 56px;">
+          <button *ngIf="custIDSearchValue" (click)="clearInput('custIDSearchValue')" class="clear-button">
+            <i class="fas fa-times clear-icon"></i>
+          </button>
+        </div>
+
+        <div>
+          <label style="font-weight: bold;color: black;">Account Number:</label>
+          <input [(ngModel)]="accountSearchValue" name="accountSearchValue" class="custom-input" style="margin-left: 27px;">
+          <button *ngIf="accountSearchValue" (click)="clearInput('accountSearchValue')" class="clear-button">
+            <i class="fas fa-times  clear-icon"></i>
+          </button>
+        </div>
+
+
+        <div>
+          <label style="font-weight: bold;color: black;">Account Name:</label>
+          <input [(ngModel)]="nameSearchValue" name="nameSearchValue" class="custom-input" style="margin-left: 41px;">
+          <button *ngIf="nameSearchValue" (click)="clearInput('nameSearchValue')" class="clear-button">
+            <i class="fas fa-times  clear-icon"></i>
+          </button>
+        </div>
+ 
+
+        <!-- <label for="countryDropdown">Select a Country:</label>
+        <div class="select-container">
+          <select id="countryDropdown" [(ngModel)]="newPerson.country_code" name="countryDropdown" class="edit-input" style="margin-left: 10px;">
+            <option value="" disabled selected>Select a country</option>
+          </select>
+          <i class="fa fa-caret-down"></i>
+        </div> -->
+
+        <button class="btn btn-default" (click)="performSearch()">
+          <i class="fas fa-search"></i>
+          Search
+        </button>
+<!-- Your HTML code -->
+
+<p *ngIf="showNoSearchCriteriaWarning" style="color: red; margin-left: 20px;">Enter at least one search criterion!</p>
+      </form>
+
+    
+    </div>
+
+    <div style="background-color: white;">
+      <div style="background-color: indianred; height: 50px; display: flex; align-items: center;">
+        <p style="font-weight: bold; color: white; margin-left: 10px;margin-top: 15px;">Search Result(s)</p>
+      </div>
+     
+
+      <p *ngIf="hasSearchCriteria" style="font-weight: bold; margin-left: 10px;">
+        {{ searchResults.length }} record(s) found
+      </p>
+
+      <p *ngIf="!hasSearchCriteria" style="font-weight: bold; margin-left: 10px;">
+        No Record Found!
+      </p>
+
+<div class="button-group">
+  <div style="display: flex;">
+
+    <button class="button" style="font-size: small; border-radius: 10px;border-color: indianred;" (click)="openEdit()" >
+      <i class="fas fa-edit"></i> Edit
+    </button>
+   
+    <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openView()">
+      <i class="fas fa-eye"></i> View
+    </button>
+  </div>
+
+ <div style="display: flex;">
+  <button class="button" style="font-size: small;  border-radius: 10px;border-color: indianred;  "  (click)="openAccount()">
+    <i class="fas fa-book"></i> Account
+  </button>
+  <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openSignatoryandDirector()">
+    <i class="fas fa-user"></i> Signatory/Director
+  </button>
+ </div>
+
+</div>
+
+
+
+<div class="popup-dialog" *ngIf="signatoryFullpopupDialog">
+
+  <div class="popup-content">
+
+    <!-- Display fetched customer details here -->
+ 
+    <div *ngIf="signatoryFullDetails">    
+      
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+      <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+       Customer Signatory Details
+      </h4>
+      <i class="fas fa-times" style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="closeViewSignatoryDialog()"></i>
+   
+    </div>
+    <div style="background-color: White;">
+    <br>
+  </div>
+
+  <!-- <div class="scrollable-container"> -->
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+        
+<div *ngIf="!isPersonInfoCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Identifier Number: {{ signatoryFullDetails.identifier_number }}</p>
+          <p class="side-by-side">Person ID: {{ signatoryFullDetails.personid}}</p>
+
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Identifier Code: {{ signatoryFullDetails.identifier_code }}</p>
+          <!-- <p class="side-by-side">Identifier Code Description: {{ matchingItem.description }}</p> -->
+          <p class="side-by-side">Issuer Name: {{ signatoryFullDetails.identifier_issuer }}</p>
+        </div>
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Issue Date: {{ signatoryFullDetails.identifier_issue_date }}</p>
+          <p class="side-by-side">Expire Date: {{ signatoryFullDetails.identifier_expire_date }}</p>
+        </div>
+
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Issue Country: {{ signatoryFullDetails.passport_issue_country }}</p>
+          <p class="side-by-side">Identifier State: {{ signatoryFullDetails.identifier_state }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Title: {{ signatoryFullDetails.title }}</p>
+          <p class="side-by-side">First Name: {{ signatoryFullDetails.first_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Middle Name: {{ signatoryFullDetails.middle_name }}</p>
+          <p class="side-by-side">Last Name: {{ signatoryFullDetails.last_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Sex: {{ signatoryFullDetails.sex }}</p>
+          <p class="side-by-side">Birth Date: {{ signatoryFullDetails.birthdate }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Birth Place: {{ signatoryFullDetails.birth_place }}</p>
+          <p class="side-by-side">Mother Name: {{ signatoryFullDetails.mothers_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Tax Number: {{ signatoryFullDetails.tax_number }}</p>
+          <p class="side-by-side">Source of Wealth: {{ signatoryFullDetails.source_of_weqlth }}</p>
+        </div>
+  
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Occupation: {{ signatoryFullDetails.occupation }}</p>
+        </div>
+
+      </div>
+
+    
+
+    </div>
+
+    
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          ADDRESS
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+          {{ isAddressInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+      
+<div *ngIf="isAddressInfoCollapsed">
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Residence: {{ signatoryFullDetails.residence }}</p>
+        <p class="side-by-side">Town: {{ signatoryFullDetails.town}}</p>
+
+      </div>
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Address: {{ signatoryFullDetails.address1 }}</p>
+        <!-- <p class="side-by-side">Address Type: {{ signatoryFullDetails.addressTypeDescription }}</p>  -->
+       <p class="side-by-side">Address Type: {{ signatoryFullDetails.addressType }}</p>
+        <!-- <p class="side-by-side">Address Type: {{ getDescriptionForAddressType(signatoryFullDetails.addressType) }}</p> -->
+        
+      </div>
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Additional Address line 1: {{ signatoryFullDetails.p_add_address1 }}</p>
+        <p class="side-by-side">Additional Address line 2: {{ signatoryFullDetails.p_add_address2 }}</p>
+      </div>
+
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">City: {{ signatoryFullDetails.city }}</p>
+        <p class="side-by-side">State: {{ signatoryFullDetails.state }}</p>
+      </div>
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Zip: {{ signatoryFullDetails.zip }}</p>
+        <p class="side-by-side">Country Code: {{ signatoryFullDetails.country_code }}</p>
+      </div>
+
+  
+
+    </div>
+
+  
+
+  </div>
+
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        PHONE
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+        {{ isPhoneInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+    
+<div *ngIf="isPhoneInfoCollapsed">
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Contact Type: {{ signatoryFullDetails.tph_contact_type }}</p>
+      <p class="side-by-side">Country Prefix: {{ signatoryFullDetails.tph_country_prefix}}</p>
+
+    </div>
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Phone Number: {{ signatoryFullDetails.tph_number  }}</p>
+      <p class="side-by-side">Phone Extension: {{ signatoryFullDetails.tph_extension }}</p>
+    </div>
+
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Communication Type: {{ signatoryFullDetails.tph_communication_type }}</p>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        EMPLOYER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+        {{ isEmployerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+    
+<div *ngIf="isEmployerInfoCollapsed">
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p>
+    </div>
+  </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      FOREIGNER
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+      {{ isForeignerInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isForeignerInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Date Arrival: {{ signatoryFullDetails.foreigner_date_arrival }}</p>
+    <p class="side-by-side">Nationality: {{ signatoryFullDetails.foreigner_nationality}}</p>
+
+  </div>
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Passport Number: {{ signatoryFullDetails.foreigner_passport_number }}</p>
+    <p class="side-by-side">Permit Number: {{ signatoryFullDetails.foreigner_permit_number }}</p>
+  </div>
+
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Visa Number: {{ signatoryFullDetails.foreigner_visa_number }}</p>
+    <p class="side-by-side">Permit Valid From: {{ signatoryFullDetails.foreigner_permit_valid_from }}</p>
+  </div>
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Permit Valid To: {{ signatoryFullDetails.foreigner_permit_valid_to }}</p>
+  </div>
+
+
+</div>
+
+
+
+</div>
+
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+
+<!-- </div> -->
+
+    </div>
+    </div>
+</div>
+
+
+
+<div class="popup-dialog" *ngIf="directorFullpopupDialog">
+
+  <div class="popup-content ">
+
+    <!-- Display fetched customer details here -->
+ 
+    <div *ngIf="directorFullDetails">    
+      
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+      <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+       Director Information Details
+      </h4>
+      <i class="fas fa-times" style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="closeViewDirectorDialog()"></i>
+   
+    </div>
+    <div style="background-color: White;">
+    <br>
+  </div>
+
+<!-- <div class="scrollable-container"> -->
+  
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+        
+<div *ngIf="!isPersonInfoCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Identifier Number: {{ directorFullDetails.identifier_number }}</p>
+          <p class="side-by-side">Person ID: {{ directorFullDetails.personid}}</p>
+
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Identifier Code: {{ directorFullDetails.identifier_code }}</p>
+          <p class="side-by-side">Issuer Name: {{ directorFullDetails.identifier_issuer }}</p>
+        </div>
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Issue Date: {{ directorFullDetails.identifier_issue_date }}</p>
+          <p class="side-by-side">Expire Date: {{ directorFullDetails.identifier_expire_date }}</p>
+        </div>
+
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Issue Country: {{ directorFullDetails.passport_issue_country }}</p>
+          <p class="side-by-side">Identifier State: {{ directorFullDetails.identifier_state }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Title: {{ directorFullDetails.title }}</p>
+          <p class="side-by-side">First Name: {{ directorFullDetails.first_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Middle Name: {{ directorFullDetails.middle_name }}</p>
+          <p class="side-by-side">Last Name: {{ directorFullDetails.last_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Sex: {{ directorFullDetails.sex }}</p>
+          <p class="side-by-side">Birth Date: {{ directorFullDetails.birthdate }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Birth Place: {{ directorFullDetails.birth_place }}</p>
+          <p class="side-by-side">Mother Name: {{ directorFullDetails.mothers_name }}</p>
+        </div>
+  
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Tax Number: {{ directorFullDetails.tax_number }}</p>
+          <p class="side-by-side">Source of Wealth: {{ directorFullDetails.source_of_weqlth }}</p>
+        </div>
+  
+
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Occupation: {{ directorFullDetails.occupation }}</p>
+        </div>
+
+      </div>
+
+    
+
+    </div>
+
+    
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          ADDRESS
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+          {{ isAddressInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+      
+<div *ngIf="isAddressInfoCollapsed">
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Residence: {{ directorFullDetails.residence }}</p>
+        <p class="side-by-side">Town: {{ directorFullDetails.town}}</p>
+
+      </div>
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Address: {{ directorFullDetails.address1 }}</p>
+        <p class="side-by-side">Address Type: {{ directorFullDetails.addressType }}</p>
+      </div>
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Additional Address line 1: {{ directorFullDetails.p_add_address1 }}</p>
+        <p class="side-by-side">Additional Address line 2: {{ directorFullDetails.p_add_address2 }}</p>
+      </div>
+
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">City: {{ directorFullDetails.city }}</p>
+        <p class="side-by-side">State: {{ directorFullDetails.state }}</p>
+      </div>
+
+      <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Zip: {{ directorFullDetails.zip }}</p>
+        <p class="side-by-side">Country Code: {{ directorFullDetails.country_code }}</p>
+      </div>
+
+  
+
+    </div>
+
+  
+
+  </div>
+
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        PHONE
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+        {{ isPhoneInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+    
+<div *ngIf="isPhoneInfoCollapsed">
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Contact Type: {{ directorFullDetails.tph_contact_type }}</p>
+      <p class="side-by-side">Country Prefix: {{ directorFullDetails.tph_country_prefix}}</p>
+
+    </div>
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Phone Number: {{ directorFullDetails.tph_number  }}</p>
+      <p class="side-by-side">Phone Extension: {{ directorFullDetails.tph_extension }}</p>
+    </div>
+
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Communication Type: {{ directorFullDetails.tph_communication_type }}</p>
+      
+    </div>
+
+  </div>
+
+
+
+</div>
+
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        EMPLOYER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+        {{ isEmployerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+    
+<div *ngIf="isEmployerInfoCollapsed">
+    <div class="container" style=" margin-bottom: -10px; ">
+      <p class="side-by-side">Employer Name: {{ directorFullDetails.employer_name }}</p>
+    </div>
+  </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      FOREIGNER
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+      {{ isForeignerInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isForeignerInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Date Arrival: {{ directorFullDetails.foreigner_date_arrival }}</p>
+    <p class="side-by-side">Nationality: {{ directorFullDetails.foreigner_nationality}}</p>
+
+  </div>
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Passport Number: {{ directorFullDetails.foreigner_passport_number }}</p>
+    <p class="side-by-side">Permit Number: {{ directorFullDetails.foreigner_permit_number }}</p>
+  </div>
+
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Visa Number: {{ directorFullDetails.foreigner_visa_number }}</p>
+    <p class="side-by-side">Permit Valid From: {{ directorFullDetails.foreigner_permit_valid_from }}</p>
+  </div>
+
+  <div class="container" style=" margin-bottom: -10px; ">
+    <p class="side-by-side">Permit Valid To: {{ directorFullDetails.foreigner_permit_valid_to }}</p>
+  </div>
+
+
+</div>
+
+
+
+</div>
+
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ directorFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+
+<!-- </div> -->
+
+    </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Pop-up window for displaying customer details -->
+<div class="popup-dialog" *ngIf="signatorypopupDialog">
+
+  <div class="popup-content" style="background-color: white;">
+
+    <!-- Display fetched customer details here -->
+ 
+      
+      
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+      <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+        SIGNATORIES/DIRECTORS DETAILS
+      </h4>
+      <i class="fas fa-times" style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="closeDialog()"></i>
+   
+    </div>
+    <div style="background-color: White;">
+    <br>
+  </div>
+
+
+  <div style="border: 1px solid lightslategray;" >
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Signatories
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isSignatoryInfoCollapsed = !isSignatoryInfoCollapsed">
+            {{ isSignatoryInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <br>
+        
+<div *ngIf="!isSignatoryInfoCollapsed" class="container">
+
+  <div class="button-group">
+    <div style="display: flex;">
+
+      <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openSignatoryDialog()">
+        <i class="fas fa-plus"></i> Add Signatory
+      </button>
+  
+      <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openViewSignatory()">
+        <i class="fas fa-eye"></i> View Details
+      </button>
+      <button class="button" style="font-size: small; border-radius: 10px;border-color: indianred;" (click)="openSignatoryEdit()">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+     
+
+    </div>
+  
+
+  
+  </div>
+  <!-- <table>
+        <thead>
+          <tr>
+            <th >Identifier Number <i class="fas" ></i></th>
+            <th >First Name <i class="fas" ></i></th>
+            <th >Last Name <i class="fas" ></i></th>
+          </tr>
+        </thead>
+        <tbody>
+  <tr (click)="selectSignatoryRow(signatoryResults)" [ngClass]="{'selected-row': signatoryResults.identifier_number === selectedIdentifierNumber}">
+            <td>{{ signatoryResults.identifier_number }}</td>
+            <td>{{ signatoryResults.first_name }}</td>
+            <td>{{ signatoryResults.last_name }}</td>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <table>
+        <thead>
+          <tr>
+            <th>Identifier Number <i class="fas"></i></th>
+            <th>First Name <i class="fas"></i></th>
+            <th>Last Name <i class="fas"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of signatoryResults" [ngClass]="{'selected-row': result.identifier_number === selectedIdentifierNumber}" (click)="selectSignatoryRow(result)">
+            <td>{{ result.identifier_number }}</td>
+            <td>{{ result.first_name }}</td>
+            <td>{{ result.last_name }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+ 
+      
+
+   </div>     
+   </div>
+	  
+   <br>
+   <br>
+</div>
+
+   <div > 
+
+    <br>
+    
+
+    <div style="border: 1px solid lightslategray;"  *ngIf="customerDetailsVerify.customer_type === 'CC'">
+   <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        Directors
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isDirectorInfoCollapsed = !isDirectorInfoCollapsed">
+        {{ isDirectorInfoCollapsed ? '+' : '-' }}
+      </span>
+    </div>
+
+    <br>
+    
+<div *ngIf="!isDirectorInfoCollapsed" class="container">
+
+  <div class="button-group">
+    <div style="display: flex;">
+
+      <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openDirectorDialog()">
+        <i class="fas fa-plus"></i> Add Director
+      </button>
+  
+      <button class="button" style="font-size: small; margin-left:-10px ; border-radius: 10px;border-color: indianred; " (click)="openViewDirector()">
+        <i class="fas fa-eye"></i> View Details
+      </button>
+      <button class="button" style="font-size: small; border-radius: 10px;border-color: indianred;" (click)="openDirectorEdit()">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+     
+
+    </div>
+  
+
+  
+  </div>
+
+<!-- <table>
+    <thead>
+      <tr>
+        <th >Identifier Number <i class="fas" ></i></th>
+        <th >First Name <i class="fas" ></i></th>
+        <th >Last Name <i class="fas" ></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="selectDirectorRow(directorResults)" [ngClass]="{'selected-row': directorResults.identifier_number === selecteddirectorIdentifierNumber}">
+      
+        <td>{{ directorResults.identifier_number }}</td>
+        <td>{{ directorResults.first_name }}</td>
+        <td>{{ directorResults.last_name }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Identifier Number <i class="fas"></i></th>
+      <th>First Name <i class="fas"></i></th>
+      <th>Last Name <i class="fas"></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let director of directorResults" (click)="selectDirectorRow(director)" [ngClass]="{'selected-row': director.identifier_number === selecteddirectorIdentifierNumber}">
+      <td>{{ director.identifier_number }}</td>
+      <td>{{ director.first_name }}</td>
+      <td>{{ director.last_name }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+  <!-- <table>
+    <thead>
+      <tr>
+        <th >Identifier Number <i class="fas" ></i></th>
+        <th >First Name <i class="fas" ></i></th>
+        <th >Last Name <i class="fas" ></i></th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let directorresult of directorResults" [ngClass]="{'selected-row': directorresult.identifier_number === selectedIdentifierNumber}" (click)="selectDirectorRow(directorresult)">
+        
+        <td>{{ directorresult.identifier_number }}</td>
+        <td>{{ directorresult.first_name }}</td>
+        <td>{{ directorresult.last_name }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  
+
+</div>     
+
+    <!-- <div style="background-color: white;">
+    <button class="close-button" (click)="closeDialog()">
+      <i class="fas fa-times"></i>
+      Close
+     </button>
+  </div> -->
+
+</div>
+
+</div>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="popup-dialog" *ngIf="checksignatorypopupDialog">
+  <div class="popup-content">
+    <div >
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+         Search Identity Number
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closechecksignatorypopupDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      <!-- Display editable customer information here -->
+      <form >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          Validate ID
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            
+                       <label for="identifier_code">Identifier Code:</label>
+              <div class="select-container">
+                  <select id="identifier_code" [(ngModel)]="newPerson.identifier_code" name="identifier_code" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let identifiertype of identifiertypes" [value]="identifiertype.item">{{ identifiertype.description }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+           
+<br>
+
+<label for="country_code">Select Country:</label>
+<div class="select-container">
+  <select id="country_code" [(ngModel)]="newPerson.country_code" name="country_code" class="edit-input" style="margin-left: 10px;" (change)="onSelectCountry()">
+    <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.country }}</option>
+  </select>
+  <i class="fa fa-caret-down"></i>
+</div>
+
+
+              <br>
+
+            
+                        <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="newPerson.identifier_number"
+                name="identifier_number"
+                class="edit-input"
+                style="margin-left: 10px;"
+                
+              />
+         
+
+          </div>
+
+     
+
+
+        </div>
+
+
+<br>
+
+<div class="container" style="display: flex;">
+  <!-- <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button> -->
+  <button type="button" (click)="continueVerifySignatory()" style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Continue
+  </button>
+  
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closechecksignatorypopupDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+
+      </form>
+
+  
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="verifysignatorypopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closeverifysignatorypopupDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="addsignatorypopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closeaddsignatorypopupDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="saveaddsignatorypopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closesignatoryAddMessageDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="popup-dialog" *ngIf="continuesignatorypopupDialog">
+  <div class="popup-content">
+    <div >
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+         Add Signatory Information Details
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closesignatoryAddDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      <!-- Display editable customer information here -->
+      <form >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+           PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            <div class="side-by-side">
+              <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="newPerson.identifier_number"
+                name="identifier_number"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="personid">Person ID*:</label>
+              <input
+                type="text"
+                id="personid"
+                [(ngModel)]="newPerson.personid"
+                name="personid"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+          </div>
+
+           <div class="container">
+
+            <div class="side-by-side" >
+              <label for="identifier_number">Customer ID:</label>
+              <input
+                type="text"
+                id="cust_id"
+                [(ngModel)]="newPerson.cust_id"
+                name="cust_id"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="identifier_code">Identifier Code:</label>
+              <div class="select-container">
+                  <select id="identifier_code" [(ngModel)]="newPerson.identifier_code" name="identifier_code" class="edit-input-readonly" style="margin-left: 10px;" disabled>
+                      <option *ngFor="let identifiertype of identifiertypes" [value]="identifiertype.item" >{{ identifiertype.description }}</option>
+                  </select>
+                  <!-- <i class="fa fa-caret-down"></i> -->
+              </div>
+          </div>
+
+          </div>
+
+
+          <div class="container" >
+
+
+            <div class="side-by-side">
+              <label for="identifier_issuer">Issuer Name:</label>
+              <input type="text" id="identifier_issuer" [(ngModel)]="newPerson.identifier_issuer" name="identifier_issuer" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+            </div>  
+
+
+            <div class="side-by-side">
+              <label for="occupation">Occupation:</label>
+              <input type="text" id="occupation" [(ngModel)]="newPerson.occupation" name="occupation" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="identifier_issue_date">Issue Date*:</label>
+              <input type="date" id="identifier_issue_date" [(ngModel)]="newPerson.identifier_issue_date" name="identifier_issue_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_expire_date">Expire Date*:</label>
+              <input type="date" id="identifier_expire_date" [(ngModel)]="newPerson.identifier_expire_date" name="identifier_expire_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="passport_issue_country">Issue Country:</label>
+              <input type="text" id="passport_issue_country" [(ngModel)]="newPerson.passport_issue_country" name="passport_issue_country" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_state">Identifier State:</label>
+              <input type="text" id="identifier_state" [(ngModel)]="newPerson.identifier_state" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+                     
+
+
+            <div class="side-by-side">
+              <label for="title">Title:</label>
+              <div class="select-container">
+                  <select id="title" [(ngModel)]="newPerson.title" name="title" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let title of titles" [value]="title">{{ title }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+          </div>
+          
+          
+
+            <div class="side-by-side">
+              <label for="first_name">First Name:</label>
+              <input type="text" id="first_name" [(ngModel)]="newPerson.first_name" name="first_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="middle_name">Middle Name:</label>
+              <input type="text" id="middle_name" [(ngModel)]="newPerson.middle_name" name="middle_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="last_name">Last Name:</label>
+              <input type="text" id="last_name" [(ngModel)]="newPerson.last_name" name="last_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="sex">Sex:</label>
+              <!-- <input type="text" id="sex" [(ngModel)]="newPerson.sex" name="sex" class="edit-input"  style="margin-left: 10px;" />             -->
+            
+              <div class="select-container">
+                <select id="sex" [(ngModel)]="newPerson.sex" name="sex" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let gendertype of gendertypes" [value]="gendertype.item" >{{ gendertype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+              
+            </div> 
+
+            <div class="side-by-side">
+              <label for="birthdate">Birth Date:</label>
+              <input type="date" id="birthdate" [(ngModel)]="newPerson.birthdate" name="birthdate" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="birth_place">Birth Place:</label>
+              <input type="text" id="birth_place" [(ngModel)]="newPerson.birth_place" name="birth_place" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="mothers_name">Mother Name:</label>
+              <input type="text" id="mothers_name" [(ngModel)]="newPerson.mothers_name" name="mothers_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>    
+          
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="tax_number">Tax Number:</label>
+              <input type="text" id="tax_number" [(ngModel)]="newPerson.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="source_of_weqlth">Source of Wealth:</label>
+              <input type="text" id="source_of_weqlth" [(ngModel)]="newPerson.source_of_weqlth" name="source_of_weqlth" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>  
+
+
+
+
+
+        </div>
+
+
+        <div style=" background-color: white; border-inline-color: black; color: black;">
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+              ADDRESS
+            </p>
+            <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+              {{ isAddressInfoCollapsed ? '-' : '+' }}
+            </span>
+          </div>
+        
+          <div *ngIf="isAddressInfoCollapsed">
+       
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="residence">House Number:</label>
+                <input type="text" id="residence" [(ngModel)]="newPerson.residence" name="residence" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+              <div class="side-by-side">
+                <label for="town">Town:</label>
+                <input type="text" id="town" [(ngModel)]="newPerson.town" name="town" class="edit-input"  style="margin-left: 10px;" />            
+              </div>  
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="address1">Address:</label>
+                <input type="text" id="address1" [(ngModel)]="newPerson.address1" name="address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="addressType">Address Type:</label>
+                <!-- <input type="text" id="addressType" [(ngModel)]="newPerson.addressType" name="addressType" class="edit-input"  style="margin-left: 10px;" />             -->
+                <div class="select-container">
+                  <select id="addressType" [(ngModel)]="newPerson.addressType" name="addressType" class="edit-input" style="margin-left: 10px;" >
+                      <option *ngFor="let contacttype of contacttypes" [value]="contacttype.item" >{{ contacttype.description }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i> 
+              </div>
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="p_add_address1">Additional Address line 1:</label>
+                <input type="text" id="p_add_address1" [(ngModel)]="newPerson.p_add_address1" name="p_add_address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="p_add_address2">Additional Address line 2:</label>
+                <input type="text" id="p_add_address2" [(ngModel)]="newPerson.p_add_address2" name="p_add_address2" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="city">City:</label>
+                <input type="text" id="city" [(ngModel)]="newPerson.city" name="city" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="state">State:</label>
+                <input type="text" id="state" [(ngModel)]="newPerson.state" name="state" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="zip">Zip:</label>
+                <input type="text" id="zip" [(ngModel)]="newPerson.zip" name="zip" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="country_code">Country Code:</label>
+                <input type="text" id="country_code" [(ngModel)]="newPerson.country_code" name="country_code" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+              </div>   
+    
+    
+              
+            </div>
+    
+    
+    
+    
+          </div>
+    
+
+      </div>
+		
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PHONE
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+            {{ isPhoneInfoCollapsed ? '-' : '+' }}
+          </span>
+        </div>
+      
+        <div *ngIf="isPhoneInfoCollapsed">
+     
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_contact_type">Contact Type*:</label>
+              <!-- <input type="text" id="tph_contact_type" [(ngModel)]="newPerson.tph_contact_type" name="tph_contact_type" class="edit-input"  style="margin-left: 10px;" />     -->
+               <div class="select-container">
+                <select id="tph_contact_type" [(ngModel)]="newPerson.tph_contact_type" name="tph_contact_type" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let contacttype of contacttypes" [value]="contacttype.item" >{{ contacttype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+
+            </div>   
+    
+            <div class="side-by-side">
+              <label for="tph_country_prefix">Country Prefix:</label>
+              <input type="text" id="tph_country_prefix" [(ngModel)]="newPerson.tph_country_prefix" name="tph_country_prefix" class="edit-input"  style="margin-left: 10px;" maxlength="4"/>            
+            </div>  
+            
+          </div>
+    
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_number">Phone Number:</label>
+              <input type="text" id="tph_number" [(ngModel)]="newPerson.tph_number" name="tph_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+         
+            <div class="side-by-side">
+              <label for="tph_extension">Phone Extension:</label>
+              <input type="text" id="tph_extension" [(ngModel)]="newPerson.tph_extension" name="tph_extension" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+    
+     
+          <div class="container" >
+    
+                
+            <div class="side-by-side">
+              <label for="tph_communication_type">Communication Type*:</label>
+              <!-- <input type="text" id="tph_communication_type" [(ngModel)]="newPerson.tph_communication_type" name="tph_communication_type" class="edit-input"  style="margin-left: 10px;" />             -->
+              <div class="select-container">
+                <select id="tph_communication_type" [(ngModel)]="newPerson.tph_communication_type" name="tph_communication_type" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let communicationtype of communicationtypes" [value]="communicationtype.item" >{{ communicationtype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+            </div>   
+            
+          </div>
+    
+    
+    
+    
+    
+        </div>
+
+  
+    </div>
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          EMPLOYER
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+          {{ isEmployerInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+    
+      <div *ngIf="isEmployerInfoCollapsed">
+   
+        <div class="container" >
+
+          <div class="side-by-side">
+            <label for="employer_name">Employer Name:</label>
+            <input type="text" id="employer_name" [(ngModel)]="newPerson.employer_name" name="employer_name" class="edit-input"  style="margin-left: 10px;" />            
+          </div>   
+
+                       
+        </div>
+
+        </div>
+
+
+  </div>
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        FOREIGNER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+        {{ isForeignerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+  
+    <div *ngIf="isForeignerInfoCollapsed">
+ 
+      <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_date_arrival">Arrival Date:</label>
+          <input type="date" id="foreigner_date_arrival" [(ngModel)]="newPerson.foreigner_date_arrival" name="foreigner_date_arrival" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_nationality">Nationality:</label>
+          <input type="text" id="foreigner_nationality" [(ngModel)]="newPerson.foreigner_nationality" name="foreigner_nationality" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_passport_number">Passport Number:</label>
+          <input type="text" id="foreigner_passport_number" [(ngModel)]="newPerson.foreigner_passport_number" name="foreigner_passport_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_number">Permit Number:</label>
+          <input type="text" id="foreigner_permit_number" [(ngModel)]="newPerson.foreigner_permit_number" name="foreigner_permit_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_visa_number">Visa Number:</label>
+          <input type="text" id="foreigner_visa_number" [(ngModel)]="newPerson.foreigner_visa_number" name="foreigner_visa_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_valid_from">Permit Valid From:</label>
+          <input type="text" id="foreigner_permit_valid_from" [(ngModel)]="newPerson.foreigner_permit_valid_from" name="foreigner_permit_valid_from" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+  <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_permit_valid_to">Permit Valid To:</label>
+          <input type="text" id="foreigner_permit_valid_to" [(ngModel)]="newPerson.foreigner_permit_valid_to" name="foreigner_permit_valid_to" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+
+       
+      </div>
+
+      </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+    
+<br>
+
+<div class="container" style="display: flex;">
+  <!-- <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button> -->
+  <button type="button" (click)="saveaddSignatoryChanges()" style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button>
+  
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closesignatoryAddDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+
+      </form>
+
+  
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+
+
+
+<div class="popup-dialog" *ngIf="checkdirectorpopupDialog">
+  <div class="popup-content">
+    <div >
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+         Search Identity Number
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closecheckdirectorpopupDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      <!-- Display editable customer information here -->
+      <form >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          Validate ID
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            
+                       <label for="identifier_code">Identifier Code:</label>
+              <div class="select-container">
+                  <select id="identifier_code" [(ngModel)]="newDirector.identifier_code" name="identifier_code" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let identifiertype of identifiertypes" [value]="identifiertype.item">{{ identifiertype.description }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+           
+<br>
+
+<label for="country_code">Select Country:</label>
+<div class="select-container">
+  <select id="country_code" [(ngModel)]="newDirector.country_code" name="country_code" class="edit-input" style="margin-left: 10px;" (change)="onSelectCountry()">
+    <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.country }}</option>
+  </select>
+  <i class="fa fa-caret-down"></i>
+</div>
+
+
+              <br>
+
+            
+                        <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="newDirector.identifier_number"
+                name="identifier_number"
+                class="edit-input"
+                style="margin-left: 10px;"
+                
+              />
+         
+
+          </div>
+
+     
+
+
+        </div>
+
+
+<br>
+
+<div class="container" style="display: flex;">
+  <!-- <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button> -->
+  <button type="button" (click)="continueVerifyDirector()" style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Continue
+  </button>
+  
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closecheckdirectorpopupDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+
+      </form>
+
+  
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="verifydirectorpopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closeverifydirectorpopupDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="adddirectorpopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closeadddirectorpopupDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="saveadddirectorpopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+ 
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closedirectorAddMessageDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="popup-dialog" *ngIf="continuedirectorpopupDialog">
+  <div class="popup-content">
+    <div >
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+         Add Director Information Details
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closedirectorAddDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      <!-- Display editable customer information here -->
+      <form >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+           PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            <div class="side-by-side">
+              <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="newDirector.identifier_number"
+                name="identifier_number"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="personid">Person ID*:</label>
+              <input
+                type="text"
+                id="personid"
+                [(ngModel)]="newDirector.personid"
+                name="personid"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+          </div>
+
+           <div class="container">
+
+            <div class="side-by-side" >
+              <label for="identifier_number">Customer ID:</label>
+              <input
+                type="text"
+                id="cust_id"
+                [(ngModel)]="newDirector.cust_id"
+                name="cust_id"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="identifier_code">Identifier Code:</label>
+              <div class="select-container">
+                  <select id="identifier_code" [(ngModel)]="newDirector.identifier_code" name="identifier_code" class="edit-input-readonly" style="margin-left: 10px;" disabled>
+                      <option *ngFor="let identifiertype of identifiertypes" [value]="identifiertype.item" >{{ identifiertype.description }}</option>
+                  </select>
+                  <!-- <i class="fa fa-caret-down"></i> -->
+              </div>
+          </div>
+
+          </div>
+
+
+          <div class="container" >
+
+
+            <div class="side-by-side">
+              <label for="identifier_issuer">Issuer Name:</label>
+              <input type="text" id="identifier_issuer" [(ngModel)]="newDirector.identifier_issuer" name="identifier_issuer" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+            </div>  
+
+
+            <div class="side-by-side">
+              <label for="occupation">Occupation:</label>
+              <input type="text" id="occupation" [(ngModel)]="newDirector.occupation" name="occupation" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="identifier_issue_date">Issue Date*:</label>
+              <input type="date" id="identifier_issue_date" [(ngModel)]="newDirector.identifier_issue_date" name="identifier_issue_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_expire_date">Expire Date*:</label>
+              <input type="date" id="identifier_expire_date" [(ngModel)]="newDirector.identifier_expire_date" name="identifier_expire_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="passport_issue_country">Issue Country:</label>
+              <input type="text" id="passport_issue_country" [(ngModel)]="newDirector.passport_issue_country" name="passport_issue_country" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_state">Identifier State:</label>
+              <input type="text" id="identifier_state" [(ngModel)]="newDirector.identifier_state" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+                     
+
+
+            <div class="side-by-side">
+              <label for="title">Title:</label>
+              <div class="select-container">
+                  <select id="title" [(ngModel)]="newDirector.title" name="title" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let title of titles" [value]="title">{{ title }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+          </div>
+          
+          
+
+            <div class="side-by-side">
+              <label for="first_name">First Name:</label>
+              <input type="text" id="first_name" [(ngModel)]="newDirector.first_name" name="first_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="middle_name">Middle Name:</label>
+              <input type="text" id="middle_name" [(ngModel)]="newDirector.middle_name" name="middle_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="last_name">Last Name:</label>
+              <input type="text" id="last_name" [(ngModel)]="newDirector.last_name" name="last_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="sex">Sex:</label>
+              <!-- <input type="text" id="sex" [(ngModel)]="newDirector.sex" name="sex" class="edit-input"  style="margin-left: 10px;" />             -->
+            
+              <div class="select-container">
+                <select id="sex" [(ngModel)]="newDirector.sex" name="sex" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let gendertype of gendertypes" [value]="gendertype.item" >{{ gendertype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+              
+            </div> 
+
+            <div class="side-by-side">
+              <label for="birthdate">Birth Date:</label>
+              <input type="date" id="birthdate" [(ngModel)]="newDirector.birthdate" name="birthdate" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="birth_place">Birth Place:</label>
+              <input type="text" id="birth_place" [(ngModel)]="newDirector.birth_place" name="birth_place" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="mothers_name">Mother Name:</label>
+              <input type="text" id="mothers_name" [(ngModel)]="newDirector.mothers_name" name="mothers_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>    
+          
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="tax_number">Tax Number:</label>
+              <input type="text" id="tax_number" [(ngModel)]="newDirector.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="source_of_weqlth">Source of Wealth:</label>
+              <input type="text" id="source_of_weqlth" [(ngModel)]="newDirector.source_of_weqlth" name="source_of_weqlth" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>  
+
+
+
+
+
+        </div>
+
+
+        <div style=" background-color: white; border-inline-color: black; color: black;">
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+              ADDRESS
+            </p>
+            <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+              {{ isAddressInfoCollapsed ? '-' : '+' }}
+            </span>
+          </div>
+        
+          <div *ngIf="isAddressInfoCollapsed">
+       
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="residence">House Number:</label>
+                <input type="text" id="residence" [(ngModel)]="newDirector.residence" name="residence" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+              <div class="side-by-side">
+                <label for="town">Town:</label>
+                <input type="text" id="town" [(ngModel)]="newDirector.town" name="town" class="edit-input"  style="margin-left: 10px;" />            
+              </div>  
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="address1">Address:</label>
+                <input type="text" id="address1" [(ngModel)]="newDirector.address1" name="address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="addressType">Address Type:</label>
+                <!-- <input type="text" id="addressType" [(ngModel)]="newDirector.addressType" name="addressType" class="edit-input"  style="margin-left: 10px;" />             -->
+                <div class="select-container">
+                  <select id="addressType" [(ngModel)]="newDirector.addressType" name="addressType" class="edit-input" style="margin-left: 10px;" >
+                      <option *ngFor="let contacttype of contacttypes" [value]="contacttype.item" >{{ contacttype.description }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i> 
+              </div>
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="p_add_address1">Additional Address line 1:</label>
+                <input type="text" id="p_add_address1" [(ngModel)]="newDirector.p_add_address1" name="p_add_address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="p_add_address2">Additional Address line 2:</label>
+                <input type="text" id="p_add_address2" [(ngModel)]="newDirector.p_add_address2" name="p_add_address2" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="city">City:</label>
+                <input type="text" id="city" [(ngModel)]="newDirector.city" name="city" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="state">State:</label>
+                <input type="text" id="state" [(ngModel)]="newDirector.state" name="state" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="zip">Zip:</label>
+                <input type="text" id="zip" [(ngModel)]="newDirector.zip" name="zip" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="country_code">Country Code:</label>
+                <input type="text" id="country_code" [(ngModel)]="newDirector.country_code" name="country_code" class="edit-input-readonly"  style="margin-left: 10px;" readonly/>            
+              </div>   
+    
+    
+              
+            </div>
+    
+    
+    
+    
+          </div>
+    
+
+      </div>
+		
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PHONE
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+            {{ isPhoneInfoCollapsed ? '-' : '+' }}
+          </span>
+        </div>
+      
+        <div *ngIf="isPhoneInfoCollapsed">
+     
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_contact_type">Contact Type*:</label>
+              <!-- <input type="text" id="tph_contact_type" [(ngModel)]="newDirector.tph_contact_type" name="tph_contact_type" class="edit-input"  style="margin-left: 10px;" />     -->
+               <div class="select-container">
+                <select id="tph_contact_type" [(ngModel)]="newDirector.tph_contact_type" name="tph_contact_type" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let contacttype of contacttypes" [value]="contacttype.item" >{{ contacttype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+
+            </div>   
+    
+            <div class="side-by-side">
+              <label for="tph_country_prefix">Country Prefix:</label>
+              <input type="text" id="tph_country_prefix" [(ngModel)]="newDirector.tph_country_prefix" name="tph_country_prefix" class="edit-input"  style="margin-left: 10px;" maxlength="4"/>            
+            </div>  
+            
+          </div>
+    
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_number">Phone Number:</label>
+              <input type="text" id="tph_number" [(ngModel)]="newDirector.tph_number" name="tph_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+         
+            <div class="side-by-side">
+              <label for="tph_extension">Phone Extension:</label>
+              <input type="text" id="tph_extension" [(ngModel)]="newDirector.tph_extension" name="tph_extension" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+    
+     
+          <div class="container" >
+    
+                
+            <div class="side-by-side">
+              <label for="tph_communication_type">Communication Type*:</label>
+              <!-- <input type="text" id="tph_communication_type" [(ngModel)]="newDirector.tph_communication_type" name="tph_communication_type" class="edit-input"  style="margin-left: 10px;" />             -->
+              <div class="select-container">
+                <select id="tph_communication_type" [(ngModel)]="newDirector.tph_communication_type" name="tph_communication_type" class="edit-input" style="margin-left: 10px;" >
+                    <option *ngFor="let communicationtype of communicationtypes" [value]="communicationtype.item" >{{ communicationtype.description }}</option>
+                </select>
+                <i class="fa fa-caret-down"></i> 
+            </div>
+            </div>   
+            
+          </div>
+    
+    
+    
+    
+    
+        </div>
+
+  
+    </div>
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          EMPLOYER
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+          {{ isEmployerInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+    
+      <div *ngIf="isEmployerInfoCollapsed">
+   
+        <div class="container" >
+
+          <div class="side-by-side">
+            <label for="employer_name">Employer Name:</label>
+            <input type="text" id="employer_name" [(ngModel)]="newDirector.employer_name" name="employer_name" class="edit-input"  style="margin-left: 10px;" />            
+          </div>   
+
+                       
+        </div>
+
+        </div>
+
+
+  </div>
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        FOREIGNER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+        {{ isForeignerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+  
+    <div *ngIf="isForeignerInfoCollapsed">
+ 
+      <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_date_arrival">Arrival Date:</label>
+          <input type="date" id="foreigner_date_arrival" [(ngModel)]="newDirector.foreigner_date_arrival" name="foreigner_date_arrival" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_nationality">Nationality:</label>
+          <input type="text" id="foreigner_nationality" [(ngModel)]="newDirector.foreigner_nationality" name="foreigner_nationality" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_passport_number">Passport Number:</label>
+          <input type="text" id="foreigner_passport_number" [(ngModel)]="newDirector.foreigner_passport_number" name="foreigner_passport_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_number">Permit Number:</label>
+          <input type="text" id="foreigner_permit_number" [(ngModel)]="newDirector.foreigner_permit_number" name="foreigner_permit_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_visa_number">Visa Number:</label>
+          <input type="text" id="foreigner_visa_number" [(ngModel)]="newDirector.foreigner_visa_number" name="foreigner_visa_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_valid_from">Permit Valid From:</label>
+          <input type="text" id="foreigner_permit_valid_from" [(ngModel)]="newDirector.foreigner_permit_valid_from" name="foreigner_permit_valid_from" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+  <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_permit_valid_to">Permit Valid To:</label>
+          <input type="text" id="foreigner_permit_valid_to" [(ngModel)]="newDirector.foreigner_permit_valid_to" name="foreigner_permit_valid_to" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+
+       
+      </div>
+
+      </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+    
+<br>
+
+<div class="container" style="display: flex;">
+  <!-- <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button> -->
+  <button type="button" (click)="saveaddDirectorChanges()" style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button>
+  
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closedirectorAddDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+
+      </form>
+
+  
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="popup-dialog" *ngIf="accountpopupDialog">
+
+  <div class="popup-content">
+
+    <!-- Display fetched customer details here -->
+ 
+    <div *ngIf="accountDetails">    
+      
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+      <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+       Client/Customer Account Details
+      </h4>
+      <i class="fas fa-times" style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="closeDialog()"></i>
+   
+    </div>
+    <div style="background-color: White;">
+    <br>
+  </div>
+
+  <!-- <div class="scrollable-container"> -->
+
+
+ <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Account Information
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAccountInfoCollapsed = !isAccountInfoCollapsed">
+            {{ isAccountInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+        
+    <div *ngIf="!isAccountInfoCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account: {{ accountDetails.account }}</p>
+          <p class="side-by-side">Account Type: {{ accountDetails.account_type }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account Branch: {{ accountDetails.branch }}</p>
+          <p class="side-by-side">Customer Number: {{ accountDetails.cust_number }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Currency Code: {{ accountDetails.currency_code }}</p>
+		  <p class="side-by-side">Iban Number: {{ accountDetails.iban }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account Name: {{ accountDetails.name }}</p>
+		  <p class="side-by-side">Account Open Date: {{ accountDetails.opened }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account Status: {{ accountDetails.status }}</p>
+		  <p class="side-by-side">Account Status Date: {{ accountDetails.status_date }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account Balance: {{ accountDetails.balance }}</p>
+		  <p class="side-by-side">Balance Date: {{ accountDetails.balance_date }}</p>
+        </div>
+    </div>
+
+ </div>
+    
+      <div style="background-color: white; border-inline-color: black; color: black;" >
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Other Details
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isOtherDetailsCollapsed = !isOtherDetailsCollapsed">
+            {{ isOtherDetailsCollapsed ? '-' : '+' }}
+          </span>
+        </div>
+
+        <div  *ngIf="isOtherDetailsCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Account Officer: {{ accountDetails.account_officer }}</p>
+        <p class="side-by-side">Account Ownership: {{ accountDetails.account_ownership }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Closed: {{ accountDetails.closed }}</p>
+          <p class="side-by-side">Comments: {{ accountDetails.comments }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Incorporation State: {{ accountDetails.entity_cre_flg }}</p>
+          <p class="side-by-side">New Account: {{ accountDetails.new_account }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Entity Cre Flg: {{ accountDetails.previous_status }}</p>
+          <p class="side-by-side">Schm Code: {{ accountDetails.schm_code }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Schm Type: {{ accountDetails.schm_type}}</p>
+          <p class="side-by-side">Swift: {{ accountDetails.swift }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Temp Account: {{ accountDetails.temp_account }}</p>
+          <p class="side-by-side">Freeze Reason Code: {{ accountDetails.frez_reason_code }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Account Closed Date: {{ accountDetails.acct_cls_date }}</p>
+          <p class="side-by-side">Account Closed Flag: {{ accountDetails.acct_cls_flg }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">CLR Balance Amount: {{ accountDetails.clr_bal_amt }}</p>
+          <p class="side-by-side">Drawing Power: {{ accountDetails.drwng_power }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Cummulative CR Amount: {{ accountDetails.cum_dr_amt }}</p>
+          <p class="side-by-side">Cummulative DR Amount: {{ accountDetails.cum_cr_amt }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Freeze Code: {{ accountDetails.frez_code }}</p>
+          <p class="side-by-side">Sanction Limit: {{ accountDetails.sanct_lim }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Last Transaction Date DR: {{ accountDetails.last_tran_date_dr }}</p>
+          <p class="side-by-side">Last Transaction Date CR: {{ accountDetails.last_tran_date_cr }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">fx_cum_dr_amt: {{ accountDetails.fx_cum_dr_amt }}</p>
+          <p class="side-by-side">fx_cum_cr_amt: {{ accountDetails.fx_cum_cr_amt }}</p>
+        </div>
+		<div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Last Transaction Date: {{ accountDetails.last_tran_date }}</p>
+        </div>
+      </div>
+
+
+    </div>
+
+  <!-- </div> -->
+
+
+          
+  
+
+
+ 
+
+        <div style="background-color: white;">
+        <button class="close-button" (click)="closeDialog()">
+          <i class="fas fa-times"></i>
+          Close
+         </button>
+      </div>
+     
+    </div>
+    </div>
+</div>
+
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="savepopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDialog()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closeDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="savesignatorypopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closesignatoryEditDialog()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closesignatoryEditDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="savedirectorpopupDialog">
+  <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+          <img src="../../../assets/img/{{ success_message ? 'success.png' : 'failure.png' }}" 
+               alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+        </h5>
+      
+      </div>
+      <div class="modal-body text-center">
+        <p>{{ success_message ? success_message : failure_message }}</p>
+        <button type="button" class="btn btn-primary" (click)="closedirectorEditDialog()" style="background-color: green !important;">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="popup-dialog" *ngIf="editsignatorypopupDialog">
+  <div class="popup-content">
+    <div *ngIf="signatoryFullDetails">
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+          Signatory Information Details
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closesignatoryEditDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      <!-- Display editable customer information here -->
+      <form (ngSubmit)="saveSignatoryChanges()">
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+           PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            <div class="side-by-side">
+              <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="updateSignatoryModel.identifier_number"
+                name="identifier_number"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="personid">Person ID:</label>
+              <input
+                type="text"
+                id="personid"
+                [(ngModel)]="updateSignatoryModel.personid"
+                name="personid"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+          </div>
+
+          <div class="container" >
+
+            <!-- <div class="side-by-side">
+              <label for="identifier_code">Identifier Code:</label>
+              <input type="text" id="identifier_code" [(ngModel)]="updateSignatoryModel.identifier_code" name="identifier_code" class="edit-input"  style="margin-left: 10px;" />            
+            </div>    -->
+
+
+            <div class="side-by-side">
+              <label for="identifier_code">Identifier Code:</label>
+              <div class="select-container">
+                  <select id="identifier_code" [(ngModel)]="updateSignatoryModel.identifier_code" name="identifier_code" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let identifiertype of identifiertypes" [value]="identifiertype.item">{{ identifiertype.description }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+          </div>
+          
+          
+
+            
+
+            <div class="side-by-side">
+              <label for="identifier_issuer">Issuer Name:</label>
+              <input type="text" id="identifier_issuer" [(ngModel)]="updateSignatoryModel.identifier_issuer" name="identifier_issuer" class="edit-input"  style="margin-left: 10px;" />            
+            </div>  
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="identifier_issue_date">Issue Date:</label>
+              <input type="date" id="identifier_issue_date" [(ngModel)]="updateSignatoryModel.identifier_issue_date" name="identifier_issue_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_expire_date">Expire Date:</label>
+              <input type="date" id="identifier_expire_date" [(ngModel)]="updateSignatoryModel.identifier_expire_date" name="identifier_expire_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="passport_issue_country">Issue Country:</label>
+              <input type="text" id="passport_issue_country" [(ngModel)]="updateSignatoryModel.passport_issue_country" name="passport_issue_country" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_state">Identifier State:</label>
+              <input type="text" id="identifier_state" [(ngModel)]="updateSignatoryModel.identifier_state" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+                     
+
+<!-- 
+            <div class="side-by-side">
+              <label for="title">Title:</label>
+              <input type="text" id="title" [(ngModel)]="updateSignatoryModel.title" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div>  -->
+
+            <div class="side-by-side">
+              <label for="title">Title:</label>
+              <div class="select-container">
+                  <select id="title" [(ngModel)]="updateSignatoryModel.title" name="title" class="edit-input" style="margin-left: 10px;">
+                      <option *ngFor="let title of titles" [value]="title">{{ title }}</option>
+                  </select>
+                  <i class="fa fa-caret-down"></i>
+              </div>
+          </div>
+          
+          
+
+            <div class="side-by-side">
+              <label for="first_name">First Name:</label>
+              <input type="text" id="first_name" [(ngModel)]="updateSignatoryModel.first_name" name="first_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="middle_name">Middle Name:</label>
+              <input type="text" id="middle_name" [(ngModel)]="updateSignatoryModel.middle_name" name="middle_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="last_name">Last Name:</label>
+              <input type="text" id="last_name" [(ngModel)]="updateSignatoryModel.last_name" name="last_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="sex">Sex:</label>
+              <input type="text" id="sex" [(ngModel)]="updateSignatoryModel.sex" name="sex" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="birthdate">Birth Date:</label>
+              <input type="date" id="birthdate" [(ngModel)]="updateSignatoryModel.birthdate" name="birthdate" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="birth_place">Birth Place:</label>
+              <input type="text" id="birth_place" [(ngModel)]="updateSignatoryModel.birth_place" name="birth_place" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="mothers_name">Mother Name:</label>
+              <input type="text" id="mothers_name" [(ngModel)]="updateSignatoryModel.mothers_name" name="mothers_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>    
+          
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="tax_number">Tax Number:</label>
+              <input type="text" id="tax_number" [(ngModel)]="updateSignatoryModel.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="source_of_weqlth">Source of Wealth:</label>
+              <input type="text" id="source_of_weqlth" [(ngModel)]="updateSignatoryModel.source_of_weqlth" name="source_of_weqlth" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>  
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="occupation">Occupation:</label>
+              <input type="text" id="occupation" [(ngModel)]="updateSignatoryModel.occupation" name="occupation" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+                
+          </div>  
+
+
+        </div>
+
+
+        <div style=" background-color: white; border-inline-color: black; color: black;">
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+              ADDRESS
+            </p>
+            <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+              {{ isAddressInfoCollapsed ? '-' : '+' }}
+            </span>
+          </div>
+        
+          <div *ngIf="isAddressInfoCollapsed">
+       
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="residence">Residence:</label>
+                <input type="text" id="residence" [(ngModel)]="updateSignatoryModel.residence" name="residence" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+              <div class="side-by-side">
+                <label for="town">Town:</label>
+                <input type="text" id="town" [(ngModel)]="updateSignatoryModel.town" name="town" class="edit-input"  style="margin-left: 10px;" />            
+              </div>  
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="address1">Address:</label>
+                <input type="text" id="address1" [(ngModel)]="updateSignatoryModel.address1" name="address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="addressType">Address Type:</label>
+                <input type="text" id="addressType" [(ngModel)]="updateSignatoryModel.addressType" name="addressType" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="p_add_address1">Additional Address line 1:</label>
+                <input type="text" id="p_add_address1" [(ngModel)]="updateSignatoryModel.p_add_address1" name="p_add_address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="p_add_address2">Additional Address line 2:</label>
+                <input type="text" id="p_add_address2" [(ngModel)]="updateSignatoryModel.p_add_address2" name="p_add_address2" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="city">City:</label>
+                <input type="text" id="city" [(ngModel)]="updateSignatoryModel.city" name="city" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="state">State:</label>
+                <input type="text" id="state" [(ngModel)]="updateSignatoryModel.state" name="state" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="zip">Zip:</label>
+                <input type="text" id="zip" [(ngModel)]="updateSignatoryModel.zip" name="zip" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="country_code">Country Code:</label>
+                <input type="text" id="country_code" [(ngModel)]="updateSignatoryModel.country_code" name="country_code" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+    
+    
+    
+          </div>
+    
+        <!-- Display editable customer information here -->
+
+      </div>
+		
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PHONE
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+            {{ isPhoneInfoCollapsed ? '-' : '+' }}
+          </span>
+        </div>
+      
+        <div *ngIf="isPhoneInfoCollapsed">
+     
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_contact_type">Contact Type:</label>
+              <input type="text" id="tph_contact_type" [(ngModel)]="updateSignatoryModel.tph_contact_type" name="tph_contact_type" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+            <div class="side-by-side">
+              <label for="tph_country_prefix">Country Prefix:</label>
+              <input type="text" id="tph_country_prefix" [(ngModel)]="updateSignatoryModel.tph_country_prefix" name="tph_country_prefix" class="edit-input"  style="margin-left: 10px;" />            
+            </div>  
+            
+          </div>
+    
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_number">Phone Number:</label>
+              <input type="text" id="tph_number" [(ngModel)]="updateSignatoryModel.tph_number" name="tph_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+         
+            <div class="side-by-side">
+              <label for="tph_extension">Phone Extension:</label>
+              <input type="text" id="tph_extension" [(ngModel)]="updateSignatoryModel.tph_extension" name="tph_extension" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+    
+     
+    
+    
+    
+    
+        </div>
+      <!-- Display editable customer information here -->
+  
+    </div>
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          EMPLOYER
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+          {{ isEmployerInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+    
+      <div *ngIf="isEmployerInfoCollapsed">
+   
+        <div class="container" >
+
+          <div class="side-by-side">
+            <label for="employer_name">Employer Name:</label>
+            <input type="text" id="employer_name" [(ngModel)]="updateSignatoryModel.employer_name" name="employer_name" class="edit-input"  style="margin-left: 10px;" />            
+          </div>   
+
+                       
+        </div>
+
+        </div>
+
+
+  </div>
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        FOREIGNER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+        {{ isForeignerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+  
+    <div *ngIf="isForeignerInfoCollapsed">
+ 
+      <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_date_arrival">Arrival Date:</label>
+          <input type="date" id="foreigner_date_arrival" [(ngModel)]="updateSignatoryModel.foreigner_date_arrival" name="foreigner_date_arrival" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_nationality">Nationality:</label>
+          <input type="text" id="foreigner_nationality" [(ngModel)]="updateSignatoryModel.foreigner_nationality" name="foreigner_nationality" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_passport_number">Passport Number:</label>
+          <input type="text" id="foreigner_passport_number" [(ngModel)]="updateSignatoryModel.foreigner_passport_number" name="foreigner_passport_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_number">Permit Number:</label>
+          <input type="text" id="foreigner_permit_number" [(ngModel)]="updateSignatoryModel.foreigner_permit_number" name="foreigner_permit_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_visa_number">Visa Number:</label>
+          <input type="text" id="foreigner_visa_number" [(ngModel)]="updateSignatoryModel.foreigner_visa_number" name="foreigner_visa_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_valid_from">Permit Valid From:</label>
+          <input type="text" id="foreigner_permit_valid_from" [(ngModel)]="updateSignatoryModel.foreigner_permit_valid_from" name="foreigner_permit_valid_from" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+  <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_permit_valid_to">Permit Valid To:</label>
+          <input type="text" id="foreigner_permit_valid_to" [(ngModel)]="updateSignatoryModel.foreigner_permit_valid_to" name="foreigner_permit_valid_to" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+
+       
+      </div>
+
+      </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+        <!-- Add more input fields for other properties -->
+<br>
+
+<div class="container" style="display: flex;">
+  <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button>
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closesignatoryEditDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+        <!-- <div class="container" style="display: flex;">
+          <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+            <i class="fas fa-save"></i> Save
+          </button>
+          <button
+            type="button"
+            style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+            (click)="closesignatoryEditDialog()"
+          >
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div> -->
+        
+      </form>
+
+    <!-- </div> -->
+
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+<div class="popup-dialog" *ngIf="editdirectorpopupDialog">
+  <div class="popup-content">
+    <div *ngIf="directorFullDetails">
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+          Director Information Details
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closedirectorEditDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+     
+        <!-- <div class="scrollable-container"> -->
+
+      
+      <form (ngSubmit)="saveDirectorChanges()">
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+           PERSON
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPersonInfoCollapsed = !isPersonInfoCollapsed">
+            {{ isPersonInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div *ngIf="!isPersonInfoCollapsed">
+          <div class="container">
+
+            <div class="side-by-side">
+              <label for="identifier_number">Identifier Number:</label>
+              <input
+                type="text"
+                id="identifier_number"
+                [(ngModel)]="updateSignatoryModel.identifier_number"
+                name="identifier_number"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+            <div class="side-by-side">
+              <label for="personid">Person ID:</label>
+              <input
+                type="text"
+                id="personid"
+                [(ngModel)]="updateSignatoryModel.personid"
+                name="personid"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="identifier_code">Identifier Code:</label>
+              <input type="text" id="identifier_code" [(ngModel)]="updateSignatoryModel.identifier_code" name="identifier_code" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+            <div class="side-by-side">
+              <label for="identifier_issuer">Issuer Name:</label>
+              <input type="text" id="identifier_issuer" [(ngModel)]="updateSignatoryModel.identifier_issuer" name="identifier_issuer" class="edit-input"  style="margin-left: 10px;" />            
+            </div>  
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="identifier_issue_date">Issue Date:</label>
+              <input type="date" id="identifier_issue_date" [(ngModel)]="updateSignatoryModel.identifier_issue_date" name="identifier_issue_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_expire_date">Expire Date:</label>
+              <input type="date" id="identifier_expire_date" [(ngModel)]="updateSignatoryModel.identifier_expire_date" name="identifier_expire_date" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="passport_issue_country">Issue Country:</label>
+              <input type="text" id="passport_issue_country" [(ngModel)]="updateSignatoryModel.passport_issue_country" name="passport_issue_country" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+         
+            <div class="side-by-side">
+              <label for="identifier_state">Identifier State:</label>
+              <input type="text" id="identifier_state" [(ngModel)]="updateSignatoryModel.identifier_state" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="title">Title:</label>
+              <input type="text" id="title" [(ngModel)]="updateSignatoryModel.title" name="identifier_state" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="first_name">First Name:</label>
+              <input type="text" id="first_name" [(ngModel)]="updateSignatoryModel.first_name" name="first_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="middle_name">Middle Name:</label>
+              <input type="text" id="middle_name" [(ngModel)]="updateSignatoryModel.middle_name" name="middle_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="last_name">Last Name:</label>
+              <input type="text" id="last_name" [(ngModel)]="updateSignatoryModel.last_name" name="last_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="sex">Sex:</label>
+              <input type="text" id="sex" [(ngModel)]="updateSignatoryModel.sex" name="sex" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="birthdate">Birth Date:</label>
+              <input type="date" id="birthdate" [(ngModel)]="updateSignatoryModel.birthdate" name="birthdate" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="birth_place">Birth Place:</label>
+              <input type="text" id="birth_place" [(ngModel)]="updateSignatoryModel.birth_place" name="birth_place" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="mothers_name">Mother Name:</label>
+              <input type="text" id="mothers_name" [(ngModel)]="updateSignatoryModel.mothers_name" name="mothers_name" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>    
+          
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="tax_number">Tax Number:</label>
+              <input type="text" id="tax_number" [(ngModel)]="updateSignatoryModel.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+            <div class="side-by-side">
+              <label for="source_of_weqlth">Source of Wealth:</label>
+              <input type="text" id="source_of_weqlth" [(ngModel)]="updateSignatoryModel.source_of_weqlth" name="source_of_weqlth" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+
+  
+            
+          </div>  
+
+
+          <div class="container" >
+                     
+            <div class="side-by-side">
+              <label for="occupation">Occupation:</label>
+              <input type="text" id="occupation" [(ngModel)]="updateSignatoryModel.occupation" name="occupation" class="edit-input"  style="margin-left: 10px;" />            
+            </div> 
+
+                
+          </div>  
+
+
+        </div>
+
+
+        <div style=" background-color: white; border-inline-color: black; color: black;">
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+              ADDRESS
+            </p>
+            <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isAddressInfoCollapsed = !isAddressInfoCollapsed">
+              {{ isAddressInfoCollapsed ? '-' : '+' }}
+            </span>
+          </div>
+        
+          <div *ngIf="isAddressInfoCollapsed">
+       
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="residence">Residence:</label>
+                <input type="text" id="residence" [(ngModel)]="updateSignatoryModel.residence" name="residence" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+              <div class="side-by-side">
+                <label for="town">Town:</label>
+                <input type="text" id="town" [(ngModel)]="updateSignatoryModel.town" name="town" class="edit-input"  style="margin-left: 10px;" />            
+              </div>  
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="address1">Address:</label>
+                <input type="text" id="address1" [(ngModel)]="updateSignatoryModel.address1" name="address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="addressType">Address Type:</label>
+                <input type="text" id="addressType" [(ngModel)]="updateSignatoryModel.addressType" name="addressType" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+    
+              <div class="side-by-side">
+                <label for="p_add_address1">Additional Address line 1:</label>
+                <input type="text" id="p_add_address1" [(ngModel)]="updateSignatoryModel.p_add_address1" name="p_add_address1" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+           
+              <div class="side-by-side">
+                <label for="p_add_address2">Additional Address line 2:</label>
+                <input type="text" id="p_add_address2" [(ngModel)]="updateSignatoryModel.p_add_address2" name="p_add_address2" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="city">City:</label>
+                <input type="text" id="city" [(ngModel)]="updateSignatoryModel.city" name="city" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="state">State:</label>
+                <input type="text" id="state" [(ngModel)]="updateSignatoryModel.state" name="state" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+            <div class="container" >
+                       
+              <div class="side-by-side">
+                <label for="zip">Zip:</label>
+                <input type="text" id="zip" [(ngModel)]="updateSignatoryModel.zip" name="zip" class="edit-input"  style="margin-left: 10px;" />            
+              </div> 
+    
+              <div class="side-by-side">
+                <label for="country_code">Country Code:</label>
+                <input type="text" id="country_code" [(ngModel)]="updateSignatoryModel.country_code" name="country_code" class="edit-input"  style="margin-left: 10px;" />            
+              </div>   
+    
+    
+              
+            </div>
+    
+    
+    
+    
+          </div>
+    
+        <!-- Display editable customer information here -->
+
+      </div>
+		
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            PHONE
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isPhoneInfoCollapsed = !isPhoneInfoCollapsed">
+            {{ isPhoneInfoCollapsed ? '-' : '+' }}
+          </span>
+        </div>
+      
+        <div *ngIf="isPhoneInfoCollapsed">
+     
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_contact_type">Contact Type:</label>
+              <input type="text" id="tph_contact_type" [(ngModel)]="updateSignatoryModel.tph_contact_type" name="tph_contact_type" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+            <div class="side-by-side">
+              <label for="tph_country_prefix">Country Prefix:</label>
+              <input type="text" id="tph_country_prefix" [(ngModel)]="updateSignatoryModel.tph_country_prefix" name="tph_country_prefix" class="edit-input"  style="margin-left: 10px;" />            
+            </div>  
+            
+          </div>
+    
+          <div class="container" >
+    
+            <div class="side-by-side">
+              <label for="tph_number">Phone Number:</label>
+              <input type="text" id="tph_number" [(ngModel)]="updateSignatoryModel.tph_number" name="tph_number" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+    
+         
+            <div class="side-by-side">
+              <label for="tph_extension">Phone Extension:</label>
+              <input type="text" id="tph_extension" [(ngModel)]="updateSignatoryModel.tph_extension" name="tph_extension" class="edit-input"  style="margin-left: 10px;" />            
+            </div>   
+            
+          </div>
+    
+     
+    
+    
+    
+    
+        </div>
+      <!-- Display editable customer information here -->
+  
+    </div>
+
+    <div style=" background-color: white; border-inline-color: black; color: black;">
+      <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+        <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+          Employer
+        </p>
+        <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isEmployerInfoCollapsed = !isEmployerInfoCollapsed">
+          {{ isEmployerInfoCollapsed ? '-' : '+' }}
+        </span>
+      </div>
+    
+      <div *ngIf="isEmployerInfoCollapsed">
+   
+        <div class="container" >
+
+          <div class="side-by-side">
+            <label for="employer_name">Employer Name:</label>
+            <input type="text" id="employer_name" [(ngModel)]="updateSignatoryModel.employer_name" name="employer_name" class="edit-input"  style="margin-left: 10px;" />            
+          </div>   
+
+                       
+        </div>
+
+        </div>
+
+
+  </div>
+
+  <div style=" background-color: white; border-inline-color: black; color: black;">
+    <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+      <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+        FOREIGNER
+      </p>
+      <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isForeignerInfoCollapsed = !isForeignerInfoCollapsed">
+        {{ isForeignerInfoCollapsed ? '-' : '+' }}
+      </span>
+    </div>
+  
+    <div *ngIf="isForeignerInfoCollapsed">
+ 
+      <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_date_arrival">Arrival Date:</label>
+          <input type="date" id="foreigner_date_arrival" [(ngModel)]="updateSignatoryModel.foreigner_date_arrival" name="foreigner_date_arrival" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_nationality">Nationality:</label>
+          <input type="text" id="foreigner_nationality" [(ngModel)]="updateSignatoryModel.foreigner_nationality" name="foreigner_nationality" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_passport_number">Passport Number:</label>
+          <input type="text" id="foreigner_passport_number" [(ngModel)]="updateSignatoryModel.foreigner_passport_number" name="foreigner_passport_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_number">Permit Number:</label>
+          <input type="text" id="foreigner_permit_number" [(ngModel)]="updateSignatoryModel.foreigner_permit_number" name="foreigner_permit_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+<div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_visa_number">Visa Number:</label>
+          <input type="text" id="foreigner_visa_number" [(ngModel)]="updateSignatoryModel.foreigner_visa_number" name="foreigner_visa_number" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+ <div class="side-by-side">
+          <label for="foreigner_permit_valid_from">Permit Valid From:</label>
+          <input type="text" id="foreigner_permit_valid_from" [(ngModel)]="updateSignatoryModel.foreigner_permit_valid_from" name="foreigner_permit_valid_from" class="edit-input"  style="margin-left: 10px;" />            
+        </div> 
+       
+      </div>
+
+  <div class="container" >
+
+        <div class="side-by-side">
+          <label for="foreigner_permit_valid_to">Permit Valid To:</label>
+          <input type="text" id="foreigner_permit_valid_to" [(ngModel)]="updateSignatoryModel.foreigner_permit_valid_to" name="foreigner_permit_valid_to" class="edit-input"  style="margin-left: 10px;" />            
+        </div>   
+
+
+       
+      </div>
+
+      </div>
+
+
+</div>
+
+<div style=" background-color: white; border-inline-color: black; color: black;">
+  <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+    <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+      HIDE
+    </p>
+    <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isHideInfoCollapsed = !isHideInfoCollapsed">
+      {{ isHideInfoCollapsed ? '-' : '+' }}
+    </span>
+  </div>
+  
+<div *ngIf="isHideInfoCollapsed">
+  <div class="container" style=" margin-bottom: -10px; ">
+    <!-- <p class="side-by-side">Employer Name: {{ signatoryFullDetails.employer_name }}</p> -->
+  </div>
+</div>
+
+
+</div>
+        <!-- Add more input fields for other properties -->
+<br>
+
+<div class="container" style="display: flex;">
+  <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+    <i class="fas fa-save"></i> Save
+  </button>
+  <button
+    type="button"
+    style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+    (click)="closedirectorEditDialog()"
+  >
+    <i class="fas fa-times"></i> Cancel
+  </button>
+</div>
+        <!-- <div class="container" style="display: flex;">
+          <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+            <i class="fas fa-save"></i> Save
+          </button>
+          <button
+            type="button"
+            style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+            (click)="closedirectorEditDialog()"
+          >
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div> -->
+        
+      </form>
+
+    <!-- </div> -->
+
+    </div>
+
+
+
+
+
+
+ 
+
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Pop-up window for displaying and editing customer details -->
+<div class="popup-dialog" *ngIf="editpopupDialog">
+  <div class="popup-content">
+    <div *ngIf="customerDetails">
+      <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+        <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+          Customer Information Details
+        </h4>
+        <i
+          class="fas fa-times"
+          style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;"
+          (click)="closeDialog()"
+        ></i>
+      </div>
+      <div style="background-color: White;">
+        <br />
+      </div>
+
+    </div>
+    <div style="background-color: White;">
+ 
+  </div>
+
+
+  <div class="scrollable-container">
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Customer Information
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isCustomerInfoCollapsed = !isCustomerInfoCollapsed">
+            {{ isCustomerInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+      
+
+      <!-- Display editable customer information here -->
+      <form (ngSubmit)="saveChanges()">
+        <div *ngIf="!isCustomerInfoCollapsed">
+          <div class="container">
+
+            <div class="side-by-side">
+              <label for="customer_type">Customer Type:</label>
+              <input type="text" id="customer_type" [(ngModel)]="updateModel.customer_type" name="customer_type" class="edit-input-readonly" style="margin-right: 10px;" readonly/>
+            </div>   
+            <div class="side-by-side">
+              <label for="cust_id">Customer Id:</label>
+              <input
+                type="text"
+                id="cust_id"
+                [(ngModel)]="updateModel.cust_id"
+                name="cust_id"
+                class="edit-input-readonly"
+                style="margin-left: 10px;"
+                readonly
+              />
+            </div>
+
+          </div>
+
+          <div class="container" >
+
+            <div class="side-by-side">
+              <label for="bvn">BVN:</label>
+              <input type="text" id="bvn" [(ngModel)]="updateModel.bvn" name="bvn" class="edit-input-readonly"  style="margin-left: 10px;" />            
+            </div>   
+            <div class="side-by-side">
+              <label for="email">Email:</label>
+              <input type="text" id="email" [(ngModel)]="updateModel.email" name="email" class="edit-input"  style="margin-left: 10px;" />
+           </div>
+
+          </div>
+
+          <div class="container" >
+            <div class="side-by-side">
+              <label for="update_date">Update Date:</label>
+              <input type="date" id="update_date" [(ngModel)]="updateModel.update_date" name="update_date" class="edit-input" style="margin-left: 10px;" />
+            </div>
+          </div>
+
+        </div>
+
+
+        <div style="background-color: white; border-inline-color: black; color: black;" *ngIf="customerDetails.customer_type === 'CC'" >
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Corporate Details
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isCorporateDetailsCollapsed = !isCorporateDetailsCollapsed">
+            {{ isCorporateDetailsCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div  *ngIf="!isCorporateDetailsCollapsed">
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="business">Business:</label>
+            <input type="number" id="business" [(ngModel)]="updateModel.business" name="business" class="edit-input"  style="margin-left: 10px;" />     
+               </div>   
+          <div class="side-by-side">
+            <label for="commercial_name">Commercial Name:</label>
+            <input type="text" id="commercial_name" [(ngModel)]="updateModel.commercial_name" name="commercial_name" class="edit-input"  style="margin-left: 10px;" />
+            </div>   
+        </div>
+        
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="incorporation_country_code">Incorporation Country Code:</label>
+            <input type="text" id="incorporation_country_code" [(ngModel)]="updateModel.incorporation_country_code" name="incorporation_country_code" class="edit-input"  style="margin-left: 10px;" />
+             </div>   
+          <div class="side-by-side">
+            <label for="name">Name:</label>
+            <input type="text" id="name" [(ngModel)]="updateModel.name" name="name" class="edit-input"  style="margin-left: 10px;" />            </div>   
+        </div>
+        
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="incorporation_state">Incorporation State:</label>
+            <input type="text" id="incorporation_state" [(ngModel)]="updateModel.incorporation_state" name="incorporation_state" class="edit-input"  style="margin-left: 10px;" />
+               </div>   
+          <div class="side-by-side">
+            <label for="tax_number">Tax Number:</label>
+            <input type="text" id="tax_number" [(ngModel)]="updateModel.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />
+             </div>   
+        </div>
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="incorporation_number">Incorporation Number:</label>
+            <input type="text" id="incorporation_number" [(ngModel)]="updateModel.incorporation_number" name="incorporation_number" class="edit-input"  style="margin-left: 10px;" />
+                 </div>   
+          <div class="side-by-side">
+            <label for="incorporation_date">Incorporation Date:</label>
+            <input type="date" id="incorporation_date" [(ngModel)]="updateModel.incorporation_date" name="incorporation_date" class="edit-input"  style="margin-left: 10px;" />
+               </div>   
+        </div>
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="updated_by">Updated By:</label>
+            <input type="text" id="updated_by" [(ngModel)]="updateModel.updated_by" name="updated_by" class="edit-input"  style="margin-left: 10px;" />
+                   </div>   
+          <div class="side-by-side">
+            <label for="business_closed">Business Closed:</label>
+            <input type="number" id="business_closed" [(ngModel)]="updateModel.business_closed" name="business_closed" class="edit-input"  style="margin-left: 10px;" />
+                 </div>   
+        </div>
+
+        <div class="container" >
+          <div class="side-by-side">
+          <label for="business_closed_date">Business Closed Date:</label>
+          <input type="date" id="business_closed_date" [(ngModel)]="updateModel.business_closed_date" name="business_closed_date" class="edit-input"  style="margin-left: 10px;" />
+                   </div>   
+                    </div> 
+
+        </div>
+
+      </div>
+
+
+
+      <div style="background-color: white; border-inline-color: black; color: black;" *ngIf="customerDetails.customer_type === 'IC'" >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Personal Details
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;"(click)="isPersonalDetailsCollapsed = !isPersonalDetailsCollapsed">
+            {{ isPersonalDetailsCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+
+<div *ngIf="!isPersonalDetailsCollapsed">
+      <div class="container" >
+        <div class="side-by-side">
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="updateModel.name" name="name" class="edit-input"  style="margin-left: 10px;" />              
+           </div>   
+        <div class="side-by-side">
+          <label for="tax_number">Tax Number:</label>
+          <input type="text" id="tax_number" [(ngModel)]="updateModel.tax_number" name="tax_number" class="edit-input"  style="margin-left: 10px;" />
+        </div>   
+      </div>
+
+      <div class="container" >
+        <div class="side-by-side">
+          <label for="updated_by">Updated By:</label>
+          <input type="text" id="updated_by" [(ngModel)]="updateModel.updated_by" name="updated_by" class="edit-input"  style="margin-left: 10px;" />
+           </div>   
+      </div>
+
+      </div>
+
+      </div>
+  
+  
+
+		
+      <div style="background-color: white; border-inline-color: black; color: black;">
+       
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Address/Phone
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;"(click)="isAddressPhoneCollapsed = !isAddressPhoneCollapsed">
+            {{ isAddressPhoneCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+      </div>
+			
+
+      <div *ngIf="!isAddressPhoneCollapsed">
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="address1">Operation Business Address:</label>
+            <input type="text" id="address1" [(ngModel)]="updateModel.address1" name="address1" class="edit-input"  style="margin-left: 10px;" />
+          </div>
+            <div class="side-by-side">
+              <label for="addressType">Operation Address Type:</label>
+              <input type="text" id="addressType" [(ngModel)]="updateModel.addressType" name="addressType" class="edit-input"  style="margin-left: 10px;" />
+                </div>   
+        </div>
+
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="country_code">Operation Business Country Code:</label>
+            <input type="text" id="country_code" [(ngModel)]="updateModel.country_code" name="country_code" class="edit-input"  style="margin-left: 10px;" />
+            </div>
+            <div class="side-by-side">
+              <label for="city">Operation Business City:</label>
+              <input type="text" id="city" [(ngModel)]="updateModel.city" name="city" class="edit-input"  style="margin-left: 10px;" />
+                  </div>   
+        </div>
+
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="state">Operation Business State:</label>
+            <input type="text" id="state" [(ngModel)]="updateModel.state" name="state" class="edit-input"  style="margin-left: 10px;" />
+              </div>
+            <div class="side-by-side">
+              <label for="zip">Operation Business Zip:</label>
+              <input type="text" id="zip" [(ngModel)]="updateModel.zip" name="zip" class="edit-input"  style="margin-left: 10px;" />
+              </div>   
+        </div>
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="tph_contact_type">Business Phone Contact Type:</label>
+            <input type="text" id="tph_contact_type" [(ngModel)]="updateModel.tph_contact_type" name="tph_contact_type" class="edit-input"  style="margin-left: 10px;" />
+                </div>
+            <div class="side-by-side">
+              <label for="tph_communication_type">Business Phone Communication Type:</label>
+              <input type="text" id="tph_communication_type" [(ngModel)]="updateModel.tph_communication_type" name="tph_communication_type" class="edit-input"  style="margin-left: 10px;" />
+                  </div>   
+        </div>
+
+
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="tph_number">Business Phone Number:</label>
+            <input type="text" id="tph_number" [(ngModel)]="updateModel.tph_number" name="tph_number" class="edit-input"  style="margin-left: 10px;" />
+                  </div>
+            <div class="side-by-side">
+              <label for="tph_extension">Business Phone Extension:</label>
+              <input type="text" id="tph_extension" [(ngModel)]="updateModel.tph_extension" name="tph_extension" class="edit-input"  style="margin-left: 10px;" />
+                      </div>   
+        </div>
+
+
+        <div class="container" >
+          <div class="side-by-side">
+            <label for="source_of_fund">Source of Funds:</label>
+            <input type="text" id="source_of_fund" [(ngModel)]="updateModel.source_of_fund" name="source_of_fund" class="edit-input"  style="margin-left: 10px;" />
+                    </div>
+            <div class="side-by-side">
+              <label for="nature_of_txn">Nature of Transaction:</label>
+              <input type="number" id="nature_of_txn" [(ngModel)]="updateModel.nature_of_txn" name="nature_of_txn" class="edit-input"  style="margin-left: 10px;" />
+                          </div>   
+        </div>
+
+       </div>
+
+		
+        <!-- Add more input fields for other properties -->
+<br>
+        <div class="container" style="display: flex;">
+          <button type="submit"  style="font-size: small; border-radius: 10px; border-color: aliceblue; color: green;font-weight: bold;">
+            <i class="fas fa-save"></i> Save
+          </button>
+          <button
+            type="button"
+            style="font-size: small; border-radius: 10px; border-color: aliceblue; color:indianred; margin-left: 1px;font-weight: bold;"
+            (click)="closeDialog()"
+          >
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div>
+        
+      </form>
+    </div>
+
+  </div>
+
+  </div>
+</div>
+
+
+
+<!-- Pop-up window for displaying customer details -->
+<div class="popup-dialog" *ngIf="popupDialog">
+
+ 
+  <div class="popup-content">
+
+    <!-- Display fetched customer details here -->
+    <div style="background-color: White; height: 20px; display: flex; align-items: center;">
+      <h4 style="font-weight: bold; color: Black; margin-left: 10px; margin-top: 15px;">
+       Customer Information Details
+      </h4>
+      <i class="fas fa-times" style="font-weight: bold; color: indianred;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="closeDialog()"></i>
+   
+    </div>
+  
+ 
+    <div *ngIf="customerDetails">    
+      
+
+    <div style="background-color: White;">
+    <br>
+  </div>
+
+  <!-- <div class="scrollable-container"> -->
+
+
+      <div style=" background-color: white; border-inline-color: black; color: black;">
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;border-color: white;border: 10px;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Customer Information
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isCustomerInfoCollapsed = !isCustomerInfoCollapsed">
+            {{ isCustomerInfoCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+        
+<div *ngIf="!isCustomerInfoCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Customer Type: {{ customerDetails.customer_type }}</p>
+          <p class="side-by-side">Customer ID: {{ customerDetails.cust_id }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">BVN: {{ customerDetails.bvn }}</p>
+          <p class="side-by-side">Email: {{ customerDetails.email }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Update Date: {{ customerDetails.update_date }}</p>
+        </div>
+      </div>
+
+      </div>
+    
+      <div style="background-color: white; border-inline-color: black; color: black;" *ngIf="customerDetails.customer_type === 'CC'" >
+          <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Corporate Details
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;" (click)="isCorporateDetailsCollapsed = !isCorporateDetailsCollapsed">
+            {{ isCorporateDetailsCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+        <div  *ngIf="!isCorporateDetailsCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+        <p class="side-by-side">Business: {{ customerDetails.business }}</p>
+        <p class="side-by-side">Commercial Name: {{ customerDetails.commercial_name }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Incorporation Country Code: {{ customerDetails.incorporation_country_code }}</p>
+          <p class="side-by-side">Name: {{ customerDetails.name }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Incorporation State: {{ customerDetails.incorporation_state }}</p>
+          <p class="side-by-side">Tax Number: {{ customerDetails.tax_number }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Incorporation Number: {{ customerDetails.incorporation_number }}</p>
+          <p class="side-by-side">Incorporation Date: {{ customerDetails.incorporation_date }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Updated By: {{ customerDetails.updated_by }}</p>
+          <p class="side-by-side">Business Closed: {{ customerDetails.business_closed }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Business Closed Date: {{ customerDetails.business_closed_date }}</p>
+        </div>
+      </div>
+
+
+      </div>
+
+
+      <div style="background-color: white; border-inline-color: black; color: black;" *ngIf="customerDetails.customer_type === 'IC'" >
+
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Personal Details
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;"(click)="isPersonalDetailsCollapsed = !isPersonalDetailsCollapsed">
+            {{ isPersonalDetailsCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+
+<div *ngIf="!isPersonalDetailsCollapsed">
+               <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Name: {{ customerDetails.name }}</p>
+          <p class="side-by-side">Tax Number: {{ customerDetails.tax_number }}</p>
+
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Updated By: {{ customerDetails.updated_by }}</p>
+        </div>
+      </div>
+
+      </div>
+  
+          
+      <div style="background-color: white; border-inline-color: black; color: black;">
+       
+        <div style="background-color: indianred; height: 20px; display: flex; align-items: center;">
+          <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">
+            Address/Phone
+          </p>
+          <span style="font-weight: bold; color: white;margin-left: auto; margin-right: 10px; cursor: pointer;"(click)="isAddressPhoneCollapsed = !isAddressPhoneCollapsed">
+            {{ isAddressPhoneCollapsed ? '+' : '-' }}
+          </span>
+        </div>
+
+
+        <div *ngIf="!isAddressPhoneCollapsed">
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Operational Business Address: {{ customerDetails.address1 }}</p>
+          <p class="side-by-side">Operational Business Type: {{ customerDetails.addressType }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Operational Business Country Code: {{ customerDetails.country_code }}</p>
+          <p class="side-by-side">Operational Business city: {{ customerDetails.city }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Operational Business state: {{ customerDetails.state }}</p>
+          <p class="side-by-side">Operational Business zip: {{ customerDetails.zip }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Business Phone Contact Type: {{ customerDetails.tph_contact_type }}</p>
+          <p class="side-by-side">Business Phone Communication Type: {{ customerDetails.tph_communication_type }}</p>
+        </div>
+        <div class="container" style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Business Phone Number: {{ customerDetails.tph_number }}</p>
+          <p class="side-by-side">Business Phone Extension: {{ customerDetails.tph_extension }}</p>
+        </div>
+        <div class="container"  style=" margin-bottom: -10px; ">
+          <p class="side-by-side">Source of Funds: {{ customerDetails.source_of_fund }}</p>
+          <p class="side-by-side">Nature of Transaction: {{ customerDetails.nature_of_txn }}</p>
+        </div>
+      </div>
+
+      </div>
+
+<!-- 
+    </div> -->
+
+    
+    <div style="background-color: white;">
+      <button class="close-button" (click)="closeDialog()">
+        <i class="fas fa-times"></i>
+        Close
+       </button>
+    </div>
+
+    </div>
+    </div>
+</div>
+
+   
+
+      
+      <!-- <table >
+        <thead>
+          <tr>
+            <th (click)="sort('cust_id')">Customer ID <i class="fas" [ngClass]="getSortIcon('cust_id')"></i></th>
+            <th (click)="sort('account')">Account Number <i class="fas" [ngClass]="getSortIcon('account')"></i></th>
+            <th (click)="sort('name')">Account Name <i class="fas" [ngClass]="getSortIcon('name')"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of searchResults"  [ngClass]="{'selected-row': result.cust_id === selectedCustId || result.account === selectedAccount}" (click)="selectRow(result)">
+            <td>{{ result.cust_id }}</td>
+            <td>{{ result.account }}</td>
+            <td>{{ result.name }}</td>
+          </tr>
+        </tbody>
+      </table> -->
+
+      <table>
+        <thead>
+          <tr>
+            <th (click)="sort('cust_id')">Customer ID <i class="fas" [ngClass]="getSortIcon('cust_id')"></i></th>
+            <th (click)="sort('account')">Account Number <i class="fas" [ngClass]="getSortIcon('account')"></i></th>
+            <th (click)="sort('name')">Account Name <i class="fas" [ngClass]="getSortIcon('name')"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of searchResults"  
+              [ngClass]="{'selected-row': result === selectedRow}" 
+              (click)="selectRow(result)">
+            <td>{{ result.cust_id }}</td>
+            <td>{{ result.account }}</td>
+            <td>{{ result.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <!-- <table>
+        <thead>
+          <tr>
+            <th (click)="sort('cust_id')">Customer ID <i class="fas" [ngClass]="getSortIcon('cust_id')"></i></th>
+            <th (click)="sort('account')">Account Number <i class="fas" [ngClass]="getSortIcon('account')"></i></th>
+            <th (click)="sort('name')">Account Name <i class="fas" [ngClass]="getSortIcon('name')"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of searchResults" (click)="selectRow(result)" [ngClass]="{'selected-row': result === selectedResult}">
+            <td>{{ result.cust_id }}</td>
+            <td>{{ result.account }}</td>
+            <td>{{ result.name }}</td>
+          </tr>
+        </tbody>
+      </table> -->
+      
+
+    </div>
+
+  </div>
+</div>
