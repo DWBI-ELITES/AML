@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace DWBIProjectAPI.Models
 {
     public class CustomerUpdateModel
     {
+        [Key]
         public string cust_id { get; set; }
         public string addressId { get; set; }
         public string birth_place { get; set; }

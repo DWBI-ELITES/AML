@@ -1,0 +1,1074 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AMLDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="account_person_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccountStatusType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="aml_configuration">
+    <Key>
+      <PropertyRef Name="config_id" />
+    </Key>
+    <Property Name="config_id" Type="int" Nullable="false" />
+    <Property Name="institution_code" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="institution_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="swift_code" Type="varchar" MaxLength="50" />
+    <Property Name="schema_version" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="individual_threshold_amt" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="cooperate_threshold_amt" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="monitoring_duration" Type="int" Nullable="false" />
+    <Property Name="rentity_id" Type="int" />
+    <Property Name="currency_code_local" Type="varchar" MaxLength="100" />
+    <Property Name="alert_threshold" Type="int" Nullable="false" />
+    <Property Name="transaction_types" Type="varchar" MaxLength="255" />
+    <Property Name="risk_score_threshold" Type="int" />
+    <Property Name="automatic_review" Type="bit" />
+  </EntityType>
+  <EntityType Name="amlAccount">
+    <Key>
+      <PropertyRef Name="account" />
+    </Key>
+    <Property Name="account" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="account_officer" Type="varchar" MaxLength="255" />
+    <Property Name="account_ownership" Type="varchar" MaxLength="255" />
+    <Property Name="account_type" Type="varchar" MaxLength="20" />
+    <Property Name="balance" Type="decimal" Precision="20" Scale="2" />
+    <Property Name="balance_date" Type="date" />
+    <Property Name="branch" Type="varchar" MaxLength="255" />
+    <Property Name="cust_number" Type="varchar" MaxLength="255" />
+    <Property Name="closed" Type="date" />
+    <Property Name="comments" Type="varchar" MaxLength="255" />
+    <Property Name="currency_code" Type="varchar" MaxLength="255" />
+    <Property Name="entity_cre_flg" Type="varchar" MaxLength="255" />
+    <Property Name="iban" Type="varchar" MaxLength="255" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="new_account" Type="varchar" MaxLength="255" />
+    <Property Name="opened" Type="date" />
+    <Property Name="previous_status" Type="varchar" MaxLength="5" />
+    <Property Name="schm_code" Type="varchar" MaxLength="255" />
+    <Property Name="schm_type" Type="varchar" MaxLength="255" />
+    <Property Name="status" Type="varchar" MaxLength="5" />
+    <Property Name="status_date" Type="date" />
+    <Property Name="swift" Type="varchar" MaxLength="255" />
+    <Property Name="temp_account" Type="varchar" MaxLength="255" />
+    <Property Name="frez_reason_code" Type="varchar" MaxLength="255" />
+    <Property Name="acct_cls_date" Type="date" />
+    <Property Name="acct_cls_flg" Type="varchar" MaxLength="3" />
+    <Property Name="clr_bal_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="cum_cr_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="cum_dr_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="drwng_power" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="frez_code" Type="varchar" MaxLength="3" />
+    <Property Name="last_tran_date_cr" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="last_tran_date_dr" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="fx_cum_cr_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="fx_cum_dr_amt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="sanct_lim" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="last_tran_date" Type="date" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlAddress' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlAddress">
+    <Key>
+      <PropertyRef Name="address_id" />
+    </Key>
+    <Property Name="address_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="address1" Type="varchar" MaxLength="255" />
+    <Property Name="address2" Type="varchar" MaxLength="255" />
+    <Property Name="house_number" Type="int" />
+    <Property Name="apartment_number" Type="int" />
+    <Property Name="addresstype" Type="varchar" MaxLength="2" />
+    <Property Name="city" Type="varchar" MaxLength="255" />
+    <Property Name="country_code" Type="varchar" MaxLength="2" />
+    <Property Name="state" Type="varchar" MaxLength="255" />
+    <Property Name="town" Type="varchar" MaxLength="255" />
+    <Property Name="zip" Type="varchar" MaxLength="10" />
+    <Property Name="geo_location" Type="varchar" MaxLength="255" />
+    <Property Name="latitude" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="longitude" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="pluscode" Type="varchar" MaxLength="25" />
+    <Property Name="is_approx_location" Type="bit" />
+    <Property Name="comments" Type="varchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlbranch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlbranch">
+    <Key>
+      <PropertyRef Name="branch_id" />
+    </Key>
+    <Property Name="branch_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="region" Type="varchar" MaxLength="255" />
+    <Property Name="address_id" Type="varchar" MaxLength="25" />
+    <Property Name="phone_id" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlbranchOLD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlbranchOLD">
+    <Key>
+      <PropertyRef Name="branch_id" />
+    </Key>
+    <Property Name="branch_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="255" />
+    <Property Name="region" Type="varchar" MaxLength="255" />
+    <Property Name="address_id" Type="varchar" MaxLength="25" />
+    <Property Name="phone_id" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="amlCountry">
+    <Key>
+      <PropertyRef Name="CountryCode" />
+    </Key>
+    <Property Name="CountryCode" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="amlCustomer">
+    <Key>
+      <PropertyRef Name="cust_id" />
+    </Key>
+    <Property Name="cust_id" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="addressId" Type="varchar" MaxLength="20" />
+    <Property Name="birth_place" Type="varchar" MaxLength="100" />
+    <Property Name="birthdate" Type="date" />
+    <Property Name="business" Type="int" />
+    <Property Name="business_closed" Type="int" />
+    <Property Name="business_closed_date" Type="date" />
+    <Property Name="bvn" Type="bigint" />
+    <Property Name="commercial_name" Type="varchar" MaxLength="100" />
+    <Property Name="cust_sex" Type="varchar" MaxLength="1" />
+    <Property Name="cust_type_code" Type="varchar" MaxLength="10" />
+    <Property Name="customer_type" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="employer_name" Type="varchar" MaxLength="100" />
+    <Property Name="first_name" Type="varchar" MaxLength="50" />
+    <Property Name="foreigner" Type="int" />
+    <Property Name="incorporation_country_code" Type="varchar" MaxLength="10" />
+    <Property Name="incorporation_date" Type="date" />
+    <Property Name="incorporation_number" Type="varchar" MaxLength="50" />
+    <Property Name="incorporation_state" Type="varchar" MaxLength="100" />
+    <Property Name="issuer_id" Type="int" />
+    <Property Name="last_name" Type="varchar" MaxLength="50" />
+    <Property Name="middle_name" Type="varchar" MaxLength="50" />
+    <Property Name="mothers_name" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="nationality" Type="varchar" MaxLength="50" />
+    <Property Name="nature_of_txn" Type="int" />
+    <Property Name="occupation" Type="varchar" MaxLength="100" />
+    <Property Name="phoneId" Type="varchar" MaxLength="20" />
+    <Property Name="prefix_name" Type="varchar" MaxLength="10" />
+    <Property Name="referee_person_id" Type="varchar" MaxLength="20" />
+    <Property Name="reference_code" Type="varchar" MaxLength="20" />
+    <Property Name="residence" Type="varchar" MaxLength="10" />
+    <Property Name="sex" Type="varchar" MaxLength="1" />
+    <Property Name="source_of_fund" Type="varchar" MaxLength="10" />
+    <Property Name="ssn" Type="varchar" MaxLength="20" />
+    <Property Name="foreigner_date_arrival" Type="date" />
+    <Property Name="foreigner_nationality" Type="varchar" MaxLength="50" />
+    <Property Name="foreigner_passport_exp_dt" Type="date" />
+    <Property Name="foreigner_passport_iss_dt" Type="date" />
+    <Property Name="foreigner_passport_number" Type="varchar" MaxLength="50" />
+    <Property Name="foreigner_permit_number" Type="varchar" MaxLength="50" />
+    <Property Name="foreigner_permit_valid_from" Type="date" />
+    <Property Name="foreigner_permit_valid_to" Type="date" />
+    <Property Name="foreigner_visa_number" Type="varchar" MaxLength="50" />
+    <Property Name="tax_comments" Type="varchar" MaxLength="100" />
+    <Property Name="tax_number" Type="varchar" MaxLength="50" />
+    <Property Name="tax_reg_number" Type="varchar" MaxLength="50" />
+    <Property Name="title" Type="varchar" MaxLength="10" />
+    <Property Name="update_date" Type="date" />
+    <Property Name="updated_by" Type="varchar" MaxLength="20" />
+    <Property Name="work_dir" Type="varchar" MaxLength="100" />
+    <Property Name="addressType" Type="varchar" MaxLength="20" />
+    <Property Name="address1" Type="varchar" MaxLength="100" />
+    <Property Name="address2" Type="varchar" MaxLength="100" />
+    <Property Name="town" Type="varchar" MaxLength="50" />
+    <Property Name="city" Type="varchar" MaxLength="50" />
+    <Property Name="zip" Type="varchar" MaxLength="20" />
+    <Property Name="country_code" Type="varchar" MaxLength="10" />
+    <Property Name="state" Type="varchar" MaxLength="50" />
+    <Property Name="tph_contact_type" Type="varchar" MaxLength="20" />
+    <Property Name="tph_communication_type" Type="varchar" MaxLength="20" />
+    <Property Name="tph_country_prefix" Type="varchar" MaxLength="10" />
+    <Property Name="tph_number" Type="varchar" MaxLength="20" />
+    <Property Name="tph_extension" Type="varchar" MaxLength="20" />
+    <Property Name="tph_fax" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlDirector' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlDirector">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="role" />
+      <PropertyRef Name="customer_id" />
+      <PropertyRef Name="person_id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="update_date" Type="date" />
+    <Property Name="customer_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="person_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="updated_by" Type="varchar" MaxLength="25" />
+    <Property Name="currentuser_id" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="amlPerson">
+    <Key>
+      <PropertyRef Name="PERSONID" />
+    </Key>
+    <Property Name="PERSONID" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="birth_place" Type="varchar" MaxLength="255" />
+    <Property Name="birthdate" Type="date" />
+    <Property Name="cust_id" Type="varchar" MaxLength="255" />
+    <Property Name="deceased" Type="bit" />
+    <Property Name="deceased_date" Type="date" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="employer_name" Type="varchar" MaxLength="255" />
+    <Property Name="first_name" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner" Type="bit" />
+    <Property Name="identifier_code" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_country" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_expire_date" Type="date" />
+    <Property Name="identifier_issue_date" Type="date" />
+    <Property Name="identifier_issuer" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_number" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_other" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_state" Type="varchar" MaxLength="255" />
+    <Property Name="issuer_id" Type="varchar" MaxLength="255" />
+    <Property Name="last_name" Type="varchar" MaxLength="255" />
+    <Property Name="lga_of_origin" Type="varchar" MaxLength="255" />
+    <Property Name="middle_name" Type="varchar" MaxLength="255" />
+    <Property Name="mothers_name" Type="varchar" MaxLength="255" />
+    <Property Name="nationality" Type="varchar" MaxLength="255" />
+    <Property Name="nok_address1" Type="varchar" MaxLength="255" />
+    <Property Name="nok_address2" Type="varchar" MaxLength="255" />
+    <Property Name="nok_email" Type="varchar" MaxLength="255" />
+    <Property Name="nok_name" Type="varchar" MaxLength="255" />
+    <Property Name="nok_phone" Type="varchar" MaxLength="255" />
+    <Property Name="nok_relationship" Type="varchar" MaxLength="255" />
+    <Property Name="occupation" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_address1" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_address2" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_city" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_country_code" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_state" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_zip" Type="varchar" MaxLength="255" />
+    <Property Name="p_alias" Type="varchar" MaxLength="255" />
+    <Property Name="passport_number" Type="varchar" MaxLength="255" />
+    <Property Name="passport_issue_country" Type="varchar" MaxLength="255" />
+    <Property Name="prefix_name" Type="varchar" MaxLength="255" />
+    <Property Name="RECORD_STATUS" Type="varchar" MaxLength="255" />
+    <Property Name="referee_person_id" Type="varchar" MaxLength="255" />
+    <Property Name="reference_code" Type="varchar" MaxLength="255" />
+    <Property Name="residence" Type="varchar" MaxLength="255" />
+    <Property Name="sex" Type="varchar" MaxLength="255" />
+    <Property Name="source_of_weqlth" Type="varchar" MaxLength="255" />
+    <Property Name="ssn" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_date_arrival" Type="date" />
+    <Property Name="foreigner_nationality" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_passport_exp_dt" Type="date" />
+    <Property Name="foreigner_passport_iss_dt" Type="date" />
+    <Property Name="foreigner_passport_number" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_permit_number" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_permit_valid_from" Type="date" />
+    <Property Name="foreigner_permit_valid_to" Type="date" />
+    <Property Name="foreigner_visa_number" Type="varchar" MaxLength="255" />
+    <Property Name="tax_comments" Type="varchar" MaxLength="255" />
+    <Property Name="tax_number" Type="varchar" MaxLength="255" />
+    <Property Name="tax_reg_number" Type="varchar" MaxLength="255" />
+    <Property Name="title" Type="varchar" MaxLength="255" />
+    <Property Name="update_date" Type="datetime" />
+    <Property Name="updated_by" Type="varchar" MaxLength="255" />
+    <Property Name="address_id" Type="varchar" MaxLength="255" />
+    <Property Name="phone_id" Type="varchar" MaxLength="255" />
+    <Property Name="addressType" Type="varchar" MaxLength="255" />
+    <Property Name="address1" Type="varchar" MaxLength="255" />
+    <Property Name="address2" Type="varchar" MaxLength="255" />
+    <Property Name="town" Type="varchar" MaxLength="255" />
+    <Property Name="city" Type="varchar" MaxLength="255" />
+    <Property Name="zip" Type="varchar" MaxLength="255" />
+    <Property Name="country_code" Type="varchar" MaxLength="255" />
+    <Property Name="state" Type="varchar" MaxLength="255" />
+    <Property Name="tph_contact_type" Type="varchar" MaxLength="255" />
+    <Property Name="tph_country_prefix" Type="varchar" MaxLength="255" />
+    <Property Name="tph_number" Type="varchar" MaxLength="255" />
+    <Property Name="tph_extension" Type="varchar" MaxLength="255" />
+    <Property Name="tph_fax" Type="varchar" MaxLength="255" />
+    <Property Name="TPH_COMMUNICATION_TYPE" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlphone' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlphone">
+    <Key>
+      <PropertyRef Name="phone_id" />
+      <PropertyRef Name="tph_contact_type" />
+      <PropertyRef Name="tph_communication_type" />
+    </Key>
+    <Property Name="phone_id" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="tph_contact_type" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="tph_communication_type" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="tph_country_prefix" Type="varchar" MaxLength="4" />
+    <Property Name="tph_extension" Type="varchar" MaxLength="25" />
+    <Property Name="tph_number" Type="varchar" MaxLength="255" />
+    <Property Name="comments" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="amlReportingPerson">
+    <Key>
+      <PropertyRef Name="REPORTINGPERSONID" />
+    </Key>
+    <Property Name="REPORTINGPERSONID" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="birth_place" Type="varchar" MaxLength="255" />
+    <Property Name="birthdate" Type="date" />
+    <Property Name="cust_id" Type="varchar" MaxLength="255" />
+    <Property Name="deceased" Type="bit" />
+    <Property Name="deceased_date" Type="date" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="employer_name" Type="varchar" MaxLength="255" />
+    <Property Name="first_name" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner" Type="bit" />
+    <Property Name="identifier_code" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_country" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_expire_date" Type="date" />
+    <Property Name="identifier_issue_date" Type="date" />
+    <Property Name="identifier_issuer" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_number" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_other" Type="varchar" MaxLength="255" />
+    <Property Name="identifier_state" Type="varchar" MaxLength="255" />
+    <Property Name="issuer_id" Type="varchar" MaxLength="255" />
+    <Property Name="last_name" Type="varchar" MaxLength="255" />
+    <Property Name="lga_of_origin" Type="varchar" MaxLength="255" />
+    <Property Name="middle_name" Type="varchar" MaxLength="255" />
+    <Property Name="mothers_name" Type="varchar" MaxLength="255" />
+    <Property Name="nationality" Type="varchar" MaxLength="255" />
+    <Property Name="nok_address1" Type="varchar" MaxLength="255" />
+    <Property Name="nok_address2" Type="varchar" MaxLength="255" />
+    <Property Name="nok_email" Type="varchar" MaxLength="255" />
+    <Property Name="nok_name" Type="varchar" MaxLength="255" />
+    <Property Name="nok_phone" Type="varchar" MaxLength="255" />
+    <Property Name="nok_relationship" Type="varchar" MaxLength="255" />
+    <Property Name="occupation" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_address1" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_address2" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_city" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_country_code" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_state" Type="varchar" MaxLength="255" />
+    <Property Name="p_add_zip" Type="varchar" MaxLength="255" />
+    <Property Name="p_alias" Type="varchar" MaxLength="255" />
+    <Property Name="passport_number" Type="varchar" MaxLength="255" />
+    <Property Name="passport_issue_country" Type="varchar" MaxLength="255" />
+    <Property Name="prefix_name" Type="varchar" MaxLength="255" />
+    <Property Name="RECORD_STATUS" Type="varchar" MaxLength="255" />
+    <Property Name="referee_person_id" Type="varchar" MaxLength="255" />
+    <Property Name="reference_code" Type="varchar" MaxLength="255" />
+    <Property Name="residence" Type="varchar" MaxLength="255" />
+    <Property Name="sex" Type="varchar" MaxLength="255" />
+    <Property Name="source_of_weqlth" Type="varchar" MaxLength="255" />
+    <Property Name="ssn" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_date_arrival" Type="date" />
+    <Property Name="foreigner_nationality" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_passport_exp_dt" Type="date" />
+    <Property Name="foreigner_passport_iss_dt" Type="date" />
+    <Property Name="foreigner_passport_number" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_permit_number" Type="varchar" MaxLength="255" />
+    <Property Name="foreigner_permit_valid_from" Type="date" />
+    <Property Name="foreigner_permit_valid_to" Type="date" />
+    <Property Name="foreigner_visa_number" Type="varchar" MaxLength="255" />
+    <Property Name="tax_comments" Type="varchar" MaxLength="255" />
+    <Property Name="tax_number" Type="varchar" MaxLength="255" />
+    <Property Name="tax_reg_number" Type="varchar" MaxLength="255" />
+    <Property Name="title" Type="varchar" MaxLength="255" />
+    <Property Name="update_date" Type="datetime" />
+    <Property Name="updated_by" Type="varchar" MaxLength="255" />
+    <Property Name="address_id" Type="varchar" MaxLength="255" />
+    <Property Name="phone_id" Type="varchar" MaxLength="255" />
+    <Property Name="addressType" Type="varchar" MaxLength="255" />
+    <Property Name="address1" Type="varchar" MaxLength="255" />
+    <Property Name="address2" Type="varchar" MaxLength="255" />
+    <Property Name="town" Type="varchar" MaxLength="255" />
+    <Property Name="city" Type="varchar" MaxLength="255" />
+    <Property Name="zip" Type="varchar" MaxLength="255" />
+    <Property Name="country_code" Type="varchar" MaxLength="255" />
+    <Property Name="state" Type="varchar" MaxLength="255" />
+    <Property Name="tph_contact_type" Type="varchar" MaxLength="255" />
+    <Property Name="tph_country_prefix" Type="varchar" MaxLength="255" />
+    <Property Name="tph_number" Type="varchar" MaxLength="255" />
+    <Property Name="tph_extension" Type="varchar" MaxLength="255" />
+    <Property Name="tph_fax" Type="varchar" MaxLength="255" />
+    <Property Name="TPH_COMMUNICATION_TYPE" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlSignatory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlSignatory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="account" Type="varchar" MaxLength="25" />
+    <Property Name="person_id" Type="varchar" MaxLength="25" />
+    <Property Name="primary_sig" Type="bit" />
+    <Property Name="role" Type="varchar" MaxLength="25" />
+    <Property Name="update_date" Type="date" />
+    <Property Name="updated_by" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="amlTitle">
+    <Key>
+      <PropertyRef Name="Title" />
+    </Key>
+    <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.amlTransaction' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="amlTransaction">
+    <Key>
+      <PropertyRef Name="account_status" />
+    </Key>
+    <Property Name="account_status" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="acctbal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="acctbaldate" Type="date" />
+    <Property Name="amount_local" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="authipaddress" Type="varchar" MaxLength="25" />
+    <Property Name="branchid" Type="varchar" MaxLength="25" />
+    <Property Name="chequetxn" Type="varchar" MaxLength="25" />
+    <Property Name="chqflag" Type="varchar" MaxLength="1" />
+    <Property Name="contracttype" Type="varchar" MaxLength="25" />
+    <Property Name="deleted" Type="bit" />
+    <Property Name="late_deposit" Type="bit" />
+    <Property Name="deleted_by" Type="varchar" MaxLength="25" />
+    <Property Name="deleted_date" Type="date" />
+    <Property Name="drcr_ind" Type="varchar" MaxLength="2" />
+    <Property Name="entry_time" Type="date" />
+    <Property Name="fx_amount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="source_branch_id" Type="varchar" MaxLength="25" />
+    <Property Name="inp_ip_address" Type="varchar" MaxLength="25" />
+    <Property Name="institution_code" Type="varchar" MaxLength="25" />
+    <Property Name="institution_name" Type="varchar" MaxLength="255" />
+    <Property Name="other_bank_account" Type="varchar" MaxLength="255" />
+    <Property Name="other_bank_acct_name" Type="varchar" MaxLength="255" />
+    <Property Name="person_type" Type="varchar" MaxLength="25" />
+    <Property Name="posted" Type="bit" />
+    <Property Name="posted_date" Type="date" />
+    <Property Name="rate" Type="varchar" MaxLength="25" />
+    <Property Name="schm_code" Type="varchar" MaxLength="25" />
+    <Property Name="schm_type" Type="varchar" MaxLength="25" />
+    <Property Name="serial_num" Type="varchar" MaxLength="25" />
+    <Property Name="tran_currency" Type="varchar" MaxLength="25" />
+    <Property Name="tran_date" Type="date" />
+    <Property Name="tran_id" Type="varchar" MaxLength="25" />
+    <Property Name="tran_description" Type="varchar" MaxLength="25" />
+    <Property Name="tran_subtype" Type="varchar" MaxLength="25" />
+    <Property Name="tran_type" Type="varchar" MaxLength="25" />
+    <Property Name="txn_country" Type="varchar" MaxLength="25" />
+    <Property Name="value_date" Type="date" />
+    <Property Name="account" Type="varchar" MaxLength="25" />
+    <Property Name="authoriser" Type="varchar" MaxLength="25" />
+    <Property Name="customer" Type="varchar" MaxLength="25" />
+    <Property Name="inputter_user_id" Type="varchar" MaxLength="25" />
+    <Property Name="person_id" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="CommunicationType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompanyInfo">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConductionType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContactType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.Currency' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyKey" />
+    </Key>
+    <Property Name="CurrencyKey" Type="int" Nullable="false" />
+    <Property Name="currency_code" Type="varchar" MaxLength="50" />
+    <Property Name="alpha_code" Type="varchar" MaxLength="50" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="category" Type="varchar" MaxLength="13" />
+    <Property Name="InsertAuditKey" Type="int" />
+    <Property Name="UpdateAuditKey" Type="int" />
+  </EntityType>
+  <EntityType Name="entity_person_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="entity_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntityLegalFormType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="foreign_currency">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="foreign_currency_code" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="foreign_amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="foreign_exchange_rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundsType">
+    <Key>
+      <PropertyRef Name="Value" />
+    </Key>
+    <Property Name="Value" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GenderType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IdentifierType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="indicator_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="party_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.PEP' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PEP">
+    <Key>
+      <PropertyRef Name="Pep_country" />
+    </Key>
+    <Property Name="Pep_country" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Function_name" Type="varchar" MaxLength="255" />
+    <Property Name="Function_description" Type="varchar" MaxLength="8000" />
+    <Property Name="Pep_date_range" Type="xml" />
+    <Property Name="Comments" Type="varchar" MaxLength="8000" />
+  </EntityType>
+  <EntityType Name="PersonRelatedPersons">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="person_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RADAR_FIU_IDENTITY">
+    <Key>
+      <PropertyRef Name="FIU_IDENTITY" />
+    </Key>
+    <Property Name="FIU_IDENTITY" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="CREATED_BY" Type="varchar" MaxLength="255" />
+    <Property Name="DATE_CREATED" Type="datetime" />
+    <Property Name="FIU_CODE" Type="varchar" MaxLength="255" />
+    <Property Name="FIU_DESCRIPTION" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="RADAR_IDENTITY_FORMAT">
+    <Key>
+      <PropertyRef Name="ID_FORMAT_SEQUENCE" />
+    </Key>
+    <Property Name="ID_FORMAT_SEQUENCE" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AGE_LIMIT" Type="numeric" Precision="28" Scale="0" />
+    <Property Name="COUNTRY_CODE" Type="varchar" MaxLength="255" />
+    <Property Name="CREATED_BY" Type="varchar" MaxLength="255" />
+    <Property Name="DATE_CREATED" Type="datetime2" Precision="7" />
+    <Property Name="DURATION" Type="numeric" Precision="28" Scale="0" />
+    <Property Name="EXPIRY_BASIS" Type="varchar" MaxLength="255" />
+    <Property Name="ID_FORMAT" Type="varchar" MaxLength="255" />
+    <Property Name="ISSUER_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="MONITOR_EXPIRY" Type="bit" />
+    <Property Name="OTHER_DURATION" Type="numeric" Precision="28" Scale="0" />
+    <Property Name="FIU_IDENTITY" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="SubmissionType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TitleLookup">
+    <Key>
+      <PropertyRef Name="SerialNumber" />
+    </Key>
+    <Property Name="SerialNumber" Type="int" Nullable="false" />
+    <Property Name="ShortTitle" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TransactionItemStatus">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionItemType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AMLData.dbo.txn_live' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="txn_live">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="DELETED" />
+      <PropertyRef Name="POSTED" />
+      <PropertyRef Name="RATE" />
+      <PropertyRef Name="ACCOUNT" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="varchar" MaxLength="1" />
+    <Property Name="ACCT_BAL" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="datetime" />
+    <Property Name="AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="CHEQUE_TXN" Type="varchar" MaxLength="255" />
+    <Property Name="DELETED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="varchar" MaxLength="30" />
+    <Property Name="DELETED_DATE" Type="datetime" />
+    <Property Name="DRCR_IND" Type="varchar" MaxLength="1" />
+    <Property Name="ENTRY_TIME" Type="datetime" />
+    <Property Name="FX_AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="INP_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="INSTITUTION_CODE" Type="varchar" MaxLength="255" />
+    <Property Name="INSTITUTION_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="POSTED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="datetime" />
+    <Property Name="RATE" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="varchar" MaxLength="10" />
+    <Property Name="SCHM_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="SERIAL_NUM" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_DATE" Type="datetime" />
+    <Property Name="TRAN_ID" Type="varchar" MaxLength="20" />
+    <Property Name="TRAN_PARTICULAR" Type="varchar" MaxLength="4000" />
+    <Property Name="TRAN_SUB_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_TYPE" Type="varchar" MaxLength="2" />
+    <Property Name="VALUE_DATE" Type="datetime" />
+    <Property Name="ACCOUNT" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AUTHORISER" Type="varchar" MaxLength="255" />
+    <Property Name="CUSTOMER" Type="varchar" MaxLength="255" />
+    <Property Name="INPUTTER_USER_ID" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_ID" Type="varchar" MaxLength="255" />
+    <Property Name="TXN_COUNTRY" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_NAME" Type="varchar" MaxLength="50" />
+    <Property Name="CHQ_FLAG" Type="decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="varchar" MaxLength="4000" />
+    <Property Name="BATCH_TRANS" Type="varchar" MaxLength="50" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="varchar" MaxLength="400" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="varchar" MaxLength="400" />
+    <Property Name="KYC_ID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="txn_live1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="varchar" MaxLength="1" />
+    <Property Name="ACCT_BAL" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="datetime" />
+    <Property Name="AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="CHEQUE_TXN" Type="varchar" MaxLength="255" />
+    <Property Name="DELETED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="varchar" MaxLength="30" />
+    <Property Name="DELETED_DATE" Type="datetime" />
+    <Property Name="DRCR_IND" Type="varchar" MaxLength="1" />
+    <Property Name="ENTRY_TIME" Type="datetime" />
+    <Property Name="FX_AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="INP_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="INSTITUTION_CODE" Type="varchar" MaxLength="255" />
+    <Property Name="INSTITUTION_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="POSTED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="datetime" />
+    <Property Name="RATE" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="varchar" MaxLength="10" />
+    <Property Name="SCHM_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="SERIAL_NUM" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_DATE" Type="datetime" />
+    <Property Name="TRAN_ID" Type="varchar" MaxLength="20" />
+    <Property Name="TRAN_PARTICULAR" Type="varchar" MaxLength="4000" />
+    <Property Name="TRAN_SUB_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_TYPE" Type="varchar" MaxLength="2" />
+    <Property Name="VALUE_DATE" Type="datetime" />
+    <Property Name="ACCOUNT" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AUTHORISER" Type="varchar" MaxLength="255" />
+    <Property Name="CUSTOMER" Type="varchar" MaxLength="255" />
+    <Property Name="INPUTTER_USER_ID" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_ID" Type="varchar" MaxLength="255" />
+    <Property Name="TXN_COUNTRY" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_NAME" Type="varchar" MaxLength="50" />
+    <Property Name="CHQ_FLAG" Type="decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="varchar" MaxLength="4000" />
+    <Property Name="BATCH_TRANS" Type="varchar" MaxLength="50" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="varchar" MaxLength="400" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="varchar" MaxLength="400" />
+    <Property Name="KYC_ID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="txn_liveOLD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="varchar" MaxLength="1" />
+    <Property Name="ACCT_BAL" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="datetime" />
+    <Property Name="AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="CHEQUE_TXN" Type="varchar" MaxLength="255" />
+    <Property Name="DELETED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="varchar" MaxLength="30" />
+    <Property Name="DELETED_DATE" Type="datetime" />
+    <Property Name="DRCR_IND" Type="varchar" MaxLength="1" />
+    <Property Name="ENTRY_TIME" Type="datetime" />
+    <Property Name="FX_AMOUNT" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="varchar" MaxLength="10" />
+    <Property Name="INP_IP_ADDRESS" Type="varchar" MaxLength="30" />
+    <Property Name="INSTITUTION_CODE" Type="varchar" MaxLength="255" />
+    <Property Name="INSTITUTION_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="varchar" MaxLength="255" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="POSTED" Type="decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="datetime" />
+    <Property Name="RATE" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="varchar" MaxLength="10" />
+    <Property Name="SCHM_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="SERIAL_NUM" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_DATE" Type="datetime" />
+    <Property Name="TRAN_ID" Type="varchar" MaxLength="20" />
+    <Property Name="TRAN_PARTICULAR" Type="varchar" MaxLength="4000" />
+    <Property Name="TRAN_SUB_TYPE" Type="varchar" MaxLength="5" />
+    <Property Name="TRAN_TYPE" Type="varchar" MaxLength="2" />
+    <Property Name="VALUE_DATE" Type="datetime" />
+    <Property Name="ACCOUNT" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AUTHORISER" Type="varchar" MaxLength="255" />
+    <Property Name="CUSTOMER" Type="varchar" MaxLength="255" />
+    <Property Name="INPUTTER_USER_ID" Type="varchar" MaxLength="255" />
+    <Property Name="PERSON_ID" Type="varchar" MaxLength="255" />
+    <Property Name="TXN_COUNTRY" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_TYPE" Type="varchar" MaxLength="10" />
+    <Property Name="CONTRACT_NAME" Type="varchar" MaxLength="50" />
+    <Property Name="CHQ_FLAG" Type="decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="varchar" MaxLength="4000" />
+    <Property Name="BATCH_TRANS" Type="varchar" MaxLength="50" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="varchar" MaxLength="400" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="varchar" MaxLength="400" />
+    <Property Name="KYC_ID" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="RDRDNTITYFORMATFDNTITY">
+    <End Role="RADAR_FIU_IDENTITY" Type="Self.RADAR_FIU_IDENTITY" Multiplicity="0..1" />
+    <End Role="RADAR_IDENTITY_FORMAT" Type="Self.RADAR_IDENTITY_FORMAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RADAR_FIU_IDENTITY">
+        <PropertyRef Name="FIU_IDENTITY" />
+      </Principal>
+      <Dependent Role="RADAR_IDENTITY_FORMAT">
+        <PropertyRef Name="FIU_IDENTITY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ReplaceCharacters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+    <Parameter Name="inputString" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="AMLDataModelStoreContainer">
+    <EntitySet Name="account_person_role_type" EntityType="Self.account_person_role_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AccountStatusType" EntityType="Self.AccountStatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="aml_configuration" EntityType="Self.aml_configuration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlAccount" EntityType="Self.amlAccount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlCountry" EntityType="Self.amlCountry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlCustomer" EntityType="Self.amlCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlPerson" EntityType="Self.amlPerson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlReportingPerson" EntityType="Self.amlReportingPerson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlTitle" EntityType="Self.amlTitle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CommunicationType" EntityType="Self.CommunicationType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompanyInfo" EntityType="Self.CompanyInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConductionType" EntityType="Self.ConductionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactType" EntityType="Self.ContactType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="entity_person_role_type" EntityType="Self.entity_person_role_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="entity_type" EntityType="Self.entity_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EntityLegalFormType" EntityType="Self.EntityLegalFormType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="foreign_currency" EntityType="Self.foreign_currency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FundsType" EntityType="Self.FundsType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GenderType" EntityType="Self.GenderType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IdentifierType" EntityType="Self.IdentifierType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="indicator_type" EntityType="Self.indicator_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="party_role_type" EntityType="Self.party_role_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonRelatedPersons" EntityType="Self.PersonRelatedPersons" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RADAR_FIU_IDENTITY" EntityType="Self.RADAR_FIU_IDENTITY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RADAR_IDENTITY_FORMAT" EntityType="Self.RADAR_IDENTITY_FORMAT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubmissionType" EntityType="Self.SubmissionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TitleLookup" EntityType="Self.TitleLookup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionItemStatus" EntityType="Self.TransactionItemStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionItemType" EntityType="Self.TransactionItemType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="txn_live1" EntityType="Self.txn_live1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="txn_liveOLD" EntityType="Self.txn_liveOLD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amlAddress" EntityType="Self.amlAddress" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlAddress].[address_id] AS [address_id], 
+    [amlAddress].[address1] AS [address1], 
+    [amlAddress].[address2] AS [address2], 
+    [amlAddress].[house_number] AS [house_number], 
+    [amlAddress].[apartment_number] AS [apartment_number], 
+    [amlAddress].[addresstype] AS [addresstype], 
+    [amlAddress].[city] AS [city], 
+    [amlAddress].[country_code] AS [country_code], 
+    [amlAddress].[state] AS [state], 
+    [amlAddress].[town] AS [town], 
+    [amlAddress].[zip] AS [zip], 
+    [amlAddress].[geo_location] AS [geo_location], 
+    [amlAddress].[latitude] AS [latitude], 
+    [amlAddress].[longitude] AS [longitude], 
+    [amlAddress].[pluscode] AS [pluscode], 
+    [amlAddress].[is_approx_location] AS [is_approx_location], 
+    [amlAddress].[comments] AS [comments]
+    FROM [dbo].[amlAddress] AS [amlAddress]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlbranch" EntityType="Self.amlbranch" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlbranch].[branch_id] AS [branch_id], 
+    [amlbranch].[name] AS [name], 
+    [amlbranch].[region] AS [region], 
+    [amlbranch].[address_id] AS [address_id], 
+    [amlbranch].[phone_id] AS [phone_id]
+    FROM [dbo].[amlbranch] AS [amlbranch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlbranchOLD" EntityType="Self.amlbranchOLD" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlbranchOLD].[branch_id] AS [branch_id], 
+    [amlbranchOLD].[name] AS [name], 
+    [amlbranchOLD].[region] AS [region], 
+    [amlbranchOLD].[address_id] AS [address_id], 
+    [amlbranchOLD].[phone_id] AS [phone_id]
+    FROM [dbo].[amlbranchOLD] AS [amlbranchOLD]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlDirector" EntityType="Self.amlDirector" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlDirector].[id] AS [id], 
+    [amlDirector].[role] AS [role], 
+    [amlDirector].[update_date] AS [update_date], 
+    [amlDirector].[customer_id] AS [customer_id], 
+    [amlDirector].[person_id] AS [person_id], 
+    [amlDirector].[updated_by] AS [updated_by], 
+    [amlDirector].[currentuser_id] AS [currentuser_id]
+    FROM [dbo].[amlDirector] AS [amlDirector]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlphone" EntityType="Self.amlphone" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlphone].[phone_id] AS [phone_id], 
+    [amlphone].[tph_contact_type] AS [tph_contact_type], 
+    [amlphone].[tph_communication_type] AS [tph_communication_type], 
+    [amlphone].[tph_country_prefix] AS [tph_country_prefix], 
+    [amlphone].[tph_extension] AS [tph_extension], 
+    [amlphone].[tph_number] AS [tph_number], 
+    [amlphone].[comments] AS [comments]
+    FROM [dbo].[amlphone] AS [amlphone]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlSignatory" EntityType="Self.amlSignatory" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlSignatory].[id] AS [id], 
+    [amlSignatory].[account] AS [account], 
+    [amlSignatory].[person_id] AS [person_id], 
+    [amlSignatory].[primary_sig] AS [primary_sig], 
+    [amlSignatory].[role] AS [role], 
+    [amlSignatory].[update_date] AS [update_date], 
+    [amlSignatory].[updated_by] AS [updated_by]
+    FROM [dbo].[amlSignatory] AS [amlSignatory]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="amlTransaction" EntityType="Self.amlTransaction" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [amlTransaction].[account_status] AS [account_status], 
+    [amlTransaction].[acctbal] AS [acctbal], 
+    [amlTransaction].[acctbaldate] AS [acctbaldate], 
+    [amlTransaction].[amount_local] AS [amount_local], 
+    [amlTransaction].[authipaddress] AS [authipaddress], 
+    [amlTransaction].[branchid] AS [branchid], 
+    [amlTransaction].[chequetxn] AS [chequetxn], 
+    [amlTransaction].[chqflag] AS [chqflag], 
+    [amlTransaction].[contracttype] AS [contracttype], 
+    [amlTransaction].[deleted] AS [deleted], 
+    [amlTransaction].[late_deposit] AS [late_deposit], 
+    [amlTransaction].[deleted_by] AS [deleted_by], 
+    [amlTransaction].[deleted_date] AS [deleted_date], 
+    [amlTransaction].[drcr_ind] AS [drcr_ind], 
+    [amlTransaction].[entry_time] AS [entry_time], 
+    [amlTransaction].[fx_amount] AS [fx_amount], 
+    [amlTransaction].[source_branch_id] AS [source_branch_id], 
+    [amlTransaction].[inp_ip_address] AS [inp_ip_address], 
+    [amlTransaction].[institution_code] AS [institution_code], 
+    [amlTransaction].[institution_name] AS [institution_name], 
+    [amlTransaction].[other_bank_account] AS [other_bank_account], 
+    [amlTransaction].[other_bank_acct_name] AS [other_bank_acct_name], 
+    [amlTransaction].[person_type] AS [person_type], 
+    [amlTransaction].[posted] AS [posted], 
+    [amlTransaction].[posted_date] AS [posted_date], 
+    [amlTransaction].[rate] AS [rate], 
+    [amlTransaction].[schm_code] AS [schm_code], 
+    [amlTransaction].[schm_type] AS [schm_type], 
+    [amlTransaction].[serial_num] AS [serial_num], 
+    [amlTransaction].[tran_currency] AS [tran_currency], 
+    [amlTransaction].[tran_date] AS [tran_date], 
+    [amlTransaction].[tran_id] AS [tran_id], 
+    [amlTransaction].[tran_description] AS [tran_description], 
+    [amlTransaction].[tran_subtype] AS [tran_subtype], 
+    [amlTransaction].[tran_type] AS [tran_type], 
+    [amlTransaction].[txn_country] AS [txn_country], 
+    [amlTransaction].[value_date] AS [value_date], 
+    [amlTransaction].[account] AS [account], 
+    [amlTransaction].[authoriser] AS [authoriser], 
+    [amlTransaction].[customer] AS [customer], 
+    [amlTransaction].[inputter_user_id] AS [inputter_user_id], 
+    [amlTransaction].[person_id] AS [person_id]
+    FROM [dbo].[amlTransaction] AS [amlTransaction]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Currency" EntityType="Self.Currency" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Currency].[CurrencyKey] AS [CurrencyKey], 
+    [Currency].[currency_code] AS [currency_code], 
+    [Currency].[alpha_code] AS [alpha_code], 
+    [Currency].[name] AS [name], 
+    [Currency].[category] AS [category], 
+    [Currency].[InsertAuditKey] AS [InsertAuditKey], 
+    [Currency].[UpdateAuditKey] AS [UpdateAuditKey]
+    FROM [dbo].[Currency] AS [Currency]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PEP" EntityType="Self.PEP" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PEP].[Pep_country] AS [Pep_country], 
+    [PEP].[Function_name] AS [Function_name], 
+    [PEP].[Function_description] AS [Function_description], 
+    [PEP].[Pep_date_range] AS [Pep_date_range], 
+    [PEP].[Comments] AS [Comments]
+    FROM [dbo].[PEP] AS [PEP]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="txn_live" EntityType="Self.txn_live" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [txn_live].[ID] AS [ID], 
+    [txn_live].[ACCOUNT_STATUS] AS [ACCOUNT_STATUS], 
+    [txn_live].[ACCT_BAL] AS [ACCT_BAL], 
+    [txn_live].[ACCT_BAL_DATE] AS [ACCT_BAL_DATE], 
+    [txn_live].[AMOUNT] AS [AMOUNT], 
+    [txn_live].[AUTH_IP_ADDRESS] AS [AUTH_IP_ADDRESS], 
+    [txn_live].[BRANCH_ID] AS [BRANCH_ID], 
+    [txn_live].[CHEQUE_TXN] AS [CHEQUE_TXN], 
+    [txn_live].[DELETED] AS [DELETED], 
+    [txn_live].[DELETED_BY] AS [DELETED_BY], 
+    [txn_live].[DELETED_DATE] AS [DELETED_DATE], 
+    [txn_live].[DRCR_IND] AS [DRCR_IND], 
+    [txn_live].[ENTRY_TIME] AS [ENTRY_TIME], 
+    [txn_live].[FX_AMOUNT] AS [FX_AMOUNT], 
+    [txn_live].[INIT_BRANCH_ID] AS [INIT_BRANCH_ID], 
+    [txn_live].[INP_IP_ADDRESS] AS [INP_IP_ADDRESS], 
+    [txn_live].[INSTITUTION_CODE] AS [INSTITUTION_CODE], 
+    [txn_live].[INSTITUTION_NAME] AS [INSTITUTION_NAME], 
+    [txn_live].[OTHER_BANK_ACCOUNT] AS [OTHER_BANK_ACCOUNT], 
+    [txn_live].[OTHER_BANK_ACCT_NAME] AS [OTHER_BANK_ACCT_NAME], 
+    [txn_live].[PERSON_TYPE] AS [PERSON_TYPE], 
+    [txn_live].[POSTED] AS [POSTED], 
+    [txn_live].[POSTED_DATE] AS [POSTED_DATE], 
+    [txn_live].[RATE] AS [RATE], 
+    [txn_live].[SCHM_CODE] AS [SCHM_CODE], 
+    [txn_live].[SCHM_TYPE] AS [SCHM_TYPE], 
+    [txn_live].[SERIAL_NUM] AS [SERIAL_NUM], 
+    [txn_live].[TRAN_CURRENCY] AS [TRAN_CURRENCY], 
+    [txn_live].[TRAN_DATE] AS [TRAN_DATE], 
+    [txn_live].[TRAN_ID] AS [TRAN_ID], 
+    [txn_live].[TRAN_PARTICULAR] AS [TRAN_PARTICULAR], 
+    [txn_live].[TRAN_SUB_TYPE] AS [TRAN_SUB_TYPE], 
+    [txn_live].[TRAN_TYPE] AS [TRAN_TYPE], 
+    [txn_live].[VALUE_DATE] AS [VALUE_DATE], 
+    [txn_live].[ACCOUNT] AS [ACCOUNT], 
+    [txn_live].[AUTHORISER] AS [AUTHORISER], 
+    [txn_live].[CUSTOMER] AS [CUSTOMER], 
+    [txn_live].[INPUTTER_USER_ID] AS [INPUTTER_USER_ID], 
+    [txn_live].[PERSON_ID] AS [PERSON_ID], 
+    [txn_live].[TXN_COUNTRY] AS [TXN_COUNTRY], 
+    [txn_live].[CONTRACT_TYPE] AS [CONTRACT_TYPE], 
+    [txn_live].[CONTRACT_NAME] AS [CONTRACT_NAME], 
+    [txn_live].[CHQ_FLAG] AS [CHQ_FLAG], 
+    [txn_live].[ORG_SERIAL] AS [ORG_SERIAL], 
+    [txn_live].[TRAN_COMMENTS] AS [TRAN_COMMENTS], 
+    [txn_live].[BATCH_TRANS] AS [BATCH_TRANS], 
+    [txn_live].[ADDRESS_OF_BENEFICIARY] AS [ADDRESS_OF_BENEFICIARY], 
+    [txn_live].[PURPOSE_OF_TRANSACTION] AS [PURPOSE_OF_TRANSACTION], 
+    [txn_live].[KYC_ID] AS [KYC_ID]
+    FROM [dbo].[txn_live] AS [txn_live]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="RDRDNTITYFORMATFDNTITY" Association="Self.RDRDNTITYFORMATFDNTITY">
+      <End Role="RADAR_FIU_IDENTITY" EntitySet="RADAR_FIU_IDENTITY" />
+      <End Role="RADAR_IDENTITY_FORMAT" EntitySet="RADAR_IDENTITY_FORMAT" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

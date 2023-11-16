@@ -756,11 +756,11 @@ namespace DWBIProjectAPI.Controllers
 
 
 
-        public class IdentifierType
-        {
-            public string Item { get; set; }
-            public string Description { get; set; }
-        }
+        //public class IdentifierType
+        //{
+        //    public string Item { get; set; }
+        //    public string Description { get; set; }
+        //}
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
@@ -1238,11 +1238,11 @@ namespace DWBIProjectAPI.Controllers
 
 
 
-        public class ContactType
-        {
-            public string Item { get; set; }
-            public string Description { get; set; }
-        }
+        //public class ContactType
+        //{
+        //    public string Item { get; set; }
+        //    public string Description { get; set; }
+        //}
 
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
@@ -1282,11 +1282,11 @@ namespace DWBIProjectAPI.Controllers
         }
 
 
-        public class GenderType
-        {
-            public string Item { get; set; }
-            public string Description { get; set; }
-        }
+        //public class GenderType
+        //{
+        //    public string Item { get; set; }
+        //    public string Description { get; set; }
+        //}
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
@@ -1326,11 +1326,11 @@ namespace DWBIProjectAPI.Controllers
 
 
 
-        public class CommunicationType
-        {
-            public string Item { get; set; }
-            public string Description { get; set; }
-        }
+        //public class CommunicationType
+        //{
+        //    public string Item { get; set; }
+        //    public string Description { get; set; }
+        //}
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]

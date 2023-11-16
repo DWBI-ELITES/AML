@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="920edc6e82174f2284905cab877be400" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="AMLDataModel.account_person_role_type" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.AccountStatusType" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.AccountType" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.CommunicationType" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.CompanyInfo" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.ConductionType" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.ContactType" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.entity_person_role_type" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.entity_type" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.EntityLegalFormType" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.foreign_currency" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.FundsType" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.GenderType" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.IdentifierType" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.indicator_type" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.party_role_type" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.PersonRelatedPerson" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.RADAR_FIU_IDENTITY" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.RADAR_IDENTITY_FORMAT" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.SubmissionType" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.TitleLookup" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.TransactionItemStatu" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.TransactionItemType" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.txn_live1" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.txn_liveOLD" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlAddress" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlbranch" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlbranchOLD" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlDirector" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlphone" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.amlTransaction" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.Currency" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.PEP" Width="1.5" PointX="14.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AMLDataModel.txn_live" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="AMLDataModel.RDRDNTITYFORMATFDNTITY" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AMLDataModel.amlAccount" Width="1.5" PointX="9.375" PointY="16.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlCountry" Width="1.5" PointX="11.375" PointY="16.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlCustomer" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlPerson" Width="1.5" PointX="13.375" PointY="17.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlTitle" Width="1.5" PointX="17.375" PointY="15.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlSignatory" Width="1.5" PointX="15.375" PointY="17.75" />
+        <EntityTypeShape EntityType="AMLDataModel.aml_configuration" Width="1.5" PointX="17.375" PointY="17.75" />
+        <EntityTypeShape EntityType="AMLDataModel.amlReportingPerson" Width="1.5" PointX="19.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -9,8 +9,8 @@ namespace DWBIProjectAPI.Data
 {
     public class DataDbContext : DbContext
     {
-        public DataDbContext() : base("Server=ADEGBOYEGAOLUWA\\GBEN;Database=FintrakDWDev;User Id=sa;Password=sqluser10$;"
-)
+        public DataDbContext() : base("Server=ADEGBOYEGAOLUWA\\GBEN;Database=FintrakDWDev;User Id=sa;Password=sqluser10$;")
+
         {
         }
 
@@ -19,4 +19,7 @@ namespace DWBIProjectAPI.Data
         public DbSet<ExposureSummaryMoM> ExposureSummaryMoMs { get; set; }
         public DbSet<TPersonModel> personModels { get; set; }
     }
+
+       
+    
 }

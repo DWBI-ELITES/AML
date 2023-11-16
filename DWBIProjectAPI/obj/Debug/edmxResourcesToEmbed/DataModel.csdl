@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AMLDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="account_person_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccountStatusType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommunicationType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompanyInfo">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConductionType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContactType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="entity_person_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="entity_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntityLegalFormType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="foreign_currency">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="foreign_currency_code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="foreign_amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="foreign_exchange_rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundsType">
+    <Key>
+      <PropertyRef Name="Value" />
+    </Key>
+    <Property Name="Value" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GenderType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IdentifierType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="indicator_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="party_role_type">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonRelatedPerson">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="person_id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RADAR_FIU_IDENTITY">
+    <Key>
+      <PropertyRef Name="FIU_IDENTITY" />
+    </Key>
+    <Property Name="FIU_IDENTITY" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CREATED_BY" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DATE_CREATED" Type="DateTime" Precision="3" />
+    <Property Name="FIU_CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FIU_DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RADAR_IDENTITY_FORMAT" Relationship="Self.RDRDNTITYFORMATFDNTITY" FromRole="RADAR_FIU_IDENTITY" ToRole="RADAR_IDENTITY_FORMAT" />
+  </EntityType>
+  <EntityType Name="RADAR_IDENTITY_FORMAT">
+    <Key>
+      <PropertyRef Name="ID_FORMAT_SEQUENCE" />
+    </Key>
+    <Property Name="ID_FORMAT_SEQUENCE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AGE_LIMIT" Type="Decimal" Precision="28" Scale="0" />
+    <Property Name="COUNTRY_CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_BY" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DATE_CREATED" Type="DateTime" Precision="7" />
+    <Property Name="DURATION" Type="Decimal" Precision="28" Scale="0" />
+    <Property Name="EXPIRY_BASIS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ID_FORMAT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ISSUER_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="MONITOR_EXPIRY" Type="Boolean" />
+    <Property Name="OTHER_DURATION" Type="Decimal" Precision="28" Scale="0" />
+    <Property Name="FIU_IDENTITY" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RADAR_FIU_IDENTITY" Relationship="Self.RDRDNTITYFORMATFDNTITY" FromRole="RADAR_IDENTITY_FORMAT" ToRole="RADAR_FIU_IDENTITY" />
+  </EntityType>
+  <EntityType Name="SubmissionType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TitleLookup">
+    <Key>
+      <PropertyRef Name="SerialNumber" />
+    </Key>
+    <Property Name="SerialNumber" Type="Int32" Nullable="false" />
+    <Property Name="ShortTitle" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TransactionItemStatu">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionItemType">
+    <Key>
+      <PropertyRef Name="Item" />
+    </Key>
+    <Property Name="Item" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="txn_live1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ACCT_BAL" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="DateTime" Precision="3" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CHEQUE_TXN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="DRCR_IND" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ENTRY_TIME" Type="DateTime" Precision="3" />
+    <Property Name="FX_AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="INP_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="POSTED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="RATE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SCHM_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="SERIAL_NUM" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_DATE" Type="DateTime" Precision="3" />
+    <Property Name="TRAN_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_PARTICULAR" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_SUB_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_TYPE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="VALUE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AUTHORISER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTOMER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INPUTTER_USER_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="TXN_COUNTRY" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CHQ_FLAG" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_TRANS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="KYC_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="txn_liveOLD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ACCT_BAL" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="DateTime" Precision="3" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CHEQUE_TXN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="DRCR_IND" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ENTRY_TIME" Type="DateTime" Precision="3" />
+    <Property Name="FX_AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="INP_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="POSTED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="RATE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SCHM_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="SERIAL_NUM" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_DATE" Type="DateTime" Precision="3" />
+    <Property Name="TRAN_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_PARTICULAR" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_SUB_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_TYPE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="VALUE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AUTHORISER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTOMER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INPUTTER_USER_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="TXN_COUNTRY" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CHQ_FLAG" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_TRANS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="KYC_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlAddress">
+    <Key>
+      <PropertyRef Name="address_id" />
+    </Key>
+    <Property Name="address_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="house_number" Type="Int32" />
+    <Property Name="apartment_number" Type="Int32" />
+    <Property Name="addresstype" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="country_code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="town" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="geo_location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="latitude" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="longitude" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="pluscode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="is_approx_location" Type="Boolean" />
+    <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlbranch">
+    <Key>
+      <PropertyRef Name="branch_id" />
+    </Key>
+    <Property Name="branch_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="region" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="phone_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlbranchOLD">
+    <Key>
+      <PropertyRef Name="branch_id" />
+    </Key>
+    <Property Name="branch_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="region" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="phone_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlDirector">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="role" />
+      <PropertyRef Name="customer_id" />
+      <PropertyRef Name="person_id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="update_date" Type="DateTime" Precision="0" />
+    <Property Name="customer_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="person_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="updated_by" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="currentuser_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlphone">
+    <Key>
+      <PropertyRef Name="phone_id" />
+      <PropertyRef Name="tph_contact_type" />
+      <PropertyRef Name="tph_communication_type" />
+    </Key>
+    <Property Name="phone_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tph_contact_type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tph_communication_type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tph_country_prefix" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="tph_extension" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tph_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlTransaction">
+    <Key>
+      <PropertyRef Name="account_status" />
+    </Key>
+    <Property Name="account_status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="acctbal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="acctbaldate" Type="DateTime" Precision="0" />
+    <Property Name="amount_local" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="authipaddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="branchid" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="chequetxn" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="chqflag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="contracttype" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="deleted" Type="Boolean" />
+    <Property Name="late_deposit" Type="Boolean" />
+    <Property Name="deleted_by" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="deleted_date" Type="DateTime" Precision="0" />
+    <Property Name="drcr_ind" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="entry_time" Type="DateTime" Precision="0" />
+    <Property Name="fx_amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="source_branch_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="inp_ip_address" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="institution_code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="institution_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="other_bank_account" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="other_bank_acct_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="person_type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="posted" Type="Boolean" />
+    <Property Name="posted_date" Type="DateTime" Precision="0" />
+    <Property Name="rate" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="schm_code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="schm_type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="serial_num" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tran_currency" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tran_date" Type="DateTime" Precision="0" />
+    <Property Name="tran_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tran_description" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tran_subtype" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="tran_type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="txn_country" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="value_date" Type="DateTime" Precision="0" />
+    <Property Name="account" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="authoriser" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="customer" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="inputter_user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="person_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyKey" />
+    </Key>
+    <Property Name="CurrencyKey" Type="Int32" Nullable="false" />
+    <Property Name="currency_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="alpha_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="category" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="InsertAuditKey" Type="Int32" />
+    <Property Name="UpdateAuditKey" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PEP">
+    <Key>
+      <PropertyRef Name="Pep_country" />
+    </Key>
+    <Property Name="Pep_country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Function_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Function_description" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="Pep_date_range" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="txn_live">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="DELETED" />
+      <PropertyRef Name="POSTED" />
+      <PropertyRef Name="RATE" />
+      <PropertyRef Name="ACCOUNT" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ACCOUNT_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ACCT_BAL" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="ACCT_BAL_DATE" Type="DateTime" Precision="3" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="AUTH_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CHEQUE_TXN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="DELETED_BY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DELETED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="DRCR_IND" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ENTRY_TIME" Type="DateTime" Precision="3" />
+    <Property Name="FX_AMOUNT" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="INIT_BRANCH_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="INP_IP_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INSTITUTION_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_BANK_ACCT_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="POSTED" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+    <Property Name="POSTED_DATE" Type="DateTime" Precision="3" />
+    <Property Name="RATE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SCHM_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SCHM_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="SERIAL_NUM" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_CURRENCY" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_DATE" Type="DateTime" Precision="3" />
+    <Property Name="TRAN_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_PARTICULAR" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_SUB_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TRAN_TYPE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="VALUE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="ACCOUNT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AUTHORISER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CUSTOMER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="INPUTTER_USER_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PERSON_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="TXN_COUNTRY" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CHQ_FLAG" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="ORG_SERIAL" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="TRAN_COMMENTS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_TRANS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ADDRESS_OF_BENEFICIARY" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="PURPOSE_OF_TRANSACTION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="KYC_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="RDRDNTITYFORMATFDNTITY">
+    <End Role="RADAR_FIU_IDENTITY" Type="Self.RADAR_FIU_IDENTITY" Multiplicity="0..1" />
+    <End Role="RADAR_IDENTITY_FORMAT" Type="Self.RADAR_IDENTITY_FORMAT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RADAR_FIU_IDENTITY">
+        <PropertyRef Name="FIU_IDENTITY" />
+      </Principal>
+      <Dependent Role="RADAR_IDENTITY_FORMAT">
+        <PropertyRef Name="FIU_IDENTITY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="account_person_role_type" EntityType="Self.account_person_role_type" />
+    <EntitySet Name="AccountStatusTypes" EntityType="Self.AccountStatusType" />
+    <EntitySet Name="AccountTypes" EntityType="Self.AccountType" />
+    <EntitySet Name="CommunicationTypes" EntityType="Self.CommunicationType" />
+    <EntitySet Name="CompanyInfoes" EntityType="Self.CompanyInfo" />
+    <EntitySet Name="ConductionTypes" EntityType="Self.ConductionType" />
+    <EntitySet Name="ContactTypes" EntityType="Self.ContactType" />
+    <EntitySet Name="entity_person_role_type" EntityType="Self.entity_person_role_type" />
+    <EntitySet Name="entity_type" EntityType="Self.entity_type" />
+    <EntitySet Name="EntityLegalFormTypes" EntityType="Self.EntityLegalFormType" />
+    <EntitySet Name="foreign_currency" EntityType="Self.foreign_currency" />
+    <EntitySet Name="FundsTypes" EntityType="Self.FundsType" />
+    <EntitySet Name="GenderTypes" EntityType="Self.GenderType" />
+    <EntitySet Name="IdentifierTypes" EntityType="Self.IdentifierType" />
+    <EntitySet Name="indicator_type" EntityType="Self.indicator_type" />
+    <EntitySet Name="party_role_type" EntityType="Self.party_role_type" />
+    <EntitySet Name="PersonRelatedPersons" EntityType="Self.PersonRelatedPerson" />
+    <EntitySet Name="RADAR_FIU_IDENTITY" EntityType="Self.RADAR_FIU_IDENTITY" />
+    <EntitySet Name="RADAR_IDENTITY_FORMAT" EntityType="Self.RADAR_IDENTITY_FORMAT" />
+    <EntitySet Name="SubmissionTypes" EntityType="Self.SubmissionType" />
+    <EntitySet Name="TitleLookups" EntityType="Self.TitleLookup" />
+    <EntitySet Name="TransactionItemStatus" EntityType="Self.TransactionItemStatu" />
+    <EntitySet Name="TransactionItemTypes" EntityType="Self.TransactionItemType" />
+    <EntitySet Name="txn_live1" EntityType="Self.txn_live1" />
+    <EntitySet Name="txn_liveOLD" EntityType="Self.txn_liveOLD" />
+    <EntitySet Name="amlAddresses" EntityType="Self.amlAddress" />
+    <EntitySet Name="amlbranches" EntityType="Self.amlbranch" />
+    <EntitySet Name="amlbranchOLDs" EntityType="Self.amlbranchOLD" />
+    <EntitySet Name="amlDirectors" EntityType="Self.amlDirector" />
+    <EntitySet Name="amlphones" EntityType="Self.amlphone" />
+    <EntitySet Name="amlTransactions" EntityType="Self.amlTransaction" />
+    <EntitySet Name="Currencies" EntityType="Self.Currency" />
+    <EntitySet Name="PEPs" EntityType="Self.PEP" />
+    <EntitySet Name="txn_live" EntityType="Self.txn_live" />
+    <AssociationSet Name="RDRDNTITYFORMATFDNTITY" Association="Self.RDRDNTITYFORMATFDNTITY">
+      <End Role="RADAR_FIU_IDENTITY" EntitySet="RADAR_FIU_IDENTITY" />
+      <End Role="RADAR_IDENTITY_FORMAT" EntitySet="RADAR_IDENTITY_FORMAT" />
+    </AssociationSet>
+    <EntitySet Name="amlAccounts" EntityType="AMLDataModel.amlAccount" />
+    <EntitySet Name="amlCountries" EntityType="AMLDataModel.amlCountry" />
+    <EntitySet Name="amlCustomers" EntityType="AMLDataModel.amlCustomer" />
+    <EntitySet Name="amlPersons" EntityType="AMLDataModel.amlPerson" />
+    <EntitySet Name="amlTitles" EntityType="AMLDataModel.amlTitle" />
+    <EntitySet Name="amlSignatories" EntityType="AMLDataModel.amlSignatory" />
+    <EntitySet Name="aml_configuration" EntityType="AMLDataModel.aml_configuration" />
+    <EntitySet Name="amlReportingPersons" EntityType="AMLDataModel.amlReportingPerson" />
+  </EntityContainer>
+  <EntityType Name="amlAccount">
+    <Key>
+      <PropertyRef Name="account" />
+    </Key>
+    <Property Name="account" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="account_officer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="account_ownership" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="account_type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="balance" Type="Decimal" Precision="20" Scale="2" />
+    <Property Name="balance_date" Type="DateTime" Precision="0" />
+    <Property Name="branch" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="cust_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="closed" Type="DateTime" Precision="0" />
+    <Property Name="comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="currency_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="entity_cre_flg" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="iban" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="new_account" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="opened" Type="DateTime" Precision="0" />
+    <Property Name="previous_status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="schm_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="schm_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="status_date" Type="DateTime" Precision="0" />
+    <Property Name="swift" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="temp_account" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="frez_reason_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="acct_cls_date" Type="DateTime" Precision="0" />
+    <Property Name="acct_cls_flg" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="clr_bal_amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="cum_cr_amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="cum_dr_amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="drwng_power" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="frez_code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="last_tran_date_cr" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="last_tran_date_dr" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="fx_cum_cr_amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="fx_cum_dr_amt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="sanct_lim" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="last_tran_date" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="amlCountry">
+    <Key>
+      <PropertyRef Name="CountryCode" />
+    </Key>
+    <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="amlCustomer">
+    <Key>
+      <PropertyRef Name="cust_id" />
+    </Key>
+    <Property Name="cust_id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="addressId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="birth_place" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="business" Type="Int32" />
+    <Property Name="business_closed" Type="Int32" />
+    <Property Name="business_closed_date" Type="DateTime" Precision="0" />
+    <Property Name="bvn" Type="Int64" />
+    <Property Name="commercial_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="cust_sex" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="cust_type_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="customer_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="employer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner" Type="Int32" />
+    <Property Name="incorporation_country_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="incorporation_date" Type="DateTime" Precision="0" />
+    <Property Name="incorporation_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="incorporation_state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="issuer_id" Type="Int32" />
+    <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="mothers_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nature_of_txn" Type="Int32" />
+    <Property Name="occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="phoneId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="prefix_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="referee_person_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="reference_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="residence" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="sex" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="source_of_fund" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ssn" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_date_arrival" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_passport_exp_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_iss_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_valid_from" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_permit_valid_to" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_visa_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tax_comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="tax_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tax_reg_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="update_date" Type="DateTime" Precision="0" />
+    <Property Name="updated_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="work_dir" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="addressType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="town" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="zip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="country_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tph_contact_type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="tph_communication_type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="tph_country_prefix" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="tph_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="tph_extension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="tph_fax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlPerson">
+    <Key>
+      <PropertyRef Name="PERSONID" />
+    </Key>
+    <Property Name="PERSONID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="birth_place" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="cust_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="deceased" Type="Boolean" />
+    <Property Name="deceased_date" Type="DateTime" Precision="0" />
+    <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="employer_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner" Type="Boolean" />
+    <Property Name="identifier_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_expire_date" Type="DateTime" Precision="0" />
+    <Property Name="identifier_issue_date" Type="DateTime" Precision="0" />
+    <Property Name="identifier_issuer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_other" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="issuer_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="lga_of_origin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="middle_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="mothers_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nationality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_relationship" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="occupation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_zip" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_alias" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="passport_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="passport_issue_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="prefix_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RECORD_STATUS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="referee_person_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="reference_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="residence" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="sex" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="source_of_weqlth" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ssn" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_date_arrival" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_nationality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_passport_exp_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_iss_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_valid_from" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_permit_valid_to" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_visa_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_reg_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="phone_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="addressType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="town" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="zip" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_contact_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_country_prefix" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_extension" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_fax" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="TPH_COMMUNICATION_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="amlTitle">
+    <Key>
+      <PropertyRef Name="Title" />
+    </Key>
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="amlSignatory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="account" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="person_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="primary_sig" Type="Boolean" />
+    <Property Name="role" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="update_date" Type="DateTime" Precision="0" />
+    <Property Name="updated_by" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="aml_configuration">
+    <Key>
+      <PropertyRef Name="config_id" />
+    </Key>
+    <Property Name="config_id" Type="Int32" Nullable="false" />
+    <Property Name="institution_code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="institution_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="swift_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="schema_version" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="individual_threshold_amt" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="cooperate_threshold_amt" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="monitoring_duration" Type="Int32" Nullable="false" />
+    <Property Name="rentity_id" Type="Int32" />
+    <Property Name="currency_code_local" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="alert_threshold" Type="Int32" Nullable="false" />
+    <Property Name="transaction_types" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="risk_score_threshold" Type="Int32" />
+    <Property Name="automatic_review" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="amlReportingPerson">
+    <Key>
+      <PropertyRef Name="REPORTINGPERSONID" />
+    </Key>
+    <Property Name="REPORTINGPERSONID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="birth_place" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="cust_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="deceased" Type="Boolean" />
+    <Property Name="deceased_date" Type="DateTime" Precision="0" />
+    <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="employer_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner" Type="Boolean" />
+    <Property Name="identifier_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_expire_date" Type="DateTime" Precision="0" />
+    <Property Name="identifier_issue_date" Type="DateTime" Precision="0" />
+    <Property Name="identifier_issuer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_other" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="identifier_state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="issuer_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="lga_of_origin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="middle_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="mothers_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nationality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="nok_relationship" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="occupation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_add_zip" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="p_alias" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="passport_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="passport_issue_country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="prefix_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RECORD_STATUS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="referee_person_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="reference_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="residence" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="sex" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="source_of_weqlth" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ssn" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_date_arrival" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_nationality" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_passport_exp_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_iss_dt" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_passport_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foreigner_permit_valid_from" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_permit_valid_to" Type="DateTime" Precision="0" />
+    <Property Name="foreigner_visa_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tax_reg_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="phone_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="addressType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="town" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="zip" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_contact_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_country_prefix" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_number" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_extension" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="tph_fax" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="TPH_COMMUNICATION_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

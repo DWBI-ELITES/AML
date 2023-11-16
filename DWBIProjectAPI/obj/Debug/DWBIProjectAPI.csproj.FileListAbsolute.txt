@@ -82,7 +82,6 @@ C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\Sys
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\System.Web.WebPages.Razor.xml
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\Antlr3.Runtime.pdb
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\obj\Debug\DWBIProjectAPI.csproj.AssemblyReference.cache
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\obj\Debug\DWBIProjectAPI.csproj.CoreCompileInputs.cache
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\obj\Debug\DWBIProjectAPI.csproj.CopyComplete
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\obj\Debug\DWBIProjectAPI.dll
@@ -129,3 +128,4 @@ C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\EPP
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\EPPlus.xml
 C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\bin\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI\obj\Debug\DWBIProjectAPI.csproj.AssemblyReference.cache

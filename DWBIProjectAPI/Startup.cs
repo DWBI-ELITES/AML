@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+
 
 namespace DWBIProjectAPI
 {
@@ -18,6 +22,10 @@ namespace DWBIProjectAPI
                            .AllowAnyMethod();
                 });
             });
+
+
+       
+
 
             // ... other configurations
         }

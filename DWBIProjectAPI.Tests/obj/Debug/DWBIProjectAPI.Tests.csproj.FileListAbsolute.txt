@@ -1,0 +1,2 @@
+C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI.Tests\obj\Debug\DWBIProjectAPI.Tests.csproj.AssemblyReference.cache
+C:\Users\Adegboyega.Oluwagbem\source\repos\DWBIProjectAPI\DWBIProjectAPI.Tests\obj\Debug\DWBIProjectAPI.Tests.csproj.CoreCompileInputs.cache

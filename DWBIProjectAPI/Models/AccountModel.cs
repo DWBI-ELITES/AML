@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace DWBIProjectAPI.Models
 {
     public class AccountModel
     {
+        [Key]
         public string account { get; set; }
         public string account_officer { get; set; }
         public string account_ownership { get; set; }

@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AMLDataModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="account_person_role_type">
+      <EntityTypeMapping TypeName="AMLDataModel.account_person_role_type">
+        <MappingFragment StoreEntitySet="account_person_role_type">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccountStatusTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.AccountStatusType">
+        <MappingFragment StoreEntitySet="AccountStatusType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccountTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.AccountType">
+        <MappingFragment StoreEntitySet="AccountType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommunicationTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.CommunicationType">
+        <MappingFragment StoreEntitySet="CommunicationType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyInfoes">
+      <EntityTypeMapping TypeName="AMLDataModel.CompanyInfo">
+        <MappingFragment StoreEntitySet="CompanyInfo">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConductionTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.ConductionType">
+        <MappingFragment StoreEntitySet="ConductionType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContactTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.ContactType">
+        <MappingFragment StoreEntitySet="ContactType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="entity_person_role_type">
+      <EntityTypeMapping TypeName="AMLDataModel.entity_person_role_type">
+        <MappingFragment StoreEntitySet="entity_person_role_type">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="entity_type">
+      <EntityTypeMapping TypeName="AMLDataModel.entity_type">
+        <MappingFragment StoreEntitySet="entity_type">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntityLegalFormTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.EntityLegalFormType">
+        <MappingFragment StoreEntitySet="EntityLegalFormType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="foreign_currency">
+      <EntityTypeMapping TypeName="AMLDataModel.foreign_currency">
+        <MappingFragment StoreEntitySet="foreign_currency">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="foreign_currency_code" ColumnName="foreign_currency_code" />
+          <ScalarProperty Name="foreign_amount" ColumnName="foreign_amount" />
+          <ScalarProperty Name="foreign_exchange_rate" ColumnName="foreign_exchange_rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FundsTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.FundsType">
+        <MappingFragment StoreEntitySet="FundsType">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GenderTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.GenderType">
+        <MappingFragment StoreEntitySet="GenderType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IdentifierTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.IdentifierType">
+        <MappingFragment StoreEntitySet="IdentifierType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="indicator_type">
+      <EntityTypeMapping TypeName="AMLDataModel.indicator_type">
+        <MappingFragment StoreEntitySet="indicator_type">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="party_role_type">
+      <EntityTypeMapping TypeName="AMLDataModel.party_role_type">
+        <MappingFragment StoreEntitySet="party_role_type">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonRelatedPersons">
+      <EntityTypeMapping TypeName="AMLDataModel.PersonRelatedPerson">
+        <MappingFragment StoreEntitySet="PersonRelatedPersons">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RADAR_FIU_IDENTITY">
+      <EntityTypeMapping TypeName="AMLDataModel.RADAR_FIU_IDENTITY">
+        <MappingFragment StoreEntitySet="RADAR_FIU_IDENTITY">
+          <ScalarProperty Name="FIU_IDENTITY" ColumnName="FIU_IDENTITY" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
+          <ScalarProperty Name="FIU_CODE" ColumnName="FIU_CODE" />
+          <ScalarProperty Name="FIU_DESCRIPTION" ColumnName="FIU_DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RADAR_IDENTITY_FORMAT">
+      <EntityTypeMapping TypeName="AMLDataModel.RADAR_IDENTITY_FORMAT">
+        <MappingFragment StoreEntitySet="RADAR_IDENTITY_FORMAT">
+          <ScalarProperty Name="ID_FORMAT_SEQUENCE" ColumnName="ID_FORMAT_SEQUENCE" />
+          <ScalarProperty Name="AGE_LIMIT" ColumnName="AGE_LIMIT" />
+          <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
+          <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+          <ScalarProperty Name="EXPIRY_BASIS" ColumnName="EXPIRY_BASIS" />
+          <ScalarProperty Name="ID_FORMAT" ColumnName="ID_FORMAT" />
+          <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+          <ScalarProperty Name="MONITOR_EXPIRY" ColumnName="MONITOR_EXPIRY" />
+          <ScalarProperty Name="OTHER_DURATION" ColumnName="OTHER_DURATION" />
+          <ScalarProperty Name="FIU_IDENTITY" ColumnName="FIU_IDENTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubmissionTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.SubmissionType">
+        <MappingFragment StoreEntitySet="SubmissionType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TitleLookups">
+      <EntityTypeMapping TypeName="AMLDataModel.TitleLookup">
+        <MappingFragment StoreEntitySet="TitleLookup">
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="ShortTitle" ColumnName="ShortTitle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionItemStatus">
+      <EntityTypeMapping TypeName="AMLDataModel.TransactionItemStatu">
+        <MappingFragment StoreEntitySet="TransactionItemStatus">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionItemTypes">
+      <EntityTypeMapping TypeName="AMLDataModel.TransactionItemType">
+        <MappingFragment StoreEntitySet="TransactionItemType">
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="txn_live1">
+      <EntityTypeMapping TypeName="AMLDataModel.txn_live1">
+        <MappingFragment StoreEntitySet="txn_live1">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACCOUNT_STATUS" ColumnName="ACCOUNT_STATUS" />
+          <ScalarProperty Name="ACCT_BAL" ColumnName="ACCT_BAL" />
+          <ScalarProperty Name="ACCT_BAL_DATE" ColumnName="ACCT_BAL_DATE" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="AUTH_IP_ADDRESS" ColumnName="AUTH_IP_ADDRESS" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="CHEQUE_TXN" ColumnName="CHEQUE_TXN" />
+          <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+          <ScalarProperty Name="DELETED_BY" ColumnName="DELETED_BY" />
+          <ScalarProperty Name="DELETED_DATE" ColumnName="DELETED_DATE" />
+          <ScalarProperty Name="DRCR_IND" ColumnName="DRCR_IND" />
+          <ScalarProperty Name="ENTRY_TIME" ColumnName="ENTRY_TIME" />
+          <ScalarProperty Name="FX_AMOUNT" ColumnName="FX_AMOUNT" />
+          <ScalarProperty Name="INIT_BRANCH_ID" ColumnName="INIT_BRANCH_ID" />
+          <ScalarProperty Name="INP_IP_ADDRESS" ColumnName="INP_IP_ADDRESS" />
+          <ScalarProperty Name="INSTITUTION_CODE" ColumnName="INSTITUTION_CODE" />
+          <ScalarProperty Name="INSTITUTION_NAME" ColumnName="INSTITUTION_NAME" />
+          <ScalarProperty Name="OTHER_BANK_ACCOUNT" ColumnName="OTHER_BANK_ACCOUNT" />
+          <ScalarProperty Name="OTHER_BANK_ACCT_NAME" ColumnName="OTHER_BANK_ACCT_NAME" />
+          <ScalarProperty Name="PERSON_TYPE" ColumnName="PERSON_TYPE" />
+          <ScalarProperty Name="POSTED" ColumnName="POSTED" />
+          <ScalarProperty Name="POSTED_DATE" ColumnName="POSTED_DATE" />
+          <ScalarProperty Name="RATE" ColumnName="RATE" />
+          <ScalarProperty Name="SCHM_CODE" ColumnName="SCHM_CODE" />
+          <ScalarProperty Name="SCHM_TYPE" ColumnName="SCHM_TYPE" />
+          <ScalarProperty Name="SERIAL_NUM" ColumnName="SERIAL_NUM" />
+          <ScalarProperty Name="TRAN_CURRENCY" ColumnName="TRAN_CURRENCY" />
+          <ScalarProperty Name="TRAN_DATE" ColumnName="TRAN_DATE" />
+          <ScalarProperty Name="TRAN_ID" ColumnName="TRAN_ID" />
+          <ScalarProperty Name="TRAN_PARTICULAR" ColumnName="TRAN_PARTICULAR" />
+          <ScalarProperty Name="TRAN_SUB_TYPE" ColumnName="TRAN_SUB_TYPE" />
+          <ScalarProperty Name="TRAN_TYPE" ColumnName="TRAN_TYPE" />
+          <ScalarProperty Name="VALUE_DATE" ColumnName="VALUE_DATE" />
+          <ScalarProperty Name="ACCOUNT" ColumnName="ACCOUNT" />
+          <ScalarProperty Name="AUTHORISER" ColumnName="AUTHORISER" />
+          <ScalarProperty Name="CUSTOMER" ColumnName="CUSTOMER" />
+          <ScalarProperty Name="INPUTTER_USER_ID" ColumnName="INPUTTER_USER_ID" />
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+          <ScalarProperty Name="TXN_COUNTRY" ColumnName="TXN_COUNTRY" />
+          <ScalarProperty Name="CONTRACT_TYPE" ColumnName="CONTRACT_TYPE" />
+          <ScalarProperty Name="CONTRACT_NAME" ColumnName="CONTRACT_NAME" />
+          <ScalarProperty Name="CHQ_FLAG" ColumnName="CHQ_FLAG" />
+          <ScalarProperty Name="ORG_SERIAL" ColumnName="ORG_SERIAL" />
+          <ScalarProperty Name="TRAN_COMMENTS" ColumnName="TRAN_COMMENTS" />
+          <ScalarProperty Name="BATCH_TRANS" ColumnName="BATCH_TRANS" />
+          <ScalarProperty Name="ADDRESS_OF_BENEFICIARY" ColumnName="ADDRESS_OF_BENEFICIARY" />
+          <ScalarProperty Name="PURPOSE_OF_TRANSACTION" ColumnName="PURPOSE_OF_TRANSACTION" />
+          <ScalarProperty Name="KYC_ID" ColumnName="KYC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="txn_liveOLD">
+      <EntityTypeMapping TypeName="AMLDataModel.txn_liveOLD">
+        <MappingFragment StoreEntitySet="txn_liveOLD">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACCOUNT_STATUS" ColumnName="ACCOUNT_STATUS" />
+          <ScalarProperty Name="ACCT_BAL" ColumnName="ACCT_BAL" />
+          <ScalarProperty Name="ACCT_BAL_DATE" ColumnName="ACCT_BAL_DATE" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="AUTH_IP_ADDRESS" ColumnName="AUTH_IP_ADDRESS" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="CHEQUE_TXN" ColumnName="CHEQUE_TXN" />
+          <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+          <ScalarProperty Name="DELETED_BY" ColumnName="DELETED_BY" />
+          <ScalarProperty Name="DELETED_DATE" ColumnName="DELETED_DATE" />
+          <ScalarProperty Name="DRCR_IND" ColumnName="DRCR_IND" />
+          <ScalarProperty Name="ENTRY_TIME" ColumnName="ENTRY_TIME" />
+          <ScalarProperty Name="FX_AMOUNT" ColumnName="FX_AMOUNT" />
+          <ScalarProperty Name="INIT_BRANCH_ID" ColumnName="INIT_BRANCH_ID" />
+          <ScalarProperty Name="INP_IP_ADDRESS" ColumnName="INP_IP_ADDRESS" />
+          <ScalarProperty Name="INSTITUTION_CODE" ColumnName="INSTITUTION_CODE" />
+          <ScalarProperty Name="INSTITUTION_NAME" ColumnName="INSTITUTION_NAME" />
+          <ScalarProperty Name="OTHER_BANK_ACCOUNT" ColumnName="OTHER_BANK_ACCOUNT" />
+          <ScalarProperty Name="OTHER_BANK_ACCT_NAME" ColumnName="OTHER_BANK_ACCT_NAME" />
+          <ScalarProperty Name="PERSON_TYPE" ColumnName="PERSON_TYPE" />
+          <ScalarProperty Name="POSTED" ColumnName="POSTED" />
+          <ScalarProperty Name="POSTED_DATE" ColumnName="POSTED_DATE" />
+          <ScalarProperty Name="RATE" ColumnName="RATE" />
+          <ScalarProperty Name="SCHM_CODE" ColumnName="SCHM_CODE" />
+          <ScalarProperty Name="SCHM_TYPE" ColumnName="SCHM_TYPE" />
+          <ScalarProperty Name="SERIAL_NUM" ColumnName="SERIAL_NUM" />
+          <ScalarProperty Name="TRAN_CURRENCY" ColumnName="TRAN_CURRENCY" />
+          <ScalarProperty Name="TRAN_DATE" ColumnName="TRAN_DATE" />
+          <ScalarProperty Name="TRAN_ID" ColumnName="TRAN_ID" />
+          <ScalarProperty Name="TRAN_PARTICULAR" ColumnName="TRAN_PARTICULAR" />
+          <ScalarProperty Name="TRAN_SUB_TYPE" ColumnName="TRAN_SUB_TYPE" />
+          <ScalarProperty Name="TRAN_TYPE" ColumnName="TRAN_TYPE" />
+          <ScalarProperty Name="VALUE_DATE" ColumnName="VALUE_DATE" />
+          <ScalarProperty Name="ACCOUNT" ColumnName="ACCOUNT" />
+          <ScalarProperty Name="AUTHORISER" ColumnName="AUTHORISER" />
+          <ScalarProperty Name="CUSTOMER" ColumnName="CUSTOMER" />
+          <ScalarProperty Name="INPUTTER_USER_ID" ColumnName="INPUTTER_USER_ID" />
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+          <ScalarProperty Name="TXN_COUNTRY" ColumnName="TXN_COUNTRY" />
+          <ScalarProperty Name="CONTRACT_TYPE" ColumnName="CONTRACT_TYPE" />
+          <ScalarProperty Name="CONTRACT_NAME" ColumnName="CONTRACT_NAME" />
+          <ScalarProperty Name="CHQ_FLAG" ColumnName="CHQ_FLAG" />
+          <ScalarProperty Name="ORG_SERIAL" ColumnName="ORG_SERIAL" />
+          <ScalarProperty Name="TRAN_COMMENTS" ColumnName="TRAN_COMMENTS" />
+          <ScalarProperty Name="BATCH_TRANS" ColumnName="BATCH_TRANS" />
+          <ScalarProperty Name="ADDRESS_OF_BENEFICIARY" ColumnName="ADDRESS_OF_BENEFICIARY" />
+          <ScalarProperty Name="PURPOSE_OF_TRANSACTION" ColumnName="PURPOSE_OF_TRANSACTION" />
+          <ScalarProperty Name="KYC_ID" ColumnName="KYC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlAddresses">
+      <EntityTypeMapping TypeName="AMLDataModel.amlAddress">
+        <MappingFragment StoreEntitySet="amlAddress">
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="house_number" ColumnName="house_number" />
+          <ScalarProperty Name="apartment_number" ColumnName="apartment_number" />
+          <ScalarProperty Name="addresstype" ColumnName="addresstype" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="town" ColumnName="town" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="geo_location" ColumnName="geo_location" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="pluscode" ColumnName="pluscode" />
+          <ScalarProperty Name="is_approx_location" ColumnName="is_approx_location" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlbranches">
+      <EntityTypeMapping TypeName="AMLDataModel.amlbranch">
+        <MappingFragment StoreEntitySet="amlbranch">
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="region" ColumnName="region" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlbranchOLDs">
+      <EntityTypeMapping TypeName="AMLDataModel.amlbranchOLD">
+        <MappingFragment StoreEntitySet="amlbranchOLD">
+          <ScalarProperty Name="branch_id" ColumnName="branch_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="region" ColumnName="region" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlDirectors">
+      <EntityTypeMapping TypeName="AMLDataModel.amlDirector">
+        <MappingFragment StoreEntitySet="amlDirector">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="currentuser_id" ColumnName="currentuser_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlphones">
+      <EntityTypeMapping TypeName="AMLDataModel.amlphone">
+        <MappingFragment StoreEntitySet="amlphone">
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="tph_contact_type" ColumnName="tph_contact_type" />
+          <ScalarProperty Name="tph_communication_type" ColumnName="tph_communication_type" />
+          <ScalarProperty Name="tph_country_prefix" ColumnName="tph_country_prefix" />
+          <ScalarProperty Name="tph_extension" ColumnName="tph_extension" />
+          <ScalarProperty Name="tph_number" ColumnName="tph_number" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlTransactions">
+      <EntityTypeMapping TypeName="AMLDataModel.amlTransaction">
+        <MappingFragment StoreEntitySet="amlTransaction">
+          <ScalarProperty Name="account_status" ColumnName="account_status" />
+          <ScalarProperty Name="acctbal" ColumnName="acctbal" />
+          <ScalarProperty Name="acctbaldate" ColumnName="acctbaldate" />
+          <ScalarProperty Name="amount_local" ColumnName="amount_local" />
+          <ScalarProperty Name="authipaddress" ColumnName="authipaddress" />
+          <ScalarProperty Name="branchid" ColumnName="branchid" />
+          <ScalarProperty Name="chequetxn" ColumnName="chequetxn" />
+          <ScalarProperty Name="chqflag" ColumnName="chqflag" />
+          <ScalarProperty Name="contracttype" ColumnName="contracttype" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+          <ScalarProperty Name="late_deposit" ColumnName="late_deposit" />
+          <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+          <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+          <ScalarProperty Name="drcr_ind" ColumnName="drcr_ind" />
+          <ScalarProperty Name="entry_time" ColumnName="entry_time" />
+          <ScalarProperty Name="fx_amount" ColumnName="fx_amount" />
+          <ScalarProperty Name="source_branch_id" ColumnName="source_branch_id" />
+          <ScalarProperty Name="inp_ip_address" ColumnName="inp_ip_address" />
+          <ScalarProperty Name="institution_code" ColumnName="institution_code" />
+          <ScalarProperty Name="institution_name" ColumnName="institution_name" />
+          <ScalarProperty Name="other_bank_account" ColumnName="other_bank_account" />
+          <ScalarProperty Name="other_bank_acct_name" ColumnName="other_bank_acct_name" />
+          <ScalarProperty Name="person_type" ColumnName="person_type" />
+          <ScalarProperty Name="posted" ColumnName="posted" />
+          <ScalarProperty Name="posted_date" ColumnName="posted_date" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="schm_code" ColumnName="schm_code" />
+          <ScalarProperty Name="schm_type" ColumnName="schm_type" />
+          <ScalarProperty Name="serial_num" ColumnName="serial_num" />
+          <ScalarProperty Name="tran_currency" ColumnName="tran_currency" />
+          <ScalarProperty Name="tran_date" ColumnName="tran_date" />
+          <ScalarProperty Name="tran_id" ColumnName="tran_id" />
+          <ScalarProperty Name="tran_description" ColumnName="tran_description" />
+          <ScalarProperty Name="tran_subtype" ColumnName="tran_subtype" />
+          <ScalarProperty Name="tran_type" ColumnName="tran_type" />
+          <ScalarProperty Name="txn_country" ColumnName="txn_country" />
+          <ScalarProperty Name="value_date" ColumnName="value_date" />
+          <ScalarProperty Name="account" ColumnName="account" />
+          <ScalarProperty Name="authoriser" ColumnName="authoriser" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="inputter_user_id" ColumnName="inputter_user_id" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Currencies">
+      <EntityTypeMapping TypeName="AMLDataModel.Currency">
+        <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="CurrencyKey" ColumnName="CurrencyKey" />
+          <ScalarProperty Name="currency_code" ColumnName="currency_code" />
+          <ScalarProperty Name="alpha_code" ColumnName="alpha_code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="InsertAuditKey" ColumnName="InsertAuditKey" />
+          <ScalarProperty Name="UpdateAuditKey" ColumnName="UpdateAuditKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PEPs">
+      <EntityTypeMapping TypeName="AMLDataModel.PEP">
+        <MappingFragment StoreEntitySet="PEP">
+          <ScalarProperty Name="Pep_country" ColumnName="Pep_country" />
+          <ScalarProperty Name="Function_name" ColumnName="Function_name" />
+          <ScalarProperty Name="Function_description" ColumnName="Function_description" />
+          <ScalarProperty Name="Pep_date_range" ColumnName="Pep_date_range" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="txn_live">
+      <EntityTypeMapping TypeName="AMLDataModel.txn_live">
+        <MappingFragment StoreEntitySet="txn_live">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACCOUNT_STATUS" ColumnName="ACCOUNT_STATUS" />
+          <ScalarProperty Name="ACCT_BAL" ColumnName="ACCT_BAL" />
+          <ScalarProperty Name="ACCT_BAL_DATE" ColumnName="ACCT_BAL_DATE" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="AUTH_IP_ADDRESS" ColumnName="AUTH_IP_ADDRESS" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="CHEQUE_TXN" ColumnName="CHEQUE_TXN" />
+          <ScalarProperty Name="DELETED" ColumnName="DELETED" />
+          <ScalarProperty Name="DELETED_BY" ColumnName="DELETED_BY" />
+          <ScalarProperty Name="DELETED_DATE" ColumnName="DELETED_DATE" />
+          <ScalarProperty Name="DRCR_IND" ColumnName="DRCR_IND" />
+          <ScalarProperty Name="ENTRY_TIME" ColumnName="ENTRY_TIME" />
+          <ScalarProperty Name="FX_AMOUNT" ColumnName="FX_AMOUNT" />
+          <ScalarProperty Name="INIT_BRANCH_ID" ColumnName="INIT_BRANCH_ID" />
+          <ScalarProperty Name="INP_IP_ADDRESS" ColumnName="INP_IP_ADDRESS" />
+          <ScalarProperty Name="INSTITUTION_CODE" ColumnName="INSTITUTION_CODE" />
+          <ScalarProperty Name="INSTITUTION_NAME" ColumnName="INSTITUTION_NAME" />
+          <ScalarProperty Name="OTHER_BANK_ACCOUNT" ColumnName="OTHER_BANK_ACCOUNT" />
+          <ScalarProperty Name="OTHER_BANK_ACCT_NAME" ColumnName="OTHER_BANK_ACCT_NAME" />
+          <ScalarProperty Name="PERSON_TYPE" ColumnName="PERSON_TYPE" />
+          <ScalarProperty Name="POSTED" ColumnName="POSTED" />
+          <ScalarProperty Name="POSTED_DATE" ColumnName="POSTED_DATE" />
+          <ScalarProperty Name="RATE" ColumnName="RATE" />
+          <ScalarProperty Name="SCHM_CODE" ColumnName="SCHM_CODE" />
+          <ScalarProperty Name="SCHM_TYPE" ColumnName="SCHM_TYPE" />
+          <ScalarProperty Name="SERIAL_NUM" ColumnName="SERIAL_NUM" />
+          <ScalarProperty Name="TRAN_CURRENCY" ColumnName="TRAN_CURRENCY" />
+          <ScalarProperty Name="TRAN_DATE" ColumnName="TRAN_DATE" />
+          <ScalarProperty Name="TRAN_ID" ColumnName="TRAN_ID" />
+          <ScalarProperty Name="TRAN_PARTICULAR" ColumnName="TRAN_PARTICULAR" />
+          <ScalarProperty Name="TRAN_SUB_TYPE" ColumnName="TRAN_SUB_TYPE" />
+          <ScalarProperty Name="TRAN_TYPE" ColumnName="TRAN_TYPE" />
+          <ScalarProperty Name="VALUE_DATE" ColumnName="VALUE_DATE" />
+          <ScalarProperty Name="ACCOUNT" ColumnName="ACCOUNT" />
+          <ScalarProperty Name="AUTHORISER" ColumnName="AUTHORISER" />
+          <ScalarProperty Name="CUSTOMER" ColumnName="CUSTOMER" />
+          <ScalarProperty Name="INPUTTER_USER_ID" ColumnName="INPUTTER_USER_ID" />
+          <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+          <ScalarProperty Name="TXN_COUNTRY" ColumnName="TXN_COUNTRY" />
+          <ScalarProperty Name="CONTRACT_TYPE" ColumnName="CONTRACT_TYPE" />
+          <ScalarProperty Name="CONTRACT_NAME" ColumnName="CONTRACT_NAME" />
+          <ScalarProperty Name="CHQ_FLAG" ColumnName="CHQ_FLAG" />
+          <ScalarProperty Name="ORG_SERIAL" ColumnName="ORG_SERIAL" />
+          <ScalarProperty Name="TRAN_COMMENTS" ColumnName="TRAN_COMMENTS" />
+          <ScalarProperty Name="BATCH_TRANS" ColumnName="BATCH_TRANS" />
+          <ScalarProperty Name="ADDRESS_OF_BENEFICIARY" ColumnName="ADDRESS_OF_BENEFICIARY" />
+          <ScalarProperty Name="PURPOSE_OF_TRANSACTION" ColumnName="PURPOSE_OF_TRANSACTION" />
+          <ScalarProperty Name="KYC_ID" ColumnName="KYC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlAccounts">
+      <EntityTypeMapping TypeName="AMLDataModel.amlAccount">
+        <MappingFragment StoreEntitySet="amlAccount">
+          <ScalarProperty Name="last_tran_date" ColumnName="last_tran_date" />
+          <ScalarProperty Name="sanct_lim" ColumnName="sanct_lim" />
+          <ScalarProperty Name="fx_cum_dr_amt" ColumnName="fx_cum_dr_amt" />
+          <ScalarProperty Name="fx_cum_cr_amt" ColumnName="fx_cum_cr_amt" />
+          <ScalarProperty Name="last_tran_date_dr" ColumnName="last_tran_date_dr" />
+          <ScalarProperty Name="last_tran_date_cr" ColumnName="last_tran_date_cr" />
+          <ScalarProperty Name="frez_code" ColumnName="frez_code" />
+          <ScalarProperty Name="drwng_power" ColumnName="drwng_power" />
+          <ScalarProperty Name="cum_dr_amt" ColumnName="cum_dr_amt" />
+          <ScalarProperty Name="cum_cr_amt" ColumnName="cum_cr_amt" />
+          <ScalarProperty Name="clr_bal_amt" ColumnName="clr_bal_amt" />
+          <ScalarProperty Name="acct_cls_flg" ColumnName="acct_cls_flg" />
+          <ScalarProperty Name="acct_cls_date" ColumnName="acct_cls_date" />
+          <ScalarProperty Name="frez_reason_code" ColumnName="frez_reason_code" />
+          <ScalarProperty Name="temp_account" ColumnName="temp_account" />
+          <ScalarProperty Name="swift" ColumnName="swift" />
+          <ScalarProperty Name="status_date" ColumnName="status_date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="schm_type" ColumnName="schm_type" />
+          <ScalarProperty Name="schm_code" ColumnName="schm_code" />
+          <ScalarProperty Name="previous_status" ColumnName="previous_status" />
+          <ScalarProperty Name="opened" ColumnName="opened" />
+          <ScalarProperty Name="new_account" ColumnName="new_account" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="iban" ColumnName="iban" />
+          <ScalarProperty Name="entity_cre_flg" ColumnName="entity_cre_flg" />
+          <ScalarProperty Name="currency_code" ColumnName="currency_code" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="closed" ColumnName="closed" />
+          <ScalarProperty Name="cust_number" ColumnName="cust_number" />
+          <ScalarProperty Name="branch" ColumnName="branch" />
+          <ScalarProperty Name="balance_date" ColumnName="balance_date" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="account_type" ColumnName="account_type" />
+          <ScalarProperty Name="account_ownership" ColumnName="account_ownership" />
+          <ScalarProperty Name="account_officer" ColumnName="account_officer" />
+          <ScalarProperty Name="account" ColumnName="account" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlCountries">
+      <EntityTypeMapping TypeName="AMLDataModel.amlCountry">
+        <MappingFragment StoreEntitySet="amlCountry">
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlCustomers">
+      <EntityTypeMapping TypeName="AMLDataModel.amlCustomer">
+        <MappingFragment StoreEntitySet="amlCustomer">
+          <ScalarProperty Name="tph_fax" ColumnName="tph_fax" />
+          <ScalarProperty Name="tph_extension" ColumnName="tph_extension" />
+          <ScalarProperty Name="tph_number" ColumnName="tph_number" />
+          <ScalarProperty Name="tph_country_prefix" ColumnName="tph_country_prefix" />
+          <ScalarProperty Name="tph_communication_type" ColumnName="tph_communication_type" />
+          <ScalarProperty Name="tph_contact_type" ColumnName="tph_contact_type" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="town" ColumnName="town" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="addressType" ColumnName="addressType" />
+          <ScalarProperty Name="work_dir" ColumnName="work_dir" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="tax_reg_number" ColumnName="tax_reg_number" />
+          <ScalarProperty Name="tax_number" ColumnName="tax_number" />
+          <ScalarProperty Name="tax_comments" ColumnName="tax_comments" />
+          <ScalarProperty Name="foreigner_visa_number" ColumnName="foreigner_visa_number" />
+          <ScalarProperty Name="foreigner_permit_valid_to" ColumnName="foreigner_permit_valid_to" />
+          <ScalarProperty Name="foreigner_permit_valid_from" ColumnName="foreigner_permit_valid_from" />
+          <ScalarProperty Name="foreigner_permit_number" ColumnName="foreigner_permit_number" />
+          <ScalarProperty Name="foreigner_passport_number" ColumnName="foreigner_passport_number" />
+          <ScalarProperty Name="foreigner_passport_iss_dt" ColumnName="foreigner_passport_iss_dt" />
+          <ScalarProperty Name="foreigner_passport_exp_dt" ColumnName="foreigner_passport_exp_dt" />
+          <ScalarProperty Name="foreigner_nationality" ColumnName="foreigner_nationality" />
+          <ScalarProperty Name="foreigner_date_arrival" ColumnName="foreigner_date_arrival" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="source_of_fund" ColumnName="source_of_fund" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="residence" ColumnName="residence" />
+          <ScalarProperty Name="reference_code" ColumnName="reference_code" />
+          <ScalarProperty Name="referee_person_id" ColumnName="referee_person_id" />
+          <ScalarProperty Name="prefix_name" ColumnName="prefix_name" />
+          <ScalarProperty Name="phoneId" ColumnName="phoneId" />
+          <ScalarProperty Name="occupation" ColumnName="occupation" />
+          <ScalarProperty Name="nature_of_txn" ColumnName="nature_of_txn" />
+          <ScalarProperty Name="nationality" ColumnName="nationality" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="mothers_name" ColumnName="mothers_name" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+          <ScalarProperty Name="incorporation_state" ColumnName="incorporation_state" />
+          <ScalarProperty Name="incorporation_number" ColumnName="incorporation_number" />
+          <ScalarProperty Name="incorporation_date" ColumnName="incorporation_date" />
+          <ScalarProperty Name="incorporation_country_code" ColumnName="incorporation_country_code" />
+          <ScalarProperty Name="foreigner" ColumnName="foreigner" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="employer_name" ColumnName="employer_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="customer_type" ColumnName="customer_type" />
+          <ScalarProperty Name="cust_type_code" ColumnName="cust_type_code" />
+          <ScalarProperty Name="cust_sex" ColumnName="cust_sex" />
+          <ScalarProperty Name="commercial_name" ColumnName="commercial_name" />
+          <ScalarProperty Name="bvn" ColumnName="bvn" />
+          <ScalarProperty Name="business_closed_date" ColumnName="business_closed_date" />
+          <ScalarProperty Name="business_closed" ColumnName="business_closed" />
+          <ScalarProperty Name="business" ColumnName="business" />
+          <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+          <ScalarProperty Name="birth_place" ColumnName="birth_place" />
+          <ScalarProperty Name="addressId" ColumnName="addressId" />
+          <ScalarProperty Name="cust_id" ColumnName="cust_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlPersons">
+      <EntityTypeMapping TypeName="AMLDataModel.amlPerson">
+        <MappingFragment StoreEntitySet="amlPerson">
+          <ScalarProperty Name="TPH_COMMUNICATION_TYPE" ColumnName="TPH_COMMUNICATION_TYPE" />
+          <ScalarProperty Name="tph_fax" ColumnName="tph_fax" />
+          <ScalarProperty Name="tph_extension" ColumnName="tph_extension" />
+          <ScalarProperty Name="tph_number" ColumnName="tph_number" />
+          <ScalarProperty Name="tph_country_prefix" ColumnName="tph_country_prefix" />
+          <ScalarProperty Name="tph_contact_type" ColumnName="tph_contact_type" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="town" ColumnName="town" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="addressType" ColumnName="addressType" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="tax_reg_number" ColumnName="tax_reg_number" />
+          <ScalarProperty Name="tax_number" ColumnName="tax_number" />
+          <ScalarProperty Name="tax_comments" ColumnName="tax_comments" />
+          <ScalarProperty Name="foreigner_visa_number" ColumnName="foreigner_visa_number" />
+          <ScalarProperty Name="foreigner_permit_valid_to" ColumnName="foreigner_permit_valid_to" />
+          <ScalarProperty Name="foreigner_permit_valid_from" ColumnName="foreigner_permit_valid_from" />
+          <ScalarProperty Name="foreigner_permit_number" ColumnName="foreigner_permit_number" />
+          <ScalarProperty Name="foreigner_passport_number" ColumnName="foreigner_passport_number" />
+          <ScalarProperty Name="foreigner_passport_iss_dt" ColumnName="foreigner_passport_iss_dt" />
+          <ScalarProperty Name="foreigner_passport_exp_dt" ColumnName="foreigner_passport_exp_dt" />
+          <ScalarProperty Name="foreigner_nationality" ColumnName="foreigner_nationality" />
+          <ScalarProperty Name="foreigner_date_arrival" ColumnName="foreigner_date_arrival" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="source_of_weqlth" ColumnName="source_of_weqlth" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="residence" ColumnName="residence" />
+          <ScalarProperty Name="reference_code" ColumnName="reference_code" />
+          <ScalarProperty Name="referee_person_id" ColumnName="referee_person_id" />
+          <ScalarProperty Name="RECORD_STATUS" ColumnName="RECORD_STATUS" />
+          <ScalarProperty Name="prefix_name" ColumnName="prefix_name" />
+          <ScalarProperty Name="passport_issue_country" ColumnName="passport_issue_country" />
+          <ScalarProperty Name="passport_number" ColumnName="passport_number" />
+          <ScalarProperty Name="p_alias" ColumnName="p_alias" />
+          <ScalarProperty Name="p_add_zip" ColumnName="p_add_zip" />
+          <ScalarProperty Name="p_add_state" ColumnName="p_add_state" />
+          <ScalarProperty Name="p_add_country_code" ColumnName="p_add_country_code" />
+          <ScalarProperty Name="p_add_city" ColumnName="p_add_city" />
+          <ScalarProperty Name="p_add_address2" ColumnName="p_add_address2" />
+          <ScalarProperty Name="p_add_address1" ColumnName="p_add_address1" />
+          <ScalarProperty Name="occupation" ColumnName="occupation" />
+          <ScalarProperty Name="nok_relationship" ColumnName="nok_relationship" />
+          <ScalarProperty Name="nok_phone" ColumnName="nok_phone" />
+          <ScalarProperty Name="nok_name" ColumnName="nok_name" />
+          <ScalarProperty Name="nok_email" ColumnName="nok_email" />
+          <ScalarProperty Name="nok_address2" ColumnName="nok_address2" />
+          <ScalarProperty Name="nok_address1" ColumnName="nok_address1" />
+          <ScalarProperty Name="nationality" ColumnName="nationality" />
+          <ScalarProperty Name="mothers_name" ColumnName="mothers_name" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="lga_of_origin" ColumnName="lga_of_origin" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+          <ScalarProperty Name="identifier_state" ColumnName="identifier_state" />
+          <ScalarProperty Name="identifier_other" ColumnName="identifier_other" />
+          <ScalarProperty Name="identifier_number" ColumnName="identifier_number" />
+          <ScalarProperty Name="identifier_issuer" ColumnName="identifier_issuer" />
+          <ScalarProperty Name="identifier_issue_date" ColumnName="identifier_issue_date" />
+          <ScalarProperty Name="identifier_expire_date" ColumnName="identifier_expire_date" />
+          <ScalarProperty Name="identifier_country" ColumnName="identifier_country" />
+          <ScalarProperty Name="identifier_code" ColumnName="identifier_code" />
+          <ScalarProperty Name="foreigner" ColumnName="foreigner" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="employer_name" ColumnName="employer_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="deceased_date" ColumnName="deceased_date" />
+          <ScalarProperty Name="deceased" ColumnName="deceased" />
+          <ScalarProperty Name="cust_id" ColumnName="cust_id" />
+          <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+          <ScalarProperty Name="birth_place" ColumnName="birth_place" />
+          <ScalarProperty Name="PERSONID" ColumnName="PERSONID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlTitles">
+      <EntityTypeMapping TypeName="AMLDataModel.amlTitle">
+        <MappingFragment StoreEntitySet="amlTitle">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlSignatories">
+      <EntityTypeMapping TypeName="AMLDataModel.amlSignatory">
+        <MappingFragment StoreEntitySet="amlSignatory">
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="primary_sig" ColumnName="primary_sig" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+          <ScalarProperty Name="account" ColumnName="account" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="aml_configuration">
+      <EntityTypeMapping TypeName="AMLDataModel.aml_configuration">
+        <MappingFragment StoreEntitySet="aml_configuration">
+          <ScalarProperty Name="automatic_review" ColumnName="automatic_review" />
+          <ScalarProperty Name="risk_score_threshold" ColumnName="risk_score_threshold" />
+          <ScalarProperty Name="transaction_types" ColumnName="transaction_types" />
+          <ScalarProperty Name="alert_threshold" ColumnName="alert_threshold" />
+          <ScalarProperty Name="currency_code_local" ColumnName="currency_code_local" />
+          <ScalarProperty Name="rentity_id" ColumnName="rentity_id" />
+          <ScalarProperty Name="monitoring_duration" ColumnName="monitoring_duration" />
+          <ScalarProperty Name="cooperate_threshold_amt" ColumnName="cooperate_threshold_amt" />
+          <ScalarProperty Name="individual_threshold_amt" ColumnName="individual_threshold_amt" />
+          <ScalarProperty Name="schema_version" ColumnName="schema_version" />
+          <ScalarProperty Name="swift_code" ColumnName="swift_code" />
+          <ScalarProperty Name="institution_name" ColumnName="institution_name" />
+          <ScalarProperty Name="institution_code" ColumnName="institution_code" />
+          <ScalarProperty Name="config_id" ColumnName="config_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amlReportingPersons">
+      <EntityTypeMapping TypeName="AMLDataModel.amlReportingPerson">
+        <MappingFragment StoreEntitySet="amlReportingPerson">
+          <ScalarProperty Name="TPH_COMMUNICATION_TYPE" ColumnName="TPH_COMMUNICATION_TYPE" />
+          <ScalarProperty Name="tph_fax" ColumnName="tph_fax" />
+          <ScalarProperty Name="tph_extension" ColumnName="tph_extension" />
+          <ScalarProperty Name="tph_number" ColumnName="tph_number" />
+          <ScalarProperty Name="tph_country_prefix" ColumnName="tph_country_prefix" />
+          <ScalarProperty Name="tph_contact_type" ColumnName="tph_contact_type" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country_code" ColumnName="country_code" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="town" ColumnName="town" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="addressType" ColumnName="addressType" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="tax_reg_number" ColumnName="tax_reg_number" />
+          <ScalarProperty Name="tax_number" ColumnName="tax_number" />
+          <ScalarProperty Name="tax_comments" ColumnName="tax_comments" />
+          <ScalarProperty Name="foreigner_visa_number" ColumnName="foreigner_visa_number" />
+          <ScalarProperty Name="foreigner_permit_valid_to" ColumnName="foreigner_permit_valid_to" />
+          <ScalarProperty Name="foreigner_permit_valid_from" ColumnName="foreigner_permit_valid_from" />
+          <ScalarProperty Name="foreigner_permit_number" ColumnName="foreigner_permit_number" />
+          <ScalarProperty Name="foreigner_passport_number" ColumnName="foreigner_passport_number" />
+          <ScalarProperty Name="foreigner_passport_iss_dt" ColumnName="foreigner_passport_iss_dt" />
+          <ScalarProperty Name="foreigner_passport_exp_dt" ColumnName="foreigner_passport_exp_dt" />
+          <ScalarProperty Name="foreigner_nationality" ColumnName="foreigner_nationality" />
+          <ScalarProperty Name="foreigner_date_arrival" ColumnName="foreigner_date_arrival" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="source_of_weqlth" ColumnName="source_of_weqlth" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="residence" ColumnName="residence" />
+          <ScalarProperty Name="reference_code" ColumnName="reference_code" />
+          <ScalarProperty Name="referee_person_id" ColumnName="referee_person_id" />
+          <ScalarProperty Name="RECORD_STATUS" ColumnName="RECORD_STATUS" />
+          <ScalarProperty Name="prefix_name" ColumnName="prefix_name" />
+          <ScalarProperty Name="passport_issue_country" ColumnName="passport_issue_country" />
+          <ScalarProperty Name="passport_number" ColumnName="passport_number" />
+          <ScalarProperty Name="p_alias" ColumnName="p_alias" />
+          <ScalarProperty Name="p_add_zip" ColumnName="p_add_zip" />
+          <ScalarProperty Name="p_add_state" ColumnName="p_add_state" />
+          <ScalarProperty Name="p_add_country_code" ColumnName="p_add_country_code" />
+          <ScalarProperty Name="p_add_city" ColumnName="p_add_city" />
+          <ScalarProperty Name="p_add_address2" ColumnName="p_add_address2" />
+          <ScalarProperty Name="p_add_address1" ColumnName="p_add_address1" />
+          <ScalarProperty Name="occupation" ColumnName="occupation" />
+          <ScalarProperty Name="nok_relationship" ColumnName="nok_relationship" />
+          <ScalarProperty Name="nok_phone" ColumnName="nok_phone" />
+          <ScalarProperty Name="nok_name" ColumnName="nok_name" />
+          <ScalarProperty Name="nok_email" ColumnName="nok_email" />
+          <ScalarProperty Name="nok_address2" ColumnName="nok_address2" />
+          <ScalarProperty Name="nok_address1" ColumnName="nok_address1" />
+          <ScalarProperty Name="nationality" ColumnName="nationality" />
+          <ScalarProperty Name="mothers_name" ColumnName="mothers_name" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="lga_of_origin" ColumnName="lga_of_origin" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+          <ScalarProperty Name="identifier_state" ColumnName="identifier_state" />
+          <ScalarProperty Name="identifier_other" ColumnName="identifier_other" />
+          <ScalarProperty Name="identifier_number" ColumnName="identifier_number" />
+          <ScalarProperty Name="identifier_issuer" ColumnName="identifier_issuer" />
+          <ScalarProperty Name="identifier_issue_date" ColumnName="identifier_issue_date" />
+          <ScalarProperty Name="identifier_expire_date" ColumnName="identifier_expire_date" />
+          <ScalarProperty Name="identifier_country" ColumnName="identifier_country" />
+          <ScalarProperty Name="identifier_code" ColumnName="identifier_code" />
+          <ScalarProperty Name="foreigner" ColumnName="foreigner" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="employer_name" ColumnName="employer_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="deceased_date" ColumnName="deceased_date" />
+          <ScalarProperty Name="deceased" ColumnName="deceased" />
+          <ScalarProperty Name="cust_id" ColumnName="cust_id" />
+          <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+          <ScalarProperty Name="birth_place" ColumnName="birth_place" />
+          <ScalarProperty Name="REPORTINGPERSONID" ColumnName="REPORTINGPERSONID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
