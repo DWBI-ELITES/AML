@@ -21,8 +21,9 @@ namespace DWBIProjectAPI.Controllers
     {
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
 
+
         [HttpGet]
-        public IHttpActionResult Search(string searchValue)
+        public IHttpActionResult Search()
         {
             string serverName = "ADEGBOYEGAOLUWA\\GBEN";
             string databaseName = "AMLData";
@@ -34,11 +35,12 @@ namespace DWBIProjectAPI.Controllers
                 connection.Open();
 
                 //string query = "SELECT account, account_ownership, cust_number FROM amlAccount WHERE account = @SearchValue OR account_ownership = @SearchValue OR cust_number = @SearchValue";
-                string query = "SELECT b.account, b.name, a.cust_id FROM amlCustomer a LEFT OUTER JOIN amlAccount b on a.cust_id = b.cust_number WHERE b.account = @SearchValue OR b.name = @SearchValue OR a.cust_id = @SearchValue";
+                //string query = "SELECT b.account, b.name, a.cust_id FROM amlCustomer a LEFT OUTER JOIN amlAccount b on a.cust_id = b.cust_number WHERE b.account = @SearchValue OR b.name = @SearchValue OR a.cust_id = @SearchValue";
+                string query = "SELECT b.account, b.name, a.cust_id, a.customer_type FROM amlCustomer a LEFT OUTER JOIN amlAccount b on a.cust_id = b.cust_number";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@SearchValue", searchValue);
+                    //command.Parameters.AddWithValue("@SearchValue", searchValue);
 
                     DataTable dt = new DataTable();
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -50,6 +52,35 @@ namespace DWBIProjectAPI.Controllers
                 }
             }
         }
+        //[HttpGet]
+        //public IHttpActionResult Search(string searchValue)
+        //{
+        //    string serverName = "ADEGBOYEGAOLUWA\\GBEN";
+        //    string databaseName = "AMLData";
+
+        //    string connectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        connection.Open();
+
+        //        //string query = "SELECT account, account_ownership, cust_number FROM amlAccount WHERE account = @SearchValue OR account_ownership = @SearchValue OR cust_number = @SearchValue";
+        //        string query = "SELECT b.account, b.name, a.cust_id FROM amlCustomer a LEFT OUTER JOIN amlAccount b on a.cust_id = b.cust_number WHERE b.account = @SearchValue OR b.name = @SearchValue OR a.cust_id = @SearchValue";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@SearchValue", searchValue);
+
+        //            DataTable dt = new DataTable();
+        //            SqlDataAdapter adapter = new SqlDataAdapter(command);
+        //            adapter.Fill(dt);
+
+        //            dt.TableName = "SearchResults"; // Set the DataTable's name
+
+        //            return Ok(dt);
+        //        }
+        //    }
+        //}
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]

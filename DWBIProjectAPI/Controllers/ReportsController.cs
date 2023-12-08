@@ -29,7 +29,7 @@ namespace DWBIProjectAPI.Controllers
         [Route("api/AccountSearch/GetPerson")]
 
 
-       
+
 
 
         public List<TPersonModel> GetPerson(string custId)
@@ -158,9 +158,9 @@ namespace DWBIProjectAPI.Controllers
         [Route("api/Reports/GetTransactions")]
         public IHttpActionResult GetTransactions(string startDate, string endDate)
         {
-            List<reportTransaction> transactionDetailsList = RetrieveTransactionsFromDatabase(startDate, endDate);
+            var transactionDetailsList = RetrieveTransactionsFromDatabase(startDate, endDate);
 
-            if (transactionDetailsList.Count > 0)
+            if (transactionDetailsList.Count > 0 )
             {
                 XmlDocument ctrXmlDoc = GenerateCTRAMLReport(transactionDetailsList);
                 ctrXmlDoc.Save("C:\\Users\\Adegboyega.Oluwagbem\\Downloads\\CTR_REPORT.xml");
@@ -171,9 +171,20 @@ namespace DWBIProjectAPI.Controllers
             return NotFound();
         }
 
+        //public void DoFundTransfer(txn_live transaction)
+
+        //{ 
+
+
+        //}
+
+
+
         private List<reportTransaction> RetrieveTransactionsFromDatabase(string startDate, string endDate)
         {
             List<reportTransaction> transactionDetailsList = new List<reportTransaction>();
+
+            //List<reportTransaction> transactionDetailsList2 = new List<reportTransaction>();
 
             using (var context = new Entities())
             {
@@ -186,10 +197,15 @@ namespace DWBIProjectAPI.Controllers
 
                 foreach (var transaction in transactions)
                 {
+                    //if (transaction.TRAN_TYPE.ToLower() == "t") 
+                    //{
+                    //    DoFundTransfer(transaction);  
+                    //}
+
                     var custNumber = transaction?.CUSTOMER;
                     var personID = transaction?.PERSON_ID;
                     var tranCURRENCY = transaction?.TRAN_CURRENCY;
-                    
+
 
                     //var accountDetails = context.amlAccounts.SingleOrDefault(a => a.cust_number == custNumber);
                     var accountNumber = transaction?.ACCOUNT;
@@ -207,7 +223,7 @@ namespace DWBIProjectAPI.Controllers
                     var personList = context.amlPersons.Where(p => p.cust_id == custNumber).ToList();
                     var person = personList.FirstOrDefault();
 
-                    var directorList = context.amlDirectors.Where(d => d.person_id == personID).ToList();
+                    var directorList = context.amlDirectors.Where(d => d.customer_id == custNumber).ToList();
                     var directorData = directorList.FirstOrDefault();
 
                     var amlConfiguration = context.aml_configuration.ToList();
@@ -219,7 +235,8 @@ namespace DWBIProjectAPI.Controllers
                     var foreignCurrencyList = context.foreign_currency.Where(l => l.foreign_currency_code == tranCURRENCY).ToList();
                     var foreignCurrencyData = foreignCurrencyList.FirstOrDefault();
 
-
+                    //var accountType = accountDetails?.account_type;
+                    //var accountTypeDetails = context.AccountTypes.SingleOrDefault(w => w.Item == accountType);
 
                     reportTransaction transactionDetails = new reportTransaction
                     {
@@ -229,8 +246,11 @@ namespace DWBIProjectAPI.Controllers
                         transaction_description = transaction?.TRAN_PARTICULAR,
                         date_transaction = transaction?.TRAN_DATE.ToString(),
                         value_date = transaction?.VALUE_DATE.ToString(),
-                        transmode_code = transaction?.TRAN_TYPE,
+                        //transmode_code = transaction?.TRAN_TYPE
+                        transmode_code = "C",
                         amount_local = transaction?.AMOUNT.ToString(),
+                        org_serial = transaction?.ORG_SERIAL,
+                        account_ownership = accountDetails?.account_ownership,
 
                         t_from_my_client = new reportTransactionT_from_my_client
                         {
@@ -246,8 +266,9 @@ namespace DWBIProjectAPI.Controllers
                                 account = transaction?.ACCOUNT,
                                 currency_code = transaction?.TRAN_CURRENCY,
                                 account_name = accountDetails?.name,
-                                client_number = accountDetails.cust_number,
+                                client_number = accountDetails?.cust_number,
                                 personal_account_type = accountDetails?.account_type, // You may need to get this from your data
+
 
                                 t_entity = new reportTransactionT_from_my_clientFrom_entity
                                 {
@@ -416,15 +437,15 @@ namespace DWBIProjectAPI.Controllers
                                         source_of_wealth = person?.source_of_weqlth,
                                         comments = transaction?.TRAN_COMMENTS,
                                     },
-                                    role = signatoryData.role
+                                    role = signatoryData?.role
                                 },
-                                    opened = accountDetails.opened,
-                                    balance = transaction.ACCT_BAL,
-                                    date_balance = transaction.ACCT_BAL_DATE,
-                                    status_code = transaction.ACCOUNT_STATUS,
-                                    beneficiary = transaction.ADDRESS_OF_BENEFICIARY,
-                                    comments =  transaction.TRAN_COMMENTS
-                },
+                                opened = accountDetails?.opened,
+                                balance = transaction.ACCT_BAL,
+                                date_balance = transaction.ACCT_BAL_DATE,
+                                status_code = transaction.ACCOUNT_STATUS,
+                                beneficiary = transaction.ADDRESS_OF_BENEFICIARY,
+                                comments = transaction.TRAN_COMMENTS
+                            },
 
                             from_country = transaction?.TXN_COUNTRY // You may need to get this from your data
                         },
@@ -449,7 +470,7 @@ namespace DWBIProjectAPI.Controllers
                                 account = transaction?.ACCOUNT,
                                 currency_code = transaction?.TRAN_CURRENCY,
                                 account_name = accountDetails?.name,
-                                client_number = accountDetails.cust_number,
+                                client_number = accountDetails?.cust_number,
                                 personal_account_type = accountDetails?.account_type, // You may need to get this from your data
 
                                 t_entity = new reportTransactionT_to_my_clientTo_entity
@@ -559,9 +580,9 @@ namespace DWBIProjectAPI.Controllers
 
                                 signatory = new reportTransactionTFromMyClientFromAccountSignatory
                                 {
-                                        is_primary = true,
-                                 t_person = new TPersonRegistrationInReport
-                                {
+                                    is_primary = true,
+                                    t_person = new TPersonRegistrationInReport
+                                    {
                                         gender = person?.sex,
                                         title = person?.title,
                                         first_name = person?.first_name,
@@ -575,9 +596,9 @@ namespace DWBIProjectAPI.Controllers
                                         nationality1 = person?.nationality,
                                         residence = person?.residence,
                                         // Add other personal details here
-                         phones = new TPersonRegistrationInReport.Phones
-                         {
-                            phone = new List<TPhone>
+                                        phones = new TPersonRegistrationInReport.Phones
+                                        {
+                                            phone = new List<TPhone>
                          {
                             new TPhone
                           {
@@ -588,10 +609,10 @@ namespace DWBIProjectAPI.Controllers
                                 tph_extension = person?.tph_extension
                             }
                         }
-                    },
-                    addresses = new TPersonRegistrationInReport.Addresses
-                    {
-                        address = new List<TAddress>
+                                        },
+                                        addresses = new TPersonRegistrationInReport.Addresses
+                                        {
+                                            address = new List<TAddress>
                         {
                             new TAddress
                             {
@@ -602,10 +623,10 @@ namespace DWBIProjectAPI.Controllers
                                 state = address?.state // You may need to get this from your data
                             }
                         }
-                    },
-                    // Add other details here
+                                        },
+                                        // Add other details here
 
-                                occupation = person?.occupation,
+                                        occupation = person?.occupation,
 
                                         identification = new TPersonIdentification
                                         {
@@ -621,9 +642,9 @@ namespace DWBIProjectAPI.Controllers
                                         },
                                         source_of_wealth = person?.source_of_weqlth,
                                         comments = transaction?.TRAN_COMMENTS,
-                },
-                role = signatoryData?.role
-            },
+                                    },
+                                    role = signatoryData?.role
+                                },
                                 // Add details for additional signatories if needed
                                 opened = accountDetails?.opened,
                                 balance = transaction?.ACCT_BAL,
@@ -635,7 +656,6 @@ namespace DWBIProjectAPI.Controllers
                             },
                             to_country = transaction?.TXN_COUNTRY
                         },
-
 
                         t_from = new reportTransactionT_from
                         {
@@ -677,10 +697,17 @@ namespace DWBIProjectAPI.Controllers
                         },
 
 
+
                     };
 
 
                     transactionDetailsList.Add(transactionDetails);
+
+                   
+
+                 
+
+
                 }
             }
 
@@ -692,8 +719,8 @@ namespace DWBIProjectAPI.Controllers
         private XmlDocument GenerateCTRAMLReport(List<reportTransaction> transactionDetailsList)
         {
 
-          
-                XmlDocument xmlDoc = new XmlDocument();
+
+            XmlDocument xmlDoc = new XmlDocument();
             using (var context = new Entities())
             {
 
@@ -760,15 +787,37 @@ namespace DWBIProjectAPI.Controllers
                 reportElement.AppendChild(reportingPersonElement);
 
 
+
+
                 var groupedTransactions = transactionDetailsList
                     .GroupBy(record => record.transactionnumber)
                     .ToList();
 
+                //var groupedTransactions2 = transactionDetailsList2
+                //  .GroupBy(record => record.transactionnumber)
+                //  .ToList();
+
+
+
                 foreach (var transactionGroup in groupedTransactions)
+
                 {
-                    if (transactionGroup.Any())
+
+
+                    var transactions = transactionGroup.OrderBy(t => t.org_serial).ToList();
+                    if (transactions.Count > 0)
                     {
-                        var firstRecord = transactionGroup.First();
+                        //var firstRecord = transactionGroup.First();
+
+                        var firstRecord = transactions[0];
+
+
+
+
+                        var customerID = firstRecord?.t_from_my_client?.from_account?.client_number;
+                        var customerType = context.amlCustomers.SingleOrDefault(k => k.cust_id == customerID);
+
+
 
                         XmlElement transactionElement = xmlDoc.CreateElement("transaction");
 
@@ -791,636 +840,666 @@ namespace DWBIProjectAPI.Controllers
                         transactionElement.AppendChild(CreateElementWithText(xmlDoc, "transmode_code", firstRecord.transmode_code));
                         transactionElement.AppendChild(CreateElementWithText(xmlDoc, "amount_local", firstRecord.amount_local));
 
-                        // Process the first record as t_from_my_client
-                        XmlElement t_from_my_clientElement = xmlDoc.CreateElement("t_from_my_client");
-                        t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", firstRecord?.t_from_my_client?.from_funds_code ?? ""));
-                        t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", firstRecord?.t_from_my_client?.from_funds_comment ?? ""));
-
-                        XmlElement from_accountElement = xmlDoc.CreateElement("from_account");
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", firstRecord?.t_from_my_client?.from_account?.institution_name ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", firstRecord?.t_from_my_client?.from_account?.institution_code ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", firstRecord?.t_from_my_client?.from_account?.non_bank_institution.ToString()));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "branch", firstRecord?.t_from_my_client?.from_account?.branch ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", firstRecord?.t_from_my_client?.from_account?.account ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "currency_code", firstRecord?.t_from_my_client?.from_account?.currency_code ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", firstRecord?.t_from_my_client?.from_account?.account_name ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "client_number", firstRecord?.t_from_my_client?.from_account?.client_number ?? ""));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "personal_account_type", firstRecord?.t_from_my_client?.from_account?.personal_account_type ?? ""));
-
-                        XmlElement t_entityElement = xmlDoc.CreateElement("t_entity");
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "name", firstRecord?.t_from_my_client?.from_account?.t_entity?.name ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "commercial_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.commercial_name ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_legal_form", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_legal_form ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_number ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "business", (firstRecord?.t_from_my_client?.from_account?.t_entity?.business).ToString()));
-
-                        XmlElement phonesTFromMyClientElement = xmlDoc.CreateElement("phones");
-                        XmlElement phoneTFromMyClientElement = xmlDoc.CreateElement("phone");
-                        phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_contact_type ?? ""));
-                        phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_communication_type ?? ""));
-                        phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_country_prefix ?? ""));
-                        phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_number ?? ""));
-                        phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_extension ?? ""));
-                        phonesTFromMyClientElement.AppendChild(phoneTFromMyClientElement);
-
-                        t_entityElement.AppendChild(phonesTFromMyClientElement);
-
-                        XmlElement addressesTFromMyClientElement = xmlDoc.CreateElement("addresses");
-                        XmlElement addressTFromMyClientElement = xmlDoc.CreateElement("address");
-                        addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.address_type ?? ""));
-                        addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.address ?? ""));
-                        addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.city ?? ""));
-                        addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.country_code ?? ""));
-                        addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.state ?? ""));
-                        addressesTFromMyClientElement.AppendChild(addressTFromMyClientElement);
-
-                        t_entityElement.AppendChild(addressesTFromMyClientElement);
-
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_state", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_state ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_country_code ?? ""));
-
-                        XmlElement directorIdElement = xmlDoc.CreateElement("director_id");
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "gender", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.gender));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "title", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.title));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.first_name));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.last_name));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.birthdate.ToString()));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.nationality1));
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "residence", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.residence));
 
 
-
-                        //XmlElement phonesDirectorElement = xmlDoc.CreateElement("phones");
-                        //XmlElement phoneDirectorElement = xmlDoc.CreateElement("phone");
-                        //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_contact_type));
-                        //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_communication_type));
-                        //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_country_prefix));
-                        //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_number));
-                        //phonesDirectorElement.AppendChild(phoneDirectorElement);
-                        //directorIdElement.AppendChild(phonesDirectorElement);
-
-                        XmlElement phonesDirectorElement = xmlDoc.CreateElement("phones");
-
-                        // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                        var phoneDirectorList = firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone;
-                        if (phoneDirectorList != null)
+                        if (firstRecord?.account_ownership?.ToLower() == "o" || firstRecord?.account_ownership?.ToLower() == "c")
                         {
-                            foreach (var phone in phoneDirectorList)
-                            {
-                                XmlElement phoneDirectorElement = xmlDoc.CreateElement("phone");
-                                phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
-                                phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
-                                phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
-                                phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
-                                phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
-
-                                phonesDirectorElement.AppendChild(phoneDirectorElement);
-                                directorIdElement.AppendChild(phonesDirectorElement);
-                            }
-                        }
-
-                        //directorIdElement.AppendChild(phonesDirectorElement);
-
-                        //t_entityElement.AppendChild(phonesDirectorElement);
-
-
-                        //XmlElement addressesDirectorElement = xmlDoc.CreateElement("addresses");
-                        //XmlElement addressDirectorElement = xmlDoc.CreateElement("address");
-                        //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.address_type));
-                        //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.address));
-                        //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.city));
-                        //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.country_code));
-                        //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.state));
-                        //addressesDirectorElement.AppendChild(addressDirectorElement);
-                        //directorIdElement.AppendChild(addressesDirectorElement);
-                        //t_entityElement.AppendChild(addressesDirectorElement);
-
-                        XmlElement addressesDirectorElement = xmlDoc.CreateElement("addresses");
-
-                        // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                        var addressDirectorList = firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address;
-                        if (addressDirectorList != null)
-                        {
-                            foreach (var address in addressDirectorList)
-                            {
-                                XmlElement addressDirectorElement = xmlDoc.CreateElement("address");
-                                addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", address?.address_type ?? ""));
-                                addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", address?.address ?? ""));
-                                addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", address?.city ?? ""));
-                                addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", address?.country_code ?? ""));
-                                addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", address?.state ?? ""));
-
-                                addressesDirectorElement.AppendChild(addressDirectorElement);
-                                directorIdElement.AppendChild(addressesDirectorElement);
-                            }
-                        }
-
-
-
-                        directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.occupation));
-
-                        XmlElement identificationElement = xmlDoc.CreateElement("identification");
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.type));
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "number", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.number));
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issue_date.ToString()));
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.expiry_date.ToString()));
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issued_by));
-                        identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issue_country));
-                        directorIdElement.AppendChild(identificationElement);
-                        //t_entityElement.AppendChild(identificationElement);
-
-
-
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.source_of_wealth));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "role", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.role));
-
-
-                        t_entityElement.AppendChild(directorIdElement);
-                        // Add directorIdElement to the main XML structure as needed
-
-
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_date.ToString("yyyy-MM-ddTHH:mm:ss") ?? ""));
-                        t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.t_entity?.comments ?? ""));
-
-
-                        from_accountElement.AppendChild(t_entityElement);
-
-                        XmlElement signatoryElement = xmlDoc.CreateElement("signatory");
-                        signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "is_primary", firstRecord?.t_from_my_client?.from_account?.signatory?.is_primary.ToString()));
-
-                        XmlElement tPersonSignatoryElement = xmlDoc.CreateElement("t_person");
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "gender", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.gender));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "title", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.title));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.first_name));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "middle_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.middle_name));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.last_name));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.birthdate.ToString()));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birth_place", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.birth_place));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.passport_number));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_country", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.passport_country));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "id_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.id_number));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.nationality1));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "residence", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.residence));
-                        signatoryElement.AppendChild(tPersonSignatoryElement);
-
-
-
-                        //XmlElement phonesSignatoryElement = xmlDoc.CreateElement("phones");
-                        //XmlElement phoneSignatoryElement = xmlDoc.CreateElement("phone");
-                        //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_contact_type));
-                        //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_communication_type));
-                        //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_country_prefix));
-                        //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_number));
-                        //phonesSignatoryElement.AppendChild(phoneSignatoryElement);
-                        //signatoryElement.AppendChild(phonesSignatoryElement);
-
-                        XmlElement phonesSignatoryElement = xmlDoc.CreateElement("phones");
-
-                        // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                        var phoneSignatoryList = firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone;
-                        if (phoneSignatoryList != null)
-                        {
-                            foreach (var phone in phoneSignatoryList)
-                            {
-                                XmlElement phoneSignatoryElement = xmlDoc.CreateElement("phone");
-                                phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
-                                phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
-                                phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
-                                phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
-                                phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
-
-                                phonesSignatoryElement.AppendChild(phoneSignatoryElement);
-                                signatoryElement.AppendChild(phonesSignatoryElement);
-                            }
-                        }
-
-                        //directorIdElement.AppendChild(phonesDirectorElement);
-
-                        //from_accountElement.AppendChild(phonesSignatoryElement);
-
-
-                        //XmlElement addressesSignatoryElement = xmlDoc.CreateElement("addresses");
-                        //XmlElement addressSignatoryElement = xmlDoc.CreateElement("address");
-                        //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.address_type));
-                        //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.address));
-                        //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.city));
-                        //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.country_code));
-                        //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.state));
-                        //addressesSignatoryElement.AppendChild(addressSignatoryElement);
-                        //signatoryElement.AppendChild(addressesSignatoryElement);
-                        //from_accountElement.AppendChild(addressesSignatoryElement);
-
-
-                        XmlElement addressesSignatoryElement = xmlDoc.CreateElement("addresses");
-
-                        // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                        var addressSignatoryList = firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address;
-                        if (addressSignatoryList != null)
-                        {
-                            foreach (var signatory in addressSignatoryList)
-                            {
-                                XmlElement addressSignatoryElement = xmlDoc.CreateElement("address");
-                                addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", signatory?.address_type ?? ""));
-                                addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", signatory?.address ?? ""));
-                                addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", signatory?.city ?? ""));
-                                addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", signatory?.country_code ?? ""));
-                                addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", signatory?.state ?? ""));
-
-                                addressesSignatoryElement.AppendChild(addressSignatoryElement);
-                                signatoryElement.AppendChild(addressesSignatoryElement);
-                            }
-                        }
-
-
-                        signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.occupation));
-
-                        XmlElement identificationSignatoryElement = xmlDoc.CreateElement("identification");
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.type));
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.number));
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issue_date.ToString()));
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.expiry_date.ToString()));
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issued_by));
-                        identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issue_country));
-                        signatoryElement.AppendChild(identificationSignatoryElement);
-                        //from_accountElement.AppendChild(identificationSignatoryElement);
-
-                        //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.source_of_wealth));
-                        //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.comments));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.source_of_wealth));
-                        tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.comments));
-
-                        signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "role", firstRecord?.t_from_my_client?.from_account?.signatory?.role));
-
-                        from_accountElement.AppendChild(signatoryElement);
-
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "opened", firstRecord?.t_from_my_client?.from_account?.opened.ToString()));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "balance", firstRecord?.t_from_my_client?.from_account?.balance.ToString()));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "date_balance", firstRecord?.t_from_my_client?.from_account?.date_balance.ToString()));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "status_code", firstRecord?.t_from_my_client?.from_account?.status_code));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "beneficiary", firstRecord?.t_from_my_client?.from_account?.beneficiary));
-                        from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.comments));
-
-
-
-
-
-                        t_from_my_clientElement.AppendChild(from_accountElement);
-                        t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_country", firstRecord?.t_from_my_client?.from_country ?? ""));
-
-                        transactionElement.AppendChild(t_from_my_clientElement);
-
-
-
-
-                        if (transactionGroup.Count() > 1)
-                        {
-                            var secondRecord = transactionGroup.Skip(1).First();
-
-                            // Process the second record as t_to_my_client
-                            XmlElement t_to_my_clientElement = xmlDoc.CreateElement("t_to_my_client");
-                            t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_funds_code", secondRecord?.t_to_my_client?.to_funds_code));
-                            t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_funds_comment", secondRecord?.t_to_my_client?.to_funds_comment));
-
-                            XmlElement to_foreignCurrencyEelement = xmlDoc.CreateElement("to_foreign_currency");
-                            to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_currency_code", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_currency_code));
-                            to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_amount", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_amount.ToString()));
-                            to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_exchange_rate", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_exchange_rate.ToString()));
-                            t_to_my_clientElement.AppendChild(to_foreignCurrencyEelement);
-
-                            XmlElement to_accountElement = xmlDoc.CreateElement("to_account");
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", secondRecord?.t_to_my_client?.to_account?.institution_name ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", secondRecord?.t_to_my_client?.to_account?.institution_code ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", secondRecord?.t_to_my_client?.to_account?.non_bank_institution.ToString()));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "branch", secondRecord?.t_to_my_client?.to_account?.branch ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", secondRecord?.t_to_my_client?.to_account?.account ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "currency_code", secondRecord?.t_to_my_client?.to_account?.currency_code ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", secondRecord?.t_to_my_client?.to_account?.account_name ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "client_number", secondRecord?.t_to_my_client?.to_account?.client_number ?? ""));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "personal_account_type", secondRecord?.t_to_my_client?.to_account?.personal_account_type ?? ""));
-
-
-
-                            XmlElement to_t_entityElement = xmlDoc.CreateElement("t_entity");
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "name", secondRecord?.t_to_my_client?.to_account?.t_entity?.name ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "commercial_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.commercial_name ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_legal_form", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_legal_form ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_number ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "business", (secondRecord?.t_to_my_client?.to_account?.t_entity?.business).ToString()));
-
-                            XmlElement phonesTToMyClientElement = xmlDoc.CreateElement("phones");
-                            XmlElement phoneTToMyClientElement = xmlDoc.CreateElement("phone");
-                            phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_contact_type ?? ""));
-                            phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_communication_type ?? ""));
-                            phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_country_prefix ?? ""));
-                            phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_number ?? ""));
-                            phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_extension ?? ""));
-                            phonesTToMyClientElement.AppendChild(phoneTToMyClientElement);
-
-                            to_t_entityElement.AppendChild(phonesTToMyClientElement);
-
-                            XmlElement addressesTToMyClientElement = xmlDoc.CreateElement("addresses");
-                            XmlElement addressTToMyClientElement = xmlDoc.CreateElement("address");
-                            addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.address_type ?? ""));
-                            addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.address ?? ""));
-                            addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "city", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.city ?? ""));
-                            addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.country_code ?? ""));
-                            addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "state", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.state ?? ""));
-                            addressesTToMyClientElement.AppendChild(addressTToMyClientElement);
-
-                            to_t_entityElement.AppendChild(addressesTToMyClientElement);
-
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_state", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_state ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_country_code ?? ""));
-
-                            XmlElement directorIdToElement = xmlDoc.CreateElement("director_id");
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "gender", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.gender));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "title", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.title));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.first_name));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.last_name));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.birthdate.ToString()));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.nationality1));
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "residence", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.residence));
+                            XmlElement t_from_my_clientElement = xmlDoc.CreateElement("t_from_my_client");
+                            t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", firstRecord?.t_from_my_client?.from_funds_code ?? ""));
+                            t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", firstRecord?.t_from_my_client?.from_funds_comment ?? ""));
+
+                            XmlElement from_accountElement = xmlDoc.CreateElement("from_account");
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", firstRecord?.t_from_my_client?.from_account?.institution_name ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", firstRecord?.t_from_my_client?.from_account?.institution_code ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", firstRecord?.t_from_my_client?.from_account?.non_bank_institution.ToString()));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "branch", firstRecord?.t_from_my_client?.from_account?.branch ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", firstRecord?.t_from_my_client?.from_account?.account ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "currency_code", firstRecord?.t_from_my_client?.from_account?.currency_code ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", firstRecord?.t_from_my_client?.from_account?.account_name ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "client_number", firstRecord?.t_from_my_client?.from_account?.client_number ?? ""));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "personal_account_type", firstRecord?.t_from_my_client?.from_account?.personal_account_type ?? ""));
+
+                            XmlElement t_entityElement = xmlDoc.CreateElement("t_entity");
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "name", firstRecord?.t_from_my_client?.from_account?.t_entity?.name ?? ""));
+
+                            if (customerType.customer_type.ToLower() == "cc") { t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "commercial_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.commercial_name ?? "")); };
+
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_legal_form", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_legal_form ?? ""));
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_number ?? ""));
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "business", (firstRecord?.t_from_my_client?.from_account?.t_entity?.business).ToString()));
+
+                            XmlElement phonesTFromMyClientElement = xmlDoc.CreateElement("phones");
+                            XmlElement phoneTFromMyClientElement = xmlDoc.CreateElement("phone");
+                            phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_contact_type ?? ""));
+                            phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_communication_type ?? ""));
+                            phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_country_prefix ?? ""));
+                            phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_number ?? ""));
+                            phoneTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", firstRecord?.t_from_my_client?.from_account?.t_entity?.phones?.phone?.tph_extension ?? ""));
+                            phonesTFromMyClientElement.AppendChild(phoneTFromMyClientElement);
+
+                            t_entityElement.AppendChild(phonesTFromMyClientElement);
+
+                            XmlElement addressesTFromMyClientElement = xmlDoc.CreateElement("addresses");
+                            XmlElement addressTFromMyClientElement = xmlDoc.CreateElement("address");
+                            addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.address_type ?? ""));
+                            addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.address ?? ""));
+                            addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.city ?? ""));
+                            addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.country_code ?? ""));
+                            addressTFromMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.t_entity?.addresses?.address?.state ?? ""));
+                            addressesTFromMyClientElement.AppendChild(addressTFromMyClientElement);
+
+                            t_entityElement.AppendChild(addressesTFromMyClientElement);
+
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_state", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_state ?? ""));
+
+                            if (firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_country_code != null) { t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_country_code ?? "")); };
+
+
+                            XmlElement directorIdElement = xmlDoc.CreateElement("director_id");
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "gender", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.gender));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "title", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.title));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.first_name));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.last_name));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.birthdate.ToString()));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.nationality1));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "residence", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.residence));
 
 
 
                             //XmlElement phonesDirectorElement = xmlDoc.CreateElement("phones");
                             //XmlElement phoneDirectorElement = xmlDoc.CreateElement("phone");
-                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_contact_type));
-                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_communication_type));
-                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_country_prefix));
-                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_number));
+                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_contact_type));
+                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_communication_type));
+                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_country_prefix));
+                            //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone?.tph_number));
                             //phonesDirectorElement.AppendChild(phoneDirectorElement);
-                            //directorIdToElement.AppendChild(phonesDirectorElement);
+                            //directorIdElement.AppendChild(phonesDirectorElement);
 
-                            XmlElement phonesDirectorToElement = xmlDoc.CreateElement("phones");
+                            XmlElement phonesDirectorElement = xmlDoc.CreateElement("phones");
 
-                            // Assuming secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                            var phoneDirectorToList = secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone;
-                            if (phoneDirectorToList != null)
+                            // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                            var phoneDirectorList = firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone;
+                            if (phoneDirectorList != null)
                             {
-                                foreach (var phone in phoneDirectorToList)
+                                foreach (var phone in phoneDirectorList)
                                 {
-                                    XmlElement phoneDirectorToElement = xmlDoc.CreateElement("phone");
-                                    phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
-                                    phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
-                                    phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
-                                    phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
-                                    phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
+                                    XmlElement phoneDirectorElement = xmlDoc.CreateElement("phone");
+                                    phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
+                                    phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
+                                    phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
+                                    phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
+                                    phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
 
-                                    phonesDirectorToElement.AppendChild(phoneDirectorToElement);
-                                    directorIdToElement.AppendChild(phonesDirectorToElement);
+                                    phonesDirectorElement.AppendChild(phoneDirectorElement);
+                                    directorIdElement.AppendChild(phonesDirectorElement);
                                 }
                             }
 
-                            //directorIdToElement.AppendChild(phonesDirectorToElement);
+                            //directorIdElement.AppendChild(phonesDirectorElement);
 
-                            //to_t_entityElement.AppendChild(phonesDirectorToElement);
+                            //t_entityElement.AppendChild(phonesDirectorElement);
 
 
                             //XmlElement addressesDirectorElement = xmlDoc.CreateElement("addresses");
                             //XmlElement addressDirectorElement = xmlDoc.CreateElement("address");
-                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.address_type));
-                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.address));
-                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.city));
-                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.country_code));
-                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.state));
+                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.address_type));
+                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.address));
+                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.city));
+                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.country_code));
+                            //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address?.state));
                             //addressesDirectorElement.AppendChild(addressDirectorElement);
-                            //directorIdToElement.AppendChild(addressesDirectorElement);
-                            //to_t_entityElement.AppendChild(addressesDirectorElement);
+                            //directorIdElement.AppendChild(addressesDirectorElement);
+                            //t_entityElement.AppendChild(addressesDirectorElement);
 
-                            XmlElement addressesDirectorToElement = xmlDoc.CreateElement("addresses");
+                            XmlElement addressesDirectorElement = xmlDoc.CreateElement("addresses");
 
-                            // Assuming secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                            var addressDirectorToList = secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address;
-                            if (addressDirectorToList != null)
+                            // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                            var addressDirectorList = firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.addresses?.address;
+                            if (addressDirectorList != null)
                             {
-                                foreach (var address in addressDirectorToList)
+                                foreach (var address in addressDirectorList)
                                 {
-                                    XmlElement addressDirectorToElement = xmlDoc.CreateElement("address");
-                                    addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", address?.address_type ?? ""));
-                                    addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "address", address?.address ?? ""));
-                                    addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "city", address?.city ?? ""));
-                                    addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", address?.country_code ?? ""));
-                                    addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "state", address?.state ?? ""));
+                                    XmlElement addressDirectorElement = xmlDoc.CreateElement("address");
+                                    addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", address?.address_type ?? ""));
+                                    addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", address?.address ?? ""));
+                                    addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", address?.city ?? ""));
+                                    addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", address?.country_code ?? ""));
+                                    addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", address?.state ?? ""));
 
-                                    addressesDirectorToElement.AppendChild(addressDirectorToElement);
-                                    directorIdToElement.AppendChild(addressesDirectorToElement);
+                                    addressesDirectorElement.AppendChild(addressDirectorElement);
+                                    directorIdElement.AppendChild(addressesDirectorElement);
                                 }
                             }
 
 
 
-                            directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.occupation));
+                            directorIdElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.occupation));
 
-                            XmlElement identificationToElement = xmlDoc.CreateElement("identification");
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.type));
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "number", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.number));
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issue_date.ToString()));
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.expiry_date.ToString()));
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issued_by));
-                            identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issue_country));
-                            directorIdToElement.AppendChild(identificationToElement);
-                            //to_t_entityElement.AppendChild(identificationToElement);
-
-
-
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.source_of_wealth));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "role", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.role));
-
-
-                            to_t_entityElement.AppendChild(directorIdToElement);
-                            // Add directorIdToElement to the main XML structure as needed
-
-
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_date.ToString("yyyy-MM-ddTHH:mm:ss") ?? ""));
-                            to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.t_entity?.comments ?? ""));
-
-
-                            to_accountElement.AppendChild(to_t_entityElement);
+                            XmlElement identificationElement = xmlDoc.CreateElement("identification");
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "type", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.type));
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "number", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.number));
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issue_date.ToString()));
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.expiry_date.ToString()));
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issued_by));
+                            identificationElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.identification?.issue_country));
+                            directorIdElement.AppendChild(identificationElement);
+                            //t_entityElement.AppendChild(identificationElement);
 
 
 
-                            XmlElement tosignatoryElement = xmlDoc.CreateElement("signatory");
-                            tosignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "is_primary", secondRecord?.t_to_my_client?.to_account?.signatory?.is_primary.ToString()));
+                            if (firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.source_of_wealth != null) { t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.source_of_wealth)); }
+                            if (firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.role != null) { t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "role", firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.role)); }
 
-                            XmlElement to_tPersonSignatoryElement = xmlDoc.CreateElement("t_person");
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "gender", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.gender));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "title", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.title));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.first_name));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "middle_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.middle_name));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.last_name));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.birthdate.ToString()));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birth_place", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.birth_place));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.passport_number));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_country", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.passport_country));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "id_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.id_number));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.nationality1));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "residence", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.residence));
-                            tosignatoryElement.AppendChild(to_tPersonSignatoryElement);
+
+                            t_entityElement.AppendChild(directorIdElement);
+                            // Add directorIdElement to the main XML structure as needed
+
+
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_date", firstRecord?.t_from_my_client?.from_account?.t_entity?.incorporation_date.ToString("yyyy-MM-ddTHH:mm:ss") ?? ""));
+                            t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.t_entity?.comments ?? ""));
+
+
+                            from_accountElement.AppendChild(t_entityElement);
+
+                            XmlElement signatoryElement = xmlDoc.CreateElement("signatory");
+                            signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "is_primary", firstRecord?.t_from_my_client?.from_account?.signatory?.is_primary.ToString()));
+
+                            XmlElement tPersonSignatoryElement = xmlDoc.CreateElement("t_person");
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "gender", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.gender));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "title", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.title));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.first_name));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "middle_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.middle_name));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.last_name));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.birthdate.ToString()));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birth_place", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.birth_place));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.passport_number));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_country", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.passport_country));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "id_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.id_number));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.nationality1));
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "residence", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.residence));
+                            signatoryElement.AppendChild(tPersonSignatoryElement);
 
 
 
                             //XmlElement phonesSignatoryElement = xmlDoc.CreateElement("phones");
                             //XmlElement phoneSignatoryElement = xmlDoc.CreateElement("phone");
-                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_contact_type));
-                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_communication_type));
-                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_country_prefix));
-                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_number));
+                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_contact_type));
+                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_communication_type));
+                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_country_prefix));
+                            //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone?.tph_number));
                             //phonesSignatoryElement.AppendChild(phoneSignatoryElement);
                             //signatoryElement.AppendChild(phonesSignatoryElement);
 
-                            XmlElement to_phonesSignatoryElement = xmlDoc.CreateElement("phones");
+                            XmlElement phonesSignatoryElement = xmlDoc.CreateElement("phones");
 
                             // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                            var to_phoneSignatoryList = secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone;
-                            if (to_phoneSignatoryList != null)
+                            var phoneSignatoryList = firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.phones?.phone;
+                            if (phoneSignatoryList != null)
                             {
-                                foreach (var phone in to_phoneSignatoryList)
+                                foreach (var phone in phoneSignatoryList)
                                 {
-                                    XmlElement to_phoneSignatoryElement = xmlDoc.CreateElement("phone");
-                                    to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
-                                    to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
-                                    to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
-                                    to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
-                                    to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
+                                    XmlElement phoneSignatoryElement = xmlDoc.CreateElement("phone");
+                                    phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
+                                    phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
+                                    phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
+                                    phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
+                                    phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
 
-                                    to_phonesSignatoryElement.AppendChild(to_phoneSignatoryElement);
-                                    tosignatoryElement.AppendChild(to_phonesSignatoryElement);
+                                    phonesSignatoryElement.AppendChild(phoneSignatoryElement);
+                                    signatoryElement.AppendChild(phonesSignatoryElement);
+                                }
+                            }
+
+                            //directorIdElement.AppendChild(phonesDirectorElement);
+
+                            //from_accountElement.AppendChild(phonesSignatoryElement);
+
+
+                            //XmlElement addressesSignatoryElement = xmlDoc.CreateElement("addresses");
+                            //XmlElement addressSignatoryElement = xmlDoc.CreateElement("address");
+                            //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.address_type));
+                            //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.address));
+                            //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.city));
+                            //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.country_code));
+                            //addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address?.state));
+                            //addressesSignatoryElement.AppendChild(addressSignatoryElement);
+                            //signatoryElement.AppendChild(addressesSignatoryElement);
+                            //from_accountElement.AppendChild(addressesSignatoryElement);
+
+
+                            XmlElement addressesSignatoryElement = xmlDoc.CreateElement("addresses");
+
+                            // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                            var addressSignatoryList = firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.addresses?.address;
+                            if (addressSignatoryList != null)
+                            {
+                                foreach (var signatory in addressSignatoryList)
+                                {
+                                    XmlElement addressSignatoryElement = xmlDoc.CreateElement("address");
+                                    addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", signatory?.address_type ?? ""));
+                                    addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", signatory?.address ?? ""));
+                                    addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", signatory?.city ?? ""));
+                                    addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", signatory?.country_code ?? ""));
+                                    addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", signatory?.state ?? ""));
+
+                                    addressesSignatoryElement.AppendChild(addressSignatoryElement);
+                                    signatoryElement.AppendChild(addressesSignatoryElement);
                                 }
                             }
 
 
+                            signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.occupation));
 
-                            XmlElement to_addressesSignatoryElement = xmlDoc.CreateElement("addresses");
-
-                            // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
-                            var to_addressSignatoryList = secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.addresses?.address;
-                            if (to_addressSignatoryList != null)
-                            {
-                                foreach (var signatory in to_addressSignatoryList)
-                                {
-                                    XmlElement to_addressSignatoryElement = xmlDoc.CreateElement("address");
-                                    to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", signatory?.address_type ?? ""));
-                                    to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", signatory?.address ?? ""));
-                                    to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", signatory?.city ?? ""));
-                                    to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", signatory?.country_code ?? ""));
-                                    to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", signatory?.state ?? ""));
-
-                                    to_addressesSignatoryElement.AppendChild(to_addressSignatoryElement);
-                                    tosignatoryElement.AppendChild(to_addressesSignatoryElement);
-                                }
-                            }
-
-
-                            signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.occupation));
-
-                            XmlElement to_identificationSignatoryElement = xmlDoc.CreateElement("identification");
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.type));
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.number));
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issue_date.ToString()));
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.expiry_date.ToString()));
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issued_by));
-                            to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issue_country));
-                            tosignatoryElement.AppendChild(to_identificationSignatoryElement);
+                            XmlElement identificationSignatoryElement = xmlDoc.CreateElement("identification");
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "type", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.type));
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "number", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.number));
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issue_date.ToString()));
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.expiry_date.ToString()));
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issued_by));
+                            identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.identification?.issue_country));
+                            signatoryElement.AppendChild(identificationSignatoryElement);
                             //from_accountElement.AppendChild(identificationSignatoryElement);
 
-                            //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.source_of_wealth));
-                            //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.comments));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.source_of_wealth));
-                            to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.comments));
+                            //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.source_of_wealth));
+                            //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.comments));
+                            if (firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.source_of_wealth != null) { tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.source_of_wealth)); }
+                            tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.signatory?.t_person?.comments));
 
-                            tosignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "role", secondRecord?.t_to_my_client?.to_account?.signatory?.role));
+                            if (firstRecord?.t_from_my_client?.from_account?.signatory?.role != null) { signatoryElement.AppendChild(CreateElementWithText(xmlDoc, "role", firstRecord?.t_from_my_client?.from_account?.signatory?.role)); }
 
-                            to_accountElement.AppendChild(tosignatoryElement);
+                            from_accountElement.AppendChild(signatoryElement);
 
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "opened", secondRecord?.t_to_my_client?.to_account?.opened.ToString()));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "balance", secondRecord?.t_to_my_client?.to_account?.balance.ToString()));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "date_balance", secondRecord?.t_to_my_client?.to_account?.date_balance.ToString()));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "status_code", secondRecord?.t_to_my_client?.to_account?.status_code));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "beneficiary", secondRecord?.t_to_my_client?.to_account?.beneficiary));
-                            to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.comments));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "opened", firstRecord?.t_from_my_client?.from_account?.opened.ToString()));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "balance", firstRecord?.t_from_my_client?.from_account?.balance.ToString()));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "date_balance", firstRecord?.t_from_my_client?.from_account?.date_balance.ToString()));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "status_code", firstRecord?.t_from_my_client?.from_account?.status_code));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "beneficiary", firstRecord?.t_from_my_client?.from_account?.beneficiary));
+                            from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", firstRecord?.t_from_my_client?.from_account?.comments));
 
-                            t_to_my_clientElement.AppendChild(to_accountElement);
-                            t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_country", secondRecord?.t_to_my_client?.to_country));
 
-                            transactionElement.AppendChild(t_to_my_clientElement);
+
+
+
+                            t_from_my_clientElement.AppendChild(from_accountElement);
+                            t_from_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "from_country", firstRecord?.t_from_my_client?.from_country ?? ""));
+
+                            transactionElement.AppendChild(t_from_my_clientElement);
                         }
-
-
-                        // Add logic to handle t_from, t_to elements if needed
-                        // ...
-
-
-                        if (transactionGroup.Count() > 2)
+                        else
                         {
-                            var thirdRecord = transactionGroup.Skip(2).First();
-                            // Rest of your code using the thirdRecord
-
                             XmlElement t_fromElement = xmlDoc.CreateElement("t_from");
-                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", thirdRecord?.t_from?.from_funds_code ?? ""));
-                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", thirdRecord?.t_from?.from_funds_comment ?? ""));
+                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", firstRecord?.t_from?.from_funds_code ?? ""));
+                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", firstRecord?.t_from?.from_funds_comment ?? ""));
 
                             XmlElement tfrom_accountElement = xmlDoc.CreateElement("from_account");
-                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", thirdRecord?.t_from?.from_account?.institution_name ?? ""));
-                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", thirdRecord?.t_from?.from_account?.institution_code ?? ""));
-                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", thirdRecord?.t_from?.from_account?.non_bank_institution.ToString()));
-                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", thirdRecord?.t_from?.from_account?.account ?? ""));
-                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", thirdRecord?.t_from?.from_account?.account_name ?? ""));
+                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", firstRecord?.t_from?.from_account?.institution_name ?? ""));
+                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", firstRecord?.t_from?.from_account?.institution_code ?? ""));
+                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", firstRecord?.t_from?.from_account?.non_bank_institution.ToString()));
+                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", firstRecord?.t_from?.from_account?.account ?? ""));
+                            tfrom_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", firstRecord?.t_from?.from_account?.account_name ?? ""));
 
                             t_fromElement.AppendChild(tfrom_accountElement);
-                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_country", thirdRecord?.t_from?.from_country ?? ""));
+                            t_fromElement.AppendChild(CreateElementWithText(xmlDoc, "from_country", firstRecord?.t_from?.from_country ?? ""));
 
                             transactionElement.AppendChild(t_fromElement);
                         }
 
 
-                        if (transactionGroup.Count() > 3)
+
+                        // Process the first record as t_from_my_client
+
+                        if (transactions.Count > 1) 
                         {
-                            var fourthRecord = transactionGroup.Skip(3).First();
-                            // Rest of your code using the thirdRecord
+                            var secondRecord = transactions[1];
+
+                            if (secondRecord.account_ownership?.ToLower() == "o" || secondRecord.account_ownership?.ToLower() == "c")
+                            {
+                                var customerID2 = secondRecord?.t_to_my_client?.to_account?.client_number;
+                                var customerType2 = context.amlCustomers.SingleOrDefault(v => v.cust_id == customerID2);
+
+                                // Process the second record as t_to_my_client
+                                XmlElement t_to_my_clientElement = xmlDoc.CreateElement("t_to_my_client");
+                                t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_funds_code", secondRecord?.t_to_my_client?.to_funds_code));
+                                t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_funds_comment", secondRecord?.t_to_my_client?.to_funds_comment));
+
+                                XmlElement to_foreignCurrencyEelement = xmlDoc.CreateElement("to_foreign_currency");
+                                to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_currency_code", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_currency_code));
+                                to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_amount", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_amount.ToString()));
+                                to_foreignCurrencyEelement.AppendChild(CreateElementWithText(xmlDoc, "foreign_exchange_rate", secondRecord?.t_to_my_client?.to_foreign_currency?.foreign_exchange_rate.ToString()));
+                                t_to_my_clientElement.AppendChild(to_foreignCurrencyEelement);
+
+                                XmlElement to_accountElement = xmlDoc.CreateElement("to_account");
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", secondRecord?.t_to_my_client?.to_account?.institution_name ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", secondRecord?.t_to_my_client?.to_account?.institution_code ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", secondRecord?.t_to_my_client?.to_account?.non_bank_institution.ToString()));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "branch", secondRecord?.t_to_my_client?.to_account?.branch ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", secondRecord?.t_to_my_client?.to_account?.account ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "currency_code", secondRecord?.t_to_my_client?.to_account?.currency_code ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", secondRecord?.t_to_my_client?.to_account?.account_name ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "client_number", secondRecord?.t_to_my_client?.to_account?.client_number ?? ""));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "personal_account_type", secondRecord?.t_to_my_client?.to_account?.personal_account_type ?? ""));
 
 
-                            XmlElement t_toElement = xmlDoc.CreateElement("t_to");
-                            t_toElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", fourthRecord?.t_to?.to_funds_code ?? ""));
-                            t_toElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", fourthRecord?.t_to?.to_funds_comment ?? ""));
+
+                                XmlElement to_t_entityElement = xmlDoc.CreateElement("t_entity");
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "name", secondRecord?.t_to_my_client?.to_account?.t_entity?.name ?? ""));
+
+                                if (customerType2.customer_type.ToLower() == "cc") { to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "commercial_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.commercial_name ?? "")); }
 
 
-                            XmlElement tto_foreignCurrencyElement = xmlDoc.CreateElement("to_foreign_currency");
-                            tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_currency_code", fourthRecord?.t_to?.to_foreign_currency?.foreign_currency_code ?? ""));
-                            tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_amount", fourthRecord?.t_to?.to_foreign_currency?.foreign_amount.ToString() ?? ""));
-                            tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_exchange_rate", fourthRecord?.t_to?.to_foreign_currency?.foreign_exchange_rate.ToString()));
-                            t_toElement.AppendChild(tto_foreignCurrencyElement);
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_legal_form", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_legal_form ?? ""));
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_number ?? ""));
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "business", (secondRecord?.t_to_my_client?.to_account?.t_entity?.business).ToString()));
+
+                                XmlElement phonesTToMyClientElement = xmlDoc.CreateElement("phones");
+                                XmlElement phoneTToMyClientElement = xmlDoc.CreateElement("phone");
+                                phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_contact_type ?? ""));
+                                phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_communication_type ?? ""));
+                                phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_country_prefix ?? ""));
+                                phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_number ?? ""));
+                                phoneTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", secondRecord?.t_to_my_client?.to_account?.t_entity?.phones?.phone?.tph_extension ?? ""));
+                                phonesTToMyClientElement.AppendChild(phoneTToMyClientElement);
+
+                                to_t_entityElement.AppendChild(phonesTToMyClientElement);
+
+                                XmlElement addressesTToMyClientElement = xmlDoc.CreateElement("addresses");
+                                XmlElement addressTToMyClientElement = xmlDoc.CreateElement("address");
+                                addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.address_type ?? ""));
+                                addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "address", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.address ?? ""));
+                                addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "city", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.city ?? ""));
+                                addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.country_code ?? ""));
+                                addressTToMyClientElement.AppendChild(CreateElementWithText(xmlDoc, "state", secondRecord?.t_to_my_client?.to_account?.t_entity?.addresses?.address?.state ?? ""));
+                                addressesTToMyClientElement.AppendChild(addressTToMyClientElement);
+
+                                to_t_entityElement.AppendChild(addressesTToMyClientElement);
+
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_state", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_state ?? ""));
+                                if (secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_country_code != null) { to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_country_code ?? "")); }
 
 
-                            XmlElement tto_accountElement = xmlDoc.CreateElement("to_account");
-                            tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", fourthRecord?.t_to?.to_account?.institution_name ?? ""));
-                            tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", fourthRecord?.t_to?.to_account?.institution_code ?? ""));
-                            tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", fourthRecord?.t_to?.to_account?.non_bank_institution.ToString()));
-                            tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", fourthRecord?.t_to?.to_account?.account ?? ""));
-                            tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", fourthRecord?.t_to?.to_account?.account_name ?? ""));
 
-                            t_toElement.AppendChild(tto_accountElement);
-                            t_toElement.AppendChild(CreateElementWithText(xmlDoc, "to_country", fourthRecord?.t_to?.to_country ?? ""));
+                                XmlElement directorIdToElement = xmlDoc.CreateElement("director_id");
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "gender", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.gender));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "title", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.title));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.first_name));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.last_name));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.birthdate.ToString()));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.nationality1));
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "residence", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.residence));
 
-                            transactionElement.AppendChild(t_toElement);
 
+
+                                //XmlElement phonesDirectorElement = xmlDoc.CreateElement("phones");
+                                //XmlElement phoneDirectorElement = xmlDoc.CreateElement("phone");
+                                //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_contact_type));
+                                //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_communication_type));
+                                //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_country_prefix));
+                                //phoneDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone?.tph_number));
+                                //phonesDirectorElement.AppendChild(phoneDirectorElement);
+                                //directorIdToElement.AppendChild(phonesDirectorElement);
+
+                                XmlElement phonesDirectorToElement = xmlDoc.CreateElement("phones");
+
+                                // Assuming secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                                var phoneDirectorToList = secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone;
+                                if (phoneDirectorToList != null)
+                                {
+                                    foreach (var phone in phoneDirectorToList)
+                                    {
+                                        XmlElement phoneDirectorToElement = xmlDoc.CreateElement("phone");
+                                        phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
+                                        phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
+                                        phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
+                                        phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
+                                        phoneDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
+
+                                        phonesDirectorToElement.AppendChild(phoneDirectorToElement);
+                                        directorIdToElement.AppendChild(phonesDirectorToElement);
+                                    }
+                                }
+
+                                //directorIdToElement.AppendChild(phonesDirectorToElement);
+
+                                //to_t_entityElement.AppendChild(phonesDirectorToElement);
+
+
+                                //XmlElement addressesDirectorElement = xmlDoc.CreateElement("addresses");
+                                //XmlElement addressDirectorElement = xmlDoc.CreateElement("address");
+                                //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.address_type));
+                                //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "address", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.address));
+                                //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "city", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.city));
+                                //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.country_code));
+                                //addressDirectorElement.AppendChild(CreateElementWithText(xmlDoc, "state", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address?.state));
+                                //addressesDirectorElement.AppendChild(addressDirectorElement);
+                                //directorIdToElement.AppendChild(addressesDirectorElement);
+                                //to_t_entityElement.AppendChild(addressesDirectorElement);
+
+                                XmlElement addressesDirectorToElement = xmlDoc.CreateElement("addresses");
+
+                                // Assuming secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                                var addressDirectorToList = secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.addresses?.address;
+                                if (addressDirectorToList != null)
+                                {
+                                    foreach (var address in addressDirectorToList)
+                                    {
+                                        XmlElement addressDirectorToElement = xmlDoc.CreateElement("address");
+                                        addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", address?.address_type ?? ""));
+                                        addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "address", address?.address ?? ""));
+                                        addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "city", address?.city ?? ""));
+                                        addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", address?.country_code ?? ""));
+                                        addressDirectorToElement.AppendChild(CreateElementWithText(xmlDoc, "state", address?.state ?? ""));
+
+                                        addressesDirectorToElement.AppendChild(addressDirectorToElement);
+                                        directorIdToElement.AppendChild(addressesDirectorToElement);
+                                    }
+                                }
+
+
+
+                                directorIdToElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.occupation));
+
+                                XmlElement identificationToElement = xmlDoc.CreateElement("identification");
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "type", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.type));
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "number", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.number));
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issue_date.ToString()));
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.expiry_date.ToString()));
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issued_by));
+                                identificationToElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.identification?.issue_country));
+                                directorIdToElement.AppendChild(identificationToElement);
+                                //to_t_entityElement.AppendChild(identificationToElement);
+
+
+
+                                if (secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.source_of_wealth != null) { to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.source_of_wealth)); }
+                                if (secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.role != null) { to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "role", secondRecord?.t_to_my_client?.to_account?.t_entity?.director_id?.role)); }
+
+
+                                to_t_entityElement.AppendChild(directorIdToElement);
+                                // Add directorIdToElement to the main XML structure as needed
+
+
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "incorporation_date", secondRecord?.t_to_my_client?.to_account?.t_entity?.incorporation_date.ToString("yyyy-MM-ddTHH:mm:ss") ?? ""));
+                                to_t_entityElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.t_entity?.comments ?? ""));
+
+
+                                to_accountElement.AppendChild(to_t_entityElement);
+
+
+
+                                XmlElement tosignatoryElement = xmlDoc.CreateElement("signatory");
+                                tosignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "is_primary", secondRecord?.t_to_my_client?.to_account?.signatory?.is_primary.ToString()));
+
+                                XmlElement to_tPersonSignatoryElement = xmlDoc.CreateElement("t_person");
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "gender", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.gender));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "title", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.title));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "first_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.first_name));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "middle_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.middle_name));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "last_name", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.last_name));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birthdate", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.birthdate.ToString()));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "birth_place", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.birth_place));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.passport_number));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "passport_country", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.passport_country));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "id_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.id_number));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "nationality1", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.nationality1));
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "residence", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.residence));
+                                tosignatoryElement.AppendChild(to_tPersonSignatoryElement);
+
+
+
+                                //XmlElement phonesSignatoryElement = xmlDoc.CreateElement("phones");
+                                //XmlElement phoneSignatoryElement = xmlDoc.CreateElement("phone");
+                                //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_contact_type));
+                                //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_communication_type));
+                                //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_country_prefix));
+                                //phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone?.tph_number));
+                                //phonesSignatoryElement.AppendChild(phoneSignatoryElement);
+                                //signatoryElement.AppendChild(phonesSignatoryElement);
+
+                                XmlElement to_phonesSignatoryElement = xmlDoc.CreateElement("phones");
+
+                                // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                                var to_phoneSignatoryList = secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.phones?.phone;
+                                if (to_phoneSignatoryList != null)
+                                {
+                                    foreach (var phone in to_phoneSignatoryList)
+                                    {
+                                        XmlElement to_phoneSignatoryElement = xmlDoc.CreateElement("phone");
+                                        to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_contact_type", phone?.tph_contact_type ?? ""));
+                                        to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_communication_type", phone?.tph_communication_type ?? ""));
+                                        to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_country_prefix", phone?.tph_country_prefix ?? ""));
+                                        to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_number", phone?.tph_number ?? ""));
+                                        to_phoneSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "tph_extension", phone?.tph_extension ?? ""));
+
+                                        to_phonesSignatoryElement.AppendChild(to_phoneSignatoryElement);
+                                        tosignatoryElement.AppendChild(to_phonesSignatoryElement);
+                                    }
+                                }
+
+
+
+                                XmlElement to_addressesSignatoryElement = xmlDoc.CreateElement("addresses");
+
+                                // Assuming firstRecord?.t_from_my_client?.from_account?.t_entity?.director_id?.phones?.phone is a List<TPhone>
+                                var to_addressSignatoryList = secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.addresses?.address;
+                                if (to_addressSignatoryList != null)
+                                {
+                                    foreach (var signatory in to_addressSignatoryList)
+                                    {
+                                        XmlElement to_addressSignatoryElement = xmlDoc.CreateElement("address");
+                                        to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address_type", signatory?.address_type ?? ""));
+                                        to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "address", signatory?.address ?? ""));
+                                        to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "city", signatory?.city ?? ""));
+                                        to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "country_code", signatory?.country_code ?? ""));
+                                        to_addressSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "state", signatory?.state ?? ""));
+
+                                        to_addressesSignatoryElement.AppendChild(to_addressSignatoryElement);
+                                        tosignatoryElement.AppendChild(to_addressesSignatoryElement);
+                                    }
+                                }
+
+
+                                tosignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "occupation", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.occupation));
+
+                                XmlElement to_identificationSignatoryElement = xmlDoc.CreateElement("identification");
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "type", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.type));
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "number", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.number));
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_date", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issue_date.ToString()));
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "expiry_date", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.expiry_date.ToString()));
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issued_by", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issued_by));
+                                to_identificationSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "issue_country", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.identification?.issue_country));
+                                tosignatoryElement.AppendChild(to_identificationSignatoryElement);
+                                //from_accountElement.AppendChild(identificationSignatoryElement);
+
+                                //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.source_of_wealth));
+                                //from_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.comments));
+                                if (secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.source_of_wealth != null) { to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "source_of_wealth", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.source_of_wealth)); }
+                                to_tPersonSignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.signatory?.t_person?.comments));
+
+                                if (secondRecord?.t_to_my_client?.to_account?.signatory?.role != null) { tosignatoryElement.AppendChild(CreateElementWithText(xmlDoc, "role", secondRecord?.t_to_my_client?.to_account?.signatory?.role)); }
+
+                                to_accountElement.AppendChild(tosignatoryElement);
+
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "opened", secondRecord?.t_to_my_client?.to_account?.opened.ToString()));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "balance", secondRecord?.t_to_my_client?.to_account?.balance.ToString()));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "date_balance", secondRecord?.t_to_my_client?.to_account?.date_balance.ToString()));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "status_code", secondRecord?.t_to_my_client?.to_account?.status_code));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "beneficiary", secondRecord?.t_to_my_client?.to_account?.beneficiary));
+                                to_accountElement.AppendChild(CreateElementWithText(xmlDoc, "comments", secondRecord?.t_to_my_client?.to_account?.comments));
+
+                                t_to_my_clientElement.AppendChild(to_accountElement);
+                                t_to_my_clientElement.AppendChild(CreateElementWithText(xmlDoc, "to_country", secondRecord?.t_to_my_client?.to_country));
+
+                                transactionElement.AppendChild(t_to_my_clientElement);
+
+                                
+                            }
+
+                            else
+                            {
+
+
+                                XmlElement t_toElement = xmlDoc.CreateElement("t_to");
+                                t_toElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_code", secondRecord?.t_to?.to_funds_code ?? ""));
+                                t_toElement.AppendChild(CreateElementWithText(xmlDoc, "from_funds_comment", secondRecord?.t_to?.to_funds_comment ?? ""));
+
+
+                                XmlElement tto_foreignCurrencyElement = xmlDoc.CreateElement("to_foreign_currency");
+                                tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_currency_code", secondRecord?.t_to?.to_foreign_currency?.foreign_currency_code ?? ""));
+                                tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_amount", secondRecord?.t_to?.to_foreign_currency?.foreign_amount.ToString() ?? ""));
+                                tto_foreignCurrencyElement.AppendChild(CreateElementWithText(xmlDoc, "foreign_exchange_rate", secondRecord?.t_to?.to_foreign_currency?.foreign_exchange_rate.ToString()));
+                                t_toElement.AppendChild(tto_foreignCurrencyElement);
+
+
+                                XmlElement tto_accountElement = xmlDoc.CreateElement("to_account");
+                                tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_name", secondRecord?.t_to?.to_account?.institution_name ?? ""));
+                                tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "institution_code", secondRecord?.t_to?.to_account?.institution_code ?? ""));
+                                tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "non_bank_institution", secondRecord?.t_to?.to_account?.non_bank_institution.ToString()));
+                                tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account", secondRecord?.t_to?.to_account?.account ?? ""));
+                                tto_accountElement.AppendChild(CreateElementWithText(xmlDoc, "account_name", secondRecord?.t_to?.to_account?.account_name ?? ""));
+
+                                t_toElement.AppendChild(tto_accountElement);
+                                t_toElement.AppendChild(CreateElementWithText(xmlDoc, "to_country", secondRecord?.t_to?.to_country ?? ""));
+
+                                transactionElement.AppendChild(t_toElement);
+
+                                
+                            }
+                            
                         }
 
 
+
+
+
+
                         reportElement.AppendChild(transactionElement);
+
+                        XmlElement reportIndicatorsElement = xmlDoc.CreateElement("report_indicators");
+                        reportIndicatorsElement.AppendChild(CreateElementWithText(xmlDoc, "indicator", "-"));
+                        reportIndicatorsElement.AppendChild(CreateElementWithText(xmlDoc, "indicator", "-"));
+                        reportElement.AppendChild(reportIndicatorsElement);
+
+                        xmlDoc.AppendChild(reportElement);
+
+
+
+
+
+
                     }
+
+
+
                 }
-
-                XmlElement reportIndicatorsElement = xmlDoc.CreateElement("report_indicators");
-                reportIndicatorsElement.AppendChild(CreateElementWithText(xmlDoc, "indicator", "-"));
-                reportIndicatorsElement.AppendChild(CreateElementWithText(xmlDoc, "indicator", "-"));
-                reportElement.AppendChild(reportIndicatorsElement);
-
-                xmlDoc.AppendChild(reportElement);
             }
+
+               
+            
 
             return xmlDoc;
         }
+
+
 
         private XmlElement CreateElementWithText(XmlDocument xmlDoc, string elementName, string text)
         {

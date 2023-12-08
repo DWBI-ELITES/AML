@@ -33,7 +33,7 @@ namespace DWBIProjectAPI.Controllers
             private System.DateTime report_dateField;
 
             private string currency_code_localField;
-                        
+
             public TPersonRegistrationInReport reporting_personField { get; set; }
 
             private string reporting_user_codeField;
@@ -201,7 +201,7 @@ namespace DWBIProjectAPI.Controllers
             public bool is_primary { get; set; }
             public TPersonRegistrationInReport t_person { get; set; }
             public string role { get; set; }
-            
+
         }
 
 
@@ -614,7 +614,7 @@ namespace DWBIProjectAPI.Controllers
 
 
         [XmlRoot("t_address")]
-        public class  TAddress
+        public class TAddress
         {
             //[XmlElement("address_type")]
             //public List<AddressTypes> address_type { get; set; }
@@ -782,13 +782,13 @@ namespace DWBIProjectAPI.Controllers
                 }
             }
         }
-            /// <remarks/>
-            [System.SerializableAttribute()]
+        /// <remarks/>
+        [System.SerializableAttribute()]
         [System.ComponentModel.DesignerCategoryAttribute("code")]
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
         public partial class reportTransaction
         {
-            
+
             private string transactionnumberField;
 
             internal string internal_ref_number;
@@ -810,6 +810,10 @@ namespace DWBIProjectAPI.Controllers
             private string transmode_codeField;
 
             private string amount_localField;
+
+            internal decimal? org_serial;
+
+            internal string account_ownership;
 
             private reportTransactionT_from_my_client t_from_my_clientField;
 
@@ -2535,7 +2539,7 @@ namespace DWBIProjectAPI.Controllers
             }
 
 
-            
+
             /// <remarks/>
             public reportTransactionT_to_my_clientTo_person to_person
             {
@@ -2597,16 +2601,16 @@ namespace DWBIProjectAPI.Controllers
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
         public class reportTransactionTo_foreign_currency
 
-    { 
-        internal string foreign_currency_code;
+        {
+            internal string foreign_currency_code;
 
-        internal decimal? foreign_amount;
+            internal decimal? foreign_amount;
 
-        internal decimal? foreign_exchange_rate;
+            internal decimal? foreign_exchange_rate;
 
-    }
-    /// <remarks/>
-    [System.SerializableAttribute()]
+        }
+        /// <remarks/>
+        [System.SerializableAttribute()]
         [System.ComponentModel.DesignerCategoryAttribute("code")]
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
         public partial class reportTransactionT_to_my_clientTo_person
