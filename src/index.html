@@ -1,80 +1,88 @@
-<!--
-
-=========================================================
-* Material Dashboard Angular - v2.8.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-angular2
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-angular2/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
--->
 <!doctype html>
-<html>
-<head>
-    <base href='/'>
-    <meta charset="utf-8" />
-   
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<html lang="en" dir="ltr">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/fintrakicon.png" />
-    <link rel="icon" type="image/png" href="./assets/img/fintrakicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/images/gallery/fintrakicon.png" />
+    <link rel="icon" type="image/png" href="./assets/images/gallery/fintrakicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>FinTrak DWBI Application</title>
+  <title>:: FINTRAK AML :: Home</title>
 
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+  <!-- Bootstrap Core and vandor -->
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css" />
 
-    <!--     Fonts and icons     -->
-    
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR-KEY-HERE"></script>
-    <script>window.global = window;</script>
+  <!-- Plugins css -->
+  <link rel="stylesheet" href="assets/plugins/charts-c3/c3.min.css" />
 
- 
+  <!-- Core css -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/theme2.css" />
+  <base href="/">
+  <style>
+    .HideDiv {
+      display: none !important;
+    }
 
-<!-- <style>
-  @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Roboto Black'), local('Roboto-Black'), url('documentation/css/Roboto-Black.ttf') format('ttf');
-  }
-</style> -->
+    .ShowDiv {
+      display: block !important;
+    }
 
+    .overlay {
+      background-color: rgba(23, 25, 28, 0.5);
+      position: fixed;
+      cursor: pointer;
+      display: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+    }
 
+    .overlay.open {
+      display: block;
+    }
+
+    .sidebar-scroll {
+      height: calc(100vh - 65px);
+      overflow: auto;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    .sticky-top {
+      width: calc(100% - 280px);
+      position: fixed;
+    }
+
+    .marginTop {
+      margin-top: 7.1% !important;
+    }
+  </style>
+  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
+
 <body>
-  <app-root>
-    <div class="loader">
-      <svg class="circular" viewBox="25 25 50 50">
-          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-      </svg>
+  <div id="body" class="font-montserrat">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+      <div class="loader">
+      </div>
     </div>
-  </app-root>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div id="main_content">
+      <app-root></app-root>
+    </div>
+  </div>
 </body>
-
-</body>
-
 
 </html>

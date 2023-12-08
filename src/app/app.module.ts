@@ -1,37 +1,35 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ComponentsModule,
-    RouterModule,
-    AppRoutingModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-
-  
-  ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
-
   ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
+    CarouselModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+    })
+  ],
+  providers: [BsDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

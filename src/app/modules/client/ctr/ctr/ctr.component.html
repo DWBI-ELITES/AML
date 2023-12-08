@@ -1,0 +1,141 @@
+<app-leftmenu></app-leftmenu>
+<!-- Main body part  -->
+<div class="page">
+    <app-header></app-header>
+    <div class="container-fluid">
+        <div class="section-body">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="nav nav-tabs page-header-tab">
+                        <li class="nav-item"><a class="nav-link active" href="javascript:void(0)">CTR REPORT</a></li>
+    
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="background-color: white;">
+          <!-- <div style="background-color: indianred; height: 50px; display: flex; align-items: center;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">CTR REPORT GENERATION</p>
+          </div> -->
+          <div class="card-header">
+            <h6 style="font-weight: light; color: #39374e; margin-left: 10px; margin-top: 15px;">CTR Report Generation</h6>
+        </div>
+<br>
+         
+          <form (ngSubmit)="generateCTR()" style="margin-left: 30px;">
+            <div>
+              <label style="font-weight: bold;color: black;">Report Date*</label>
+                  <input type="date" [(ngModel)]="reportDate" name="reportDate" class="custom-input" style="margin-left: 56px;" readonly>
+              </div>
+    <br>
+            <div>
+              <label style="font-weight: bold;color: black;">Start Date*</label>
+              <input type="date" [(ngModel)]="startDate" name="startDate" class="custom-input" style="margin-left: 68px;">
+             
+            </div>
+    
+    <br>
+            <div>
+              <label style="font-weight: bold;color: black;">End Date*</label>
+              <input type="date" [(ngModel)]="endDate" name="endDate" class="custom-input" style="margin-left: 74px;">
+             
+            </div>
+     <br>
+    
+     <div>
+      <p style="font-weight: bold; ">
+          Generate Records With Signatories Only:  
+          <span class="custom-checkbox" style="margin-left: 10px;">
+              <input type="checkbox" id="generateWithSignatories" name="generateWithSignatories" >
+              
+          </span>
+      </p>
+      
+    </div>
+  
+    <br>
+    <button type="submit" class="btn" [disabled]="loading" style="background-color: #39374e; color: aliceblue;">
+      <i class="fa fa-book"></i>
+      GENERATE CTR
+  </button>
+  
+  <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner> <!-- Add this line -->
+  <br>
+  <br>
+           </form>  
+        </div>
+  
+  
+        <div *ngIf="reportGenerated" style="background-color: white;" class="card">
+          <!-- <div style="background-color: indianred; height: 50px; display: flex; align-items: center;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">REPORT GENERATION COMPLETED. DOWNLOAD REPORT HERE</p>
+          </div> -->
+          <div class="card-header">
+            <h6 style="font-weight: light; color: #39374e; margin-left: 10px; margin-top: 15px;">Report Generation Completed. Downlaod Report Here</h6>
+        </div>
+  
+          <div  style=" margin-left: 30px;">
+            <label style="font-weight: bold;color: black;">Start Date</label>
+            <input type="date" [(ngModel)]="startDate" name="startDate" class="custom-input-readonly" style="margin-left: 68px;" readonly>
+           
+          </div>
+  
+          <div style=" margin-left: 30px;">
+            <label style="font-weight: bold;color: black;">End Date</label>
+            <input type="date" [(ngModel)]="endDate" name="endDate" class="custom-input-readonly" style="margin-left: 74px;" readonly>
+           
+          </div>
+  
+          <div style=" margin-left: 30px;">
+            <label style="font-weight: bold;color: black;">Report Date</label>
+                <input type="date" [(ngModel)]="reportDate" name="reportDate" class="custom-input-readonly" style="margin-left: 56px;" readonly>
+            </div>
+  
+            <p  style="font-weight: bold; margin-left: 30px;">
+              Download Report <a (click)="downloadReport()" style="color: blue; margin-left: 21px; cursor: pointer;">CTR_Report.xml</a>
+            </p>
+  <br>
+        </div>
+  
+  
+        <div class="card" style="background-color: white;">
+          <!-- <div style="background-color: indianred; height: 50px; display: flex; align-items: center;">
+            <p style="font-weight: bold; color: white; margin-left: 10px; margin-top: 15px;">REPORT LOG</p>
+          </div> -->
+          <div class="card-header">
+            <h6 style="font-weight: light; color: #39374e; margin-left: 10px; margin-top: 15px;">Report Log</h6>
+        </div>
+    
+  
+          <p  style="font-weight: bold; margin-left: 30px;padding-bottom: 10px;">
+              No log information
+            </p>
+        
+        </div>
+      </div>
+  
+  
+      <div class="modal popup-dialog" tabindex="-1" role="dialog" *ngIf="StartEndDatepopupDialog || InvalidDatepopupDialog || NoRecordpopupDialog || ErrorGeneratingCTRpopupDialog">
+        <div class="modal-dialog modal-dialog-centered popup-content" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center">{{ success_message ? 'Success' : 'Failure' }} &nbsp;
+                <img src="./assets/images/gallery/{{ success_message ? 'success.png' : 'failure.png' }}" 
+                     alt="{{ success_message ? 'Success' : 'Failure' }} Icon" height="20px">
+              </h5>
+       
+              
+            </div>
+            <div class="modal-body text-center">
+              <p>{{ success_message ? success_message : failure_message }}</p>
+              <button type="button" class="btn btn-primary" (click)="closeStartEndDatepopupDialog()" style="background-color: green !important;">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>  
+    <app-footer></app-footer>
+</div>
+
+
